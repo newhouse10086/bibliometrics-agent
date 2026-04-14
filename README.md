@@ -1,4 +1,4 @@
-# Bibliometrics Agent (文献综述智能体)
+# 文献计量智能体 (Bibliometrics Agent)
 
 **Fully automated bibliometric analysis powered by LLM — 用户输入研究领域，系统自动生成查询、抓取论文、执行分析、生成可视化和报告**
 
@@ -50,17 +50,72 @@ python -m spacy download en_core_web_sm
 
 ### 2. 配置 API Key
 
-```bash
-# LLM 功能（必需）— 通过 OpenRouter 使用各种模型
-export OPENAI_API_KEY="your-openrouter-key-here"
+#### 配置优先级
 
-# 论文抓取（可选，提高速率限制）
-export SEMANTIC_SCHOLAR_API_KEY="your-key-here"
+系统使用**三层配置优先级**（从高到低）：
+
+1. **项目特定配置** — `state.json` 的 `llm_config` 字段（高级用法）
+2. **环境变量** — `.env` 文件（推荐方式）✅
+3. **默认配置** — `configs/default.yaml` 的默认值
+
+#### 快速配置（推荐）
+
+创建 `.env` 文件（复制 `.env.example`）：
+
+```bash
+# 必需：设置 OpenRouter API Key（支持多种模型）
+OPENAI_API_KEY="sk-or-v1-your-key-here"
+OPENAI_BASE_URL="https://openrouter.ai/api/v1"
+
+# 可选：指定模型（默认 qwen/qwen3.6-plus）
+LLM_MODEL="qwen/qwen3.6-plus"
+
+# 其他模型选项：
+# LLM_MODEL="anthropic/claude-3.5-sonnet"
+# LLM_MODEL="openai/gpt-4o"
+# LLM_MODEL="deepseek/deepseek-chat"
 ```
 
-**默认模型**：`qwen/qwen3.6-plus`（通过 OpenRouter）
+**获取 API Key**：访问 https://openrouter.ai/keys
 
-配置文件：`configs/default.yaml`
+#### 高级配置
+
+**调整模型参数**（编辑 `configs/default.yaml`）：
+
+```yaml
+llm:
+  model: "qwen/qwen3.6-plus"  # 默认模型
+  temperature: 0.3             # 生成温度（0-1）
+  max_tokens: 4096             # 最大输出长度
+```
+
+**项目级别覆盖**（通过 API 创建项目时）：
+
+```json
+{
+  "name": "My Project",
+  "llm_config": {
+    "model": "anthropic/claude-3.5-sonnet",
+    "temperature": 0.7
+  }
+}
+```
+
+#### 可选：论文抓取 API Keys
+
+提高论文抓取速率限制（可选）：
+
+```bash
+# Semantic Scholar（更高速率限制）
+SEMANTIC_SCHOLAR_API_KEY="your-key-here"
+
+# PubMed（速率限制从 3/s 提升到 10/s）
+PUBMED_API_KEY="your-ncbi-key"
+PUBMED_EMAIL="your-email@example.com"
+
+# OpenAlex（速率限制从 1/s 提升到 10/s）
+OPENALEX_EMAIL="your-email@example.com"
+```
 
 ### 3. 启动服务
 
@@ -83,6 +138,7 @@ python run_web.py
 ## 📖 文档
 
 - **[快速开始指南](docs_content/QUICK_START_GUIDE.md)** — 详细安装和使用教程
+- **[LLM 配置说明](docs_content/LLM_CONFIGURATION.md)** — API Key、模型选择、配置优先级详解
 - **[架构设计](CLAUDE.md)** — 系统架构、模块开发、API 端点
 - **[会话记忆实现](docs_progress/context_memory_implementation.md)** — Agent 记忆系统技术文档
 
@@ -199,6 +255,8 @@ bibliometrics-agent/
 ├── static/                 # 前端单页应用
 ├── testscript/             # 测试脚本（20 个）
 ├── docs_content/           # 项目内容文档
+│   ├── QUICK_START_GUIDE.md
+│   └── LLM_CONFIGURATION.md
 ├── docs_progress/          # 项目进展文档
 ├── docs_archive/           # 归档文档
 └── scripts_archive/        # 归档脚本
@@ -244,35 +302,92 @@ bibliometrics-agent/
 
 ## ⚙️ 配置
 
-编辑 `configs/default.yaml`：
+### 配置优先级
+
+系统使用三层配置架构：
+
+| 优先级 | 来源 | 用途 | 示例 |
+|--------|------|------|------|
+| **1** | 项目配置 (`state.json`) | 项目特定模型设置 | 临时切换模型 |
+| **2** | 环境变量 (`.env`) | 主要配置方式 ✅ | API Key、模型选择 |
+| **3** | 默认配置 (`default.yaml`) | 全局默认值 | temperature、max_tokens |
+
+### 环境变量配置
+
+编辑 `.env` 文件（推荐方式）：
+
+```bash
+# 必需：LLM API Key
+OPENAI_API_KEY="sk-or-v1-your-key-here"        # OpenRouter Key
+OPENAI_BASE_URL="https://openrouter.ai/api/v1"  # API 端点
+
+# 可选：模型选择
+LLM_MODEL="qwen/qwen3.6-plus"                   # 默认模型
+
+# 可选：论文抓取 API Keys（提高速率限制）
+SEMANTIC_SCHOLAR_API_KEY="your-key-here"
+PUBMED_API_KEY="your-ncbi-key"
+PUBMED_EMAIL="your-email@example.com"
+OPENALEX_EMAIL="your-email@example.com"
+```
+
+### YAML 配置
+
+编辑 `configs/default.yaml` 调整模型参数：
 
 ```yaml
 llm:
-  model: "qwen/qwen3.6-plus"        # LLM 模型
-  temperature: 0.7
-  max_tokens: 4096
+  model: "qwen/qwen3.6-plus"    # 默认模型
+  temperature: 0.3               # 生成温度（0-1，越低越确定）
+  max_tokens: 4096               # 最大输出 token 数
+  base_url: "https://openrouter.ai/api/v1"
 
 modules:
   query_generator:
-    max_queries: 10
+    max_queries: 10              # 最大查询数
   paper_fetcher:
-    max_papers: 500
+    max_papers: 500              # 最大论文数
   topic_modeler:
     min_topics: 5
     max_topics: 50
   tuning_agent:
-    max_steps: 30                   # Agent 最大步数
-    max_history_files: 10           # 最多保留多少个历史文件
-    preserve_recent_messages: 20    # 压缩时保留最近消息数
+    max_steps: 30                # Agent 最大步数
+    max_history_files: 10        # 历史文件保留数量
+    preserve_recent_messages: 20 # 压缩时保留消息数
 
 pipeline:
   automated:
-    guardian_max_steps: 50          # Guardian 最大步数
+    guardian_max_steps: 50       # Guardian 最大步数
 ```
 
-环境变量（见 `.env.example`）：
-- `OPENAI_API_KEY` — OpenRouter API Key（必需）
-- `SEMANTIC_SCHOLAR_API_KEY` — 提高论文抓取速率限制
+### 项目级别配置
+
+创建项目时通过 API 覆盖配置：
+
+```bash
+POST /api/projects
+{
+  "name": "My Project",
+  "domain": "machine learning",
+  "llm_config": {
+    "model": "anthropic/claude-3.5-sonnet",
+    "temperature": 0.7,
+    "max_tokens": 8192
+  }
+}
+```
+
+### 支持的模型
+
+通过 OpenRouter 支持多种模型：
+
+- `qwen/qwen3.6-plus` — 默认，性价比高
+- `anthropic/claude-3.5-sonnet` — 高质量推理
+- `openai/gpt-4o` — OpenAI 旗舰模型
+- `deepseek/deepseek-chat` — DeepSeek 模型
+- `meta-llama/llama-3.1-70b-instruct` — 开源模型
+
+完整列表：https://openrouter.ai/models
 
 ---
 
@@ -324,6 +439,7 @@ MIT License
 ## 📚 相关资源
 
 - [快速开始指南](docs_content/QUICK_START_GUIDE.md)
+- [LLM 配置说明](docs_content/LLM_CONFIGURATION.md)
 - [架构设计文档](CLAUDE.md)
 - [会话记忆系统实现](docs_progress/context_memory_implementation.md)
 - [项目进展记录](docs_progress/)
