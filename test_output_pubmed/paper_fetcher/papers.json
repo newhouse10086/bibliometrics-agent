@@ -1,0 +1,1473 @@
+[
+  {
+    "pmid": "41966528",
+    "doi": "10.1016/j.clinimag.2026.110801",
+    "pmcid": "",
+    "title": "Integration of advanced ultrasound techniques, radiomics, and artificial intelligence for improved diagnosis of cystic breast lesions.",
+    "abstract": "Cystic breast lesions are commonly encountered on breast ultrasound, encompassing a spectrum from simple benign cysts to complex mixed solid and cystic lesions with malignant potential. Accurate sonographic characterization using ACR BI-RADS v2025 criteria is essential to guide clinical management, avoid unnecessary biopsies, and reduce patient anxiety. This review examines the sonographic features of cystic breast lesions across the pathological spectrum, including simple cysts, fat necrosis, abscesses, papillomas, and malignant subtypes such as medullary, papillary, and mucinous carcinomas. Key ultrasound techniques - including harmonic imaging, Doppler evaluation, and elastography - are discussed in the context of optimizing lesion characterization and differentiating benign from malignant cystic lesions. Despite these advances, image interpretation remains operator-dependent and challenging, particularly when malignancies mimic benign cystic features. Ultrasonomics emerged as a promising quantitative approach, extracting high-dimensional imaging features related to lesion shape, texture, and intensity to enable objective, reproducible assessment of lesion heterogeneity beyond visual interpretation. When combined with machine learning algorithms, ultrasonomics enhances lesion classification and diagnostic consistency. Building upon this framework, AI-based decision support systems analyze multiple sonographic parameters simultaneously, reducing interobserver variability and helping stratify malignancy risk in indeterminate or mixed solid and cystic lesions demonstrating suspicious features such as irregular walls, mural nodules, or internal vascularity. Clinical studies demonstrate AI can reduce unnecessary biopsies without compromising cancer detection rates. The integration of advanced ultrasound techniques, ultrasonomics, and AI-based decision support represents a meaningful advancement in the objective evaluation of cystic breast lesions, supporting more accurate risk stratification and optimized patient management.",
+    "year": 2026,
+    "journal_name": "Clinical imaging",
+    "journal_issn": "1873-4499",
+    "authors": [
+      {
+        "name": "Harsh N Shah",
+        "affiliations": [
+          "Department of Diagnostic, Molecular and Interventional Radiology, Icahn School of Medicine at Mount Sinai, New York, NY, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Laurie R Margolies",
+        "affiliations": [
+          "Department of Diagnostic, Molecular and Interventional Radiology, Icahn School of Medicine at Mount Sinai, New York, NY, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Christine Chen",
+        "affiliations": [
+          "Department of Diagnostic, Molecular and Interventional Radiology, Icahn School of Medicine at Mount Sinai, New York, NY, USA. Electronic address: christine.chen@mountsinai.org."
+        ],
+        "country": "US"
+      }
+    ],
+    "mesh_terms": [],
+    "keywords": [
+      "Artificial intelligence",
+      "Breast ultrasound",
+      "Cystic breast lesions",
+      "Diagnostic decision support",
+      "Radiomics"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41966528/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41966410",
+    "doi": "10.1016/j.ijcard.2026.134481",
+    "pmcid": "",
+    "title": "Machine learning applied to echocardiographic deformation curves for prediction of heart failure and cardiovascular death.",
+    "abstract": "BACKGROUND: Many patterns from the entire strain and TDI curves remain uninvestigated. OBJECTIVES: We investigated whether applying signal analysis with supervised machine learning (ML) to strain and TDI curves would improve the prediction of heart failure (HF) or cardiovascular death (CV death) compared with conventional echocardiographic parameters, and whether it would reveal previously unrecognized prognostic signal-derived parameters. METHODS: In total, 744 novel signal-analytical parameters extracted from 18 strain curves and 6 TDI curves were evaluated using ML and compared with a baseline ML model trained on 17 conventional echocardiographic parameters. The primary endpoint was a combined endpoint of incident HF or CV death within five years. RESULTS: The analysis included 2589 subjects from the Copenhagen City Heart Study (CCHS) for training the ML model and 916 subjects from the LOOP Study for external testing. In total, 126 subjects (4.9%) met the primary endpoint in CCHS, whereas 59 subjects (6.4%) met the primary endpoint in the LOOP Study. The models incorporating signal analysis, both stand-alone and combined with conventional parameters, significantly increased discrimination compared to the baseline model based on conventional parameters in the external test cohort (Baseline model: AUC 0.721, CI 0.639:0.802 vs. signal analytical model: AUC 0.790, CI 0.730:0.850, p = 0.031 and combined model: AUC 0.788, CI 0.727:0.849, p = 0.021). CONCLUSION: A ML model based on signal analysis of strain and TDI curves from echocardiographic examinations modestly improved 5-year discrimination for incident HF or CV death compared to a model based on conventional echocardiographic parameters.",
+    "year": 2026,
+    "journal_name": "International journal of cardiology",
+    "journal_issn": "1874-1754",
+    "authors": [
+      {
+        "name": "Jakob Øystein Simonsen",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Herlev and Gentofte, Hellerup, Denmark.. Electronic address: jako.simonsen@gmail.com."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Rune Højlund",
+        "affiliations": [
+          "Department of Physics, Technical University of Denmark, Kgs Lyngby, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Daniel Modin",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Herlev and Gentofte, Hellerup, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Kristoffer Grundtvig Skaarup",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Herlev and Gentofte, Hellerup, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Flemming Javier Olsen",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Herlev and Gentofte, Hellerup, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Jacob Christensen",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Herlev and Gentofte, Hellerup, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Mats Christian Højbjerg Lassen",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Herlev and Gentofte, Hellerup, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Niklas Dyrby Johansen",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Herlev and Gentofte, Hellerup, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Sergio Sánchez-Martínez",
+        "affiliations": [
+          "Department of Information and Communication Technologies, Universitat Pompeu Fabra, Barcelona, Spain."
+        ],
+        "country": "ES"
+      },
+      {
+        "name": "Brian Lee Claggett",
+        "affiliations": [
+          "Harvard Medical School, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Jacob Louis Marott",
+        "affiliations": [
+          "The Copenhagen City Heart Study, Copenhagen University Hospital - Bispebjerg and Frederiksberg, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Magnus T Jensen",
+        "affiliations": [
+          "The Copenhagen City Heart Study, Copenhagen University Hospital - Bispebjerg and Frederiksberg, Copenhagen, Denmark; Steno Diabetes Center Copenhagen, 2730 Herlev, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Gorm B Jensen",
+        "affiliations": [
+          "The Copenhagen City Heart Study, Copenhagen University Hospital - Bispebjerg and Frederiksberg, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Peter Schnohr",
+        "affiliations": [
+          "The Copenhagen City Heart Study, Copenhagen University Hospital - Bispebjerg and Frederiksberg, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Rasmus Møgelvang",
+        "affiliations": [
+          "The Copenhagen City Heart Study, Copenhagen University Hospital - Bispebjerg and Frederiksberg, Copenhagen, Denmark; Department of Cardiology, Copenhagen University Hospital - Rigshospitalet, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Søren Zöga Diederichsen",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Rigshospitalet, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Lucas Yixi Xing",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Herlev and Gentofte, Hellerup, Denmark.; Department of Cardiology, Copenhagen University Hospital - Rigshospitalet, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Lars Køber",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Rigshospitalet, Copenhagen, Denmark.; Department of Clinical Medicine, Faculty of Health and Medical Sciences, University of Copenhagen, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Jesper Hastrup Svendsen",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Rigshospitalet, Copenhagen, Denmark.; Department of Clinical Medicine, Faculty of Health and Medical Sciences, University of Copenhagen, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Simon Rasmussen",
+        "affiliations": [
+          "Novo Nordisk Foundation Center for Basic Metabolic Research Multi-modal Bioinformatics, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Line Katrine Harder Clemmensen",
+        "affiliations": [
+          "Applied Mathematics and Computer Science, Technical University of Denmark, Kgs Lyngby, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Jacob Tfelt-Hansen",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Rigshospitalet, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      },
+      {
+        "name": "Tor Biering-Sørensen",
+        "affiliations": [
+          "Department of Cardiology, Copenhagen University Hospital - Herlev and Gentofte, Hellerup, Denmark.; The Copenhagen City Heart Study, Copenhagen University Hospital - Bispebjerg and Frederiksberg, Copenhagen, Denmark; Steno Diabetes Center Copenhagen, 2730 Herlev, Denmark; Department of Cardiology, Copenhagen University Hospital - Rigshospitalet, Copenhagen, Denmark.; Department of Biomedical Sciences, Faculty of Health and Medical Sciences, University of Copenhagen, Copenhagen, Denmark."
+        ],
+        "country": "DK"
+      }
+    ],
+    "mesh_terms": [],
+    "keywords": [
+      "Cardiovascular death",
+      "Echocardiography",
+      "Heart failure",
+      "Machine learning",
+      "Strain",
+      "Tissue Doppler imaging"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41966410/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41966238",
+    "doi": "10.1016/j.envres.2026.124445",
+    "pmcid": "",
+    "title": "Pollutant-Specific Pathways Linking Gaseous Air Pollution to Adolescent Depressive Symptoms: Direct and Sleep-Mediated Effects in a Population-Based Retrospective Cohort Study.",
+    "abstract": "OBJECTIVE: This study aimed to examine associations between multiple gaseous air pollutants across different developmental periods and depressive in late adolescence. We also investigated the mediating role of sleep duration. METHODS: This population-based longitudinal cohort study consisted of 10,859 adolescence Taiwan followed up to 2 years. The exposures consisted of residential concentrations of sulfur dioxide (SO2), carbon monoxide (CO), ozone (O3), and nitrogen dioxide (NO2), estimated using a hybrid kriging-land use regression framework with machine learning models and expressed as daily averages across three periods: current (2015-2017), early adolescence (2012-2014), and lifetime cumulative (2000-2017). Depressive symptoms were assessed via five CES-D-based items at ages 16 and 18. Scores from both time points were averaged to generate a continuous composite score, with higher values reflecting greater severity of depressive symptoms. RESULTS: A total of 10,859 adolescents were included. After adjustment for demographic, health, and other pollutant factors, higher exposure to CO and NO2 was consistently associated with greater depressive symptoms across current (CO β= 0.083; P = 0.001; NO2 β= 0.002; P = 0.038), early adolescence (CO β= 0.058; P = 0.011; NO2 β= 0.003; P = 0.005), and cumulative (CO β= 0.054; P = 0.028; NO2 β= 0.002; P = 0.034) exposure periods. SO2 and O3 were not directly associated with depressive symptoms but showed significant indirect effects through sleep duration (SO2 indirect β= 0.005; 95% CI, 0.001-0.010; O3 indirect β = -0.002; 95% CI, -0.003 to -0.001). CONCLUSIONS: Adolescents exposed to higher levels of CO and NO2 showed greater depressive symptoms during late adolescence. Sleep duration mediated the associations of SO2 and O3 with depression, suggesting pollutant-specific pathways linking air pollution to mental health outcomes in adolescents.",
+    "year": 2026,
+    "journal_name": "Environmental research",
+    "journal_issn": "1096-0953",
+    "authors": [
+      {
+        "name": "Chun-Ji Lin",
+        "affiliations": [
+          "Department of Healthcare Administration, Asia University, Taichung, Taiwan."
+        ],
+        "country": "TW"
+      },
+      {
+        "name": "Po-Ya Chang",
+        "affiliations": [
+          "Department of Leisure Industry and Health Promotion, National Taipei University of Nursing and Health Sciences, Taipei, Taiwan."
+        ],
+        "country": "TW"
+      },
+      {
+        "name": "Yu-Ling Li",
+        "affiliations": [
+          "Institute of Population Health Sciences, National Health Research Institutes, Zhunan, Miaoli County, Taiwan."
+        ],
+        "country": "TW"
+      },
+      {
+        "name": "Chih-Da Wu",
+        "affiliations": [
+          "Department of Geomatics, College of Engineering, National Cheng Kung University, Tainan, Taiwan; National Institute of Environmental Health Sciences, National Health Research Institutes, Zhunan, Miaoli County, Taiwan; Research Center for Precision Environmental Medicine, Kaohsiung Medical University, Kaohsiung, Taiwan; Innovation and Development Center of Sustainable Agriculture, National Chung Hsing University, Taichung, Taiwan."
+        ],
+        "country": "TW"
+      },
+      {
+        "name": "Chao-Ying Tu",
+        "affiliations": [
+          "Department of Psychiatry, National Taiwan University Hospital Yunlin Branch, Yunlin, Taiwan; Institute of Health Policy and Management, College of Public Health, National Taiwan University, Taipei, Taiwan."
+        ],
+        "country": "TW"
+      },
+      {
+        "name": "Chih-Yi Wu",
+        "affiliations": [
+          "Institute of Population Health Sciences, National Health Research Institutes, Zhunan, Miaoli County, Taiwan."
+        ],
+        "country": "TW"
+      },
+      {
+        "name": "Szu-Ying Chen",
+        "affiliations": [
+          "Institute of Population Health Sciences, National Health Research Institutes, Zhunan, Miaoli County, Taiwan."
+        ],
+        "country": "TW"
+      },
+      {
+        "name": "Hung-Yi Chiou",
+        "affiliations": [
+          "Institute of Population Health Sciences, National Health Research Institutes, Zhunan, Miaoli County, Taiwan; School of Public Health, College of Public Health, Taipei Medical University, Taipei, Taiwan. Electronic address: hychiou@nhri.edu.tw."
+        ],
+        "country": "TW"
+      }
+    ],
+    "mesh_terms": [],
+    "keywords": [
+      "Adolescent depression",
+      "Gaseous air pollutants",
+      "Hybrid kriging-LUR with machine learning",
+      "Longitudinal study",
+      "Mediation effect",
+      "Multi-period exposure",
+      "Sleep duration"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41966238/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41966214",
+    "doi": "10.34172/ijhpm.9410",
+    "pmcid": "",
+    "title": "Applying Abstract Text Mining as a Complement to PRISMA in Reviewing the Scope of Healthcare's Circular Economy Comment on \"A Review of the Applicability of Current Green Practices in Healthcare Facilities\".",
+    "abstract": "Efforts to reduce the healthcare sector's carbon footprint and greenhouse gas (GHG) emissions have brought increased attention to the adoption of the circular economy (CE) in recent years. These efforts aim to lower carbon-intensive products while improving efficiency, waste reduction, and healthcare resilience. Soares et al conducted a scoping review examining CE applicability in healthcare and identified strategies to enhance its implementation. In this commentary paper, a novel abstract text mining (ATM) approach is introduced as a complement to the standard Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) methodology. Using this approach, the search terms employed by Soares et al were expanded, article abstracts were extracted, and scope areas were mapped with the assistance of a well-established machine learning technique-latent Dirichlet allocation (LDA) topic modeling. Comparison of the ATM results with those reported by Soares et al revealed three additional scope areas: alternative treatment pathways, pharmaceutical footprint reduction, and the utilization of emerging technologies.",
+    "year": 2026,
+    "journal_name": "International journal of health policy and management",
+    "journal_issn": "2322-5939",
+    "authors": [
+      {
+        "name": "Amin Esmaeili",
+        "affiliations": [
+          "Industrial and Systems Engineering Department, Kennesaw State University, Marietta, GA, USA."
+        ],
+        "country": "US"
+      }
+    ],
+    "mesh_terms": [
+      "Data Mining",
+      "Humans",
+      "Carbon Footprint",
+      "Delivery of Health Care",
+      "Health Facilities",
+      "Greenhouse Gases"
+    ],
+    "keywords": [
+      "Climate Change",
+      "Clinics",
+      "Environmental Impact",
+      "Global Warming",
+      "Hospital",
+      "Medical"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41966214/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41964201",
+    "doi": "10.1139/jpn-25-0116",
+    "pmcid": "",
+    "title": "Machine learning-based computational validation of the Addictions Neuroclinical Assessment framework in relation to hazardous drinking.",
+    "abstract": "BACKGROUND: Addiction is a multifaceted disorder driven by complex neurobiological and psychological mechanisms. The Addictions Neuroclinical Assessment (ANA) framework offers a dimensional mechanistic approach, focusing on three core domains: incentive salience, negative emotionality, and executive function. This study aimed to validate the ANA framework in relation to hazardous drinking using a machine learning approach, with the hypothesis that incentive salience and negative emotionality would be most strongly associated with drinking severity. METHODS: We analysed two independent datasets: a cohort of 1260 nonclinical community-based adults ascertained in 2016-2018 and a cohort of 655 young adults reporting regular binge drinking ascertained in 2017-2018. The three ANA domains were operationalized using behavioural and self-report measures. Four machine learning models (elastic net, support vector machines, random forest, and gradient boosting machines) with nested five-fold cross-validation were used to assess relations between ANA domains and hazardous drinking as measured via the Alcohol Use Disorder Identification Test (AUDIT), a validated screening instrument. RESULTS: Across both datasets, elastic net consistently outperformed other models. Incentive salience, largely reflecting alcohol's reinforcing value, was most robustly related to AUDIT score (R2 = 0.389-0.419), followed by negative emotionality (R2 = 0.293-0.317), largely reflecting drinking to cope. Executive function, reflecting impulsivity and inhibitory control, accounted for less variance (R2 = 0.098-0.109). Optimizing elastic net models via meta-learner further improved performance, explaining more than half of the variance (R2 = 0.539-0.549). LIMITATIONS: These findings may not generalize to individuals who are older or have severe AUD. Cross-sectional data limits longitudinal causal inferences. CONCLUSION: These results provide robust computational validation for the ANA framework, emphasizing incentive salience and negative emotionality as key domains linked to AUDIT score. Future research should explore diagnostic and longitudinal applications.",
+    "year": 2026,
+    "journal_name": "Journal of psychiatry & neuroscience : JPN",
+    "journal_issn": "1488-2434",
+    "authors": [
+      {
+        "name": "Mahmoud Elsayed",
+        "affiliations": [
+          "Department of Psychiatry and Behavioural Neurosciences, McMaster University, Hamilton, Canada.",
+          "Peter Boris Centre for Addictions Research, St. Joseph's Healthcare Hamilton, Hamilton, Canada."
+        ],
+        "country": "CA"
+      },
+      {
+        "name": "Kyla L Belisario",
+        "affiliations": [
+          "Department of Psychiatry and Behavioural Neurosciences, McMaster University, Hamilton, Canada.",
+          "Peter Boris Centre for Addictions Research, St. Joseph's Healthcare Hamilton, Hamilton, Canada."
+        ],
+        "country": "CA"
+      },
+      {
+        "name": "James G Murphy",
+        "affiliations": [
+          "Department of Psychology, University of Memphis, Memphis, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "James MacKillop",
+        "affiliations": [
+          "Department of Psychiatry and Behavioural Neurosciences, McMaster University, Hamilton, Canada.",
+          "Peter Boris Centre for Addictions Research, St. Joseph's Healthcare Hamilton, Hamilton, Canada."
+        ],
+        "country": "CA"
+      }
+    ],
+    "mesh_terms": [
+      "Humans",
+      "Machine Learning",
+      "Female",
+      "Male",
+      "Adult",
+      "Young Adult",
+      "Motivation",
+      "Executive Function",
+      "Binge Drinking",
+      "Emotions",
+      "Alcoholism",
+      "Behavior, Addictive",
+      "Adolescent"
+    ],
+    "keywords": [
+      "Addictions Neuroclinical Assessment",
+      "alcohol misuse",
+      "alcohol use disorder",
+      "hazardous drinking",
+      "machine learning"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41964201/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41963296",
+    "doi": "10.1038/s41467-026-71271-9",
+    "pmcid": "PMC13068930",
+    "title": "Exposome-wide patterns predict brain health in aging.",
+    "abstract": "Promoting brain health is vital for well-being and reducing healthcare burdens. Brain health as measured with the Brain Age Gap (BAG) - the difference between chronological and predicted brain age- relates to many factors. However, a holistic view, integrating the range of factors an individual brain is exposed to, is missing for understanding how the exposome shapes brain health. After computing BAG as an indicator of grey matter (GM) health, we predicted it using machine learning based on 261 exposome variables (spanning biomedical, environmental, lifestyle, socio-affective, and early life domains) in UK Biobank participants. Exposome data can predict GM health with factors pertaining to cardiovascular and bone health, along with alcohol and smoking, nutrition and diabetes showing greater contribution to the prediction. In such domains, life period and duration of exposure appeared crucial. These findings call for early prevention in cardiovascular and metabolic health to promote life-long brain health.",
+    "year": 2026,
+    "journal_name": "Nature communications",
+    "journal_issn": "2041-1723",
+    "authors": [
+      {
+        "name": "Mostafa Mahdipour",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany. m.mahdipour@fz-juelich.de.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany. m.mahdipour@fz-juelich.de."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Somayeh Maleki Balajoo",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Federico Raimondo",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Jianxiao Wu",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Eliana Nicolaisen-Sobesky",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Shammi More",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany.",
+          "Department of Bioinformatics, Fraunhofer Institute for Algorithms and Scientific Computing (SCAI), Sankt Augustin, Germany."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Felix Hoffstaedter",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Holger Schwender",
+        "affiliations": [
+          "Mathematical Institute, Heinrich Heine University Düsseldorf, Düsseldorf, Germany."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Masoud Tahmasian",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany.",
+          "Department of Nuclear Medicine, Faculty of Medicine and University Hospital Cologne, University of Cologne, Cologne, Germany."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Simon B Eickhoff",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany."
+        ],
+        "country": "DE"
+      },
+      {
+        "name": "Sarah Genon",
+        "affiliations": [
+          "Institute of Neuroscience and Medicine (INM-7: Brain and Behaviour), Research Centre Jülich, Jülich, Germany. s.genon@fz-juelich.de.",
+          "Institute of Systems Neuroscience, Heinrich Heine University Düsseldorf, Düsseldorf, Germany. s.genon@fz-juelich.de.",
+          "GIGA-CRC-Human Imaging, University of Liège, Liège, Belgium. s.genon@fz-juelich.de."
+        ],
+        "country": "DE"
+      }
+    ],
+    "mesh_terms": [
+      "Humans",
+      "Brain",
+      "Male",
+      "Female",
+      "Aging",
+      "Aged",
+      "Middle Aged",
+      "Exposome",
+      "Machine Learning",
+      "United Kingdom",
+      "Gray Matter",
+      "Adult",
+      "Life Style"
+    ],
+    "keywords": [],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41963296/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41963228",
+    "doi": "10.1016/j.acra.2026.03.037",
+    "pmcid": "",
+    "title": "Predicting Radiology Burnout via Machine Learning: A Cohort Study.",
+    "abstract": "RATIONALE AND OBJECTIVES: Burnout is prevalent among radiology staff, negatively impacting job satisfaction and patient care quality. This study aims to develop and validate machine learning-based predictive models for burnout in radiology staff, focusing on the role of artificial intelligence (AI) software utilization. MATERIALS AND METHODS: This prospective longitudinal cohort study enrolled 496 radiologists and technicians from 68 public hospitals in China. Data were collected at baseline and at a 3-month follow-up using questionnaires that covered demographic characteristics, work-related factors, AI software usage, and burnout assessed by the Maslach Burnout Inventory-Human Services Survey (MBI-HSS). Five machine learning algorithms were trained on a training set (n = 402) and validated on an independent validation set (n = 94). SHapley Additive exPlanations (SHAP) values were utilized to enhance model interpretability. The predictive performance of the models was evaluated using the area under the receiver operating characteristic curve (AUC-ROC). RESULTS: The XGBoost model exhibited the best predictive performance on the external validation set, achieving an AUC-ROC of 0.719. Salary satisfaction and the use of AI for coronary CTA were positively associated with burnout risk, whereas the use of AI for chest CT was negatively associated. SHAP analysis uncovered complex interactions between work-related stressors, AI utilization patterns, and burnout risk. Machine learning models, particularly the XGBoost model, effectively predicted burnout risk among radiology staff. CONCLUSION: Machine learning models, especially the XGBoost model, demonstrated robust predictive capabilities for identifying burnout risk in radiology staff. Future research should incorporate multi-modal data sources and validate the model in diverse healthcare settings to further enhance its generalizability and applicability.",
+    "year": 2026,
+    "journal_name": "Academic radiology",
+    "journal_issn": "1878-4046",
+    "authors": [
+      {
+        "name": "Can Ma",
+        "affiliations": [
+          "MOE Key Laboratory of Geriatric Diseases and Immunology, School of Public Health, Suzhou Medical College of Soochow University, Suzhou 215123, Jiangsu Province, China (C.M., T.Z.)."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Xia Liu",
+        "affiliations": [
+          "Department of Radiology, Sichuan Academy of Medical Sciences and Sichuan Provincial People's Hospital, University of Electronic Science and Technology of China, Chengdu 610000, Sichuan Province, China (X.L.)."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Mi Su",
+        "affiliations": [
+          "Functional Science Laboratory, West China School of Basic Medical Sciences & Forensic Medicine, Sichuan University, Chengdu 610000, Sichuan Province, China (M.S.)."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Xiao Fang",
+        "affiliations": [
+          "National Science Library (Chengdu), Chinese Academy of Sciences, Chengdu 610000, Sichuan Province, China (X.F.)."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Ming Zhang",
+        "affiliations": [
+          "Department of Psychology, Suzhou University of Science and Technology, Suzhou 215009, Jiangsu Province, China (M.Z.); School of Psychology, Northeast Normal University, Changchun 130024, Jilin Province, China (M.Z.); Graduate School of Interdisciplinary Science and Engineering in Health Systems, Okayama University, Okayama 700-8530, Okayama Ken, Japan (M.Z., T.Z.)."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Tianyang Zhang",
+        "affiliations": [
+          "MOE Key Laboratory of Geriatric Diseases and Immunology, School of Public Health, Suzhou Medical College of Soochow University, Suzhou 215123, Jiangsu Province, China (C.M., T.Z.); Graduate School of Interdisciplinary Science and Engineering in Health Systems, Okayama University, Okayama 700-8530, Okayama Ken, Japan (M.Z., T.Z.). Electronic address: tyzhang@suda.edu.cn."
+        ],
+        "country": "CN"
+      }
+    ],
+    "mesh_terms": [],
+    "keywords": [
+      "Artificial intelligence",
+      "Burnout",
+      "Machine learning",
+      "Radiology"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41963228/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41962257",
+    "doi": "10.1016/j.ajp.2026.104970",
+    "pmcid": "",
+    "title": "Digital health and machine learning in population health and wellness management: A scoping and bibliometric review of effectiveness, equity, and implementation challenges.",
+    "abstract": "Machine learning (ML) in digital health applications is becoming more popular for the general management of population wellness and the promotion of large-scale prevention, risk stratification, and the use of data to formulate data-driven decision-making in the field of population health. Although there has been a rapid increase in this area, the available reviews are highly fragmented and frequently tend to concentrate on particular technologies or predictive performance, yet provide minimal synthesis of the effectiveness, equity, implementation, and governance at the population-level. This review followed the Preferred Reporting Items for Systematic Reviews and Scoping Reviews (PRISMA-ScR) guidelines and employed a hybrid scoping and bibliometric approach. of the peer-reviewed literature published between 2018 and 2025 and indexed in PubMed/MEDLINE, Scopus, Web of Science, and IEEE Xplore. The review of the literature was in the form of scoping and concerned the digital form of healthcare, roles of ML analytic, the domains of outcome, and bibliometric analysis was performed to map the trends in publications, thematic groups, and evolving research areas. The results show significant increases in interdisciplinary studies in the field of public health, medical informatics, and data science in health. Most studies reported predictive-performance and short-term behavioral outcomes, whereas evidence on long-term population-level health effects and healthcare utilization remained limited. Nevertheless, there is little evidence regarding long-term population-level health effects and changes in healthcare use. Equity assessments have rarely conducted, and there have been repeated debates pertaining to data representativeness and algorithmic bias. Governance and implementation issues (such as model interpretability, privacy, data sharing, and regulatory uncertainty) have been continuously found to be obstacles to wide-scale and responsible deployment. All in all, this review offers a combined evaluation of efficacy, equity, and governance in ML-enabled, digital health to manage population wellness. The conclusions also show that there is a need to shift away from technology-focused assessments in favor of outcome-driven, equity-based, and governance-informed ways of encouraging sustainable and responsible population-level action.",
+    "year": 2026,
+    "journal_name": "Asian journal of psychiatry",
+    "journal_issn": "1876-2026",
+    "authors": [
+      {
+        "name": "Jun Zhang",
+        "affiliations": [
+          "School of Public Health and Health Management, Henan Medical College, Zhengzhou, PR China. Electronic address: zhangjun202501@126.com."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Meng Hu",
+        "affiliations": [
+          "School of Public Health and Health Management, Henan Medical College, Zhengzhou, PR China."
+        ],
+        "country": "CN"
+      }
+    ],
+    "mesh_terms": [],
+    "keywords": [
+      "Data science in health",
+      "Digital health",
+      "Health equity",
+      "Health governance",
+      "Machine learning",
+      "Population health and wellness management",
+      "Public health"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41962257/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41962130",
+    "doi": "10.2196/95004",
+    "pmcid": "PMC13068364",
+    "title": "Beyond GPT-4: The Rapidly Evolving Potential of Large Language Models for Clinical Guideline Improvement.",
+    "abstract": "This commentary reviews the study by Jones et al, which evaluated whether GPT-4 could improve the readability of injectable medication guidelines while preserving important safety information. The study found that GPT-4 produced modest readability gains comparable to manual revision, but also introduced omissions and meaning changes in a minority of sections. These findings highlight both the potential and limitations of early large language models (LLMs) in clinical contexts. However, this study reflects the capabilities of a specific model in a rapidly evolving domain. Since the release of GPT-4, advances in multistep reasoning, model-critique workflows, and structured validation have substantially improved the ability of newer systems to detect omissions, maintain factual fidelity, and support controlled editing. As a result, some documented limitations may stem from the constraints of a single-model, single-pass workflow rather than intrinsic flaws in LLM-assisted guideline revision. This commentary highlights the need for evaluation frameworks that can keep pace with LLM progress and emphasizes that clinical oversight and user-centered testing remain essential. Updated research using contemporary models is needed to determine how emerging architectures can more safely support clarity, consistency, and maintenance of clinical guidelines.",
+    "year": 2026,
+    "journal_name": "Journal of medical Internet research",
+    "journal_issn": "1438-8871",
+    "authors": [
+      {
+        "name": "Scott D Nelson",
+        "affiliations": [
+          "Department of Biomedical Informatics, School of Medicine, Vanderbilt University Medical Center, 3401 West End Ave, Nashville, TN, 37203, United States, 1 6158759347."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Adam Wright",
+        "affiliations": [
+          "Department of Biomedical Informatics, School of Medicine, Vanderbilt University Medical Center, 3401 West End Ave, Nashville, TN, 37203, United States, 1 6158759347."
+        ],
+        "country": "US"
+      }
+    ],
+    "mesh_terms": [
+      "Practice Guidelines as Topic",
+      "Humans",
+      "Language",
+      "Large Language Models"
+    ],
+    "keywords": [
+      "artificial intelligence",
+      "clinical decision support",
+      "clinical guidelines",
+      "large language model",
+      "patient safety",
+      "readability"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41962130/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41962065",
+    "doi": "10.57187/4942",
+    "pmcid": "",
+    "title": "A qualitative assessment of the use of artificial intelligence in public sector health organisations in Ontario, Canada.",
+    "abstract": "BACKGROUND: Advancements in artificial intelligence (AI) and machine learning (ML) capabilities and increased access to methods have enabled population-level analysis for research and health system monitoring. However, governments and public authorities may not be aware of the full range of applications, opportunities, and barriers and challenges. The purpose of the present study was to understand the barriers and facilitators of AI/ML and whether (and how) AI/ML was being used (or could be used) in public sector health organisations in a publicly funded health system. METHODS: Thirteen key informant interviews at three public sector health organisations were conducted. Common themes were identified. An in-person workshop was held in Toronto on 15 May 2024. We identified barriers and enablers and make recommendations for advancing AI/ML in the broader public sector. RESULTS: A total of six barriers were identified by participants: 1) knowledge, education and expertise; 2) privacy, ethics and security; 3) technology and infrastructure; 4) financial barriers; 5) competing priorities; and 6) fear of being replaced. Key enablers include 1) partnerships; 2) buy-in and support from senior leadership; 3) management and operational supports; and 4) actionable use cases. One prominent use case objective was to enhance healthcare system efficiency, including automating routine or unskilled operations to allow healthcare professionals to focus on higher-value tasks. CONCLUSION: Demonstrating success from focused small-scale AI applications, partnering with academia, and engaging senior leadership may build confidence and capability, but it is important to share knowledge, experiences, and measure success for the perspectives of different partners.",
+    "year": 2026,
+    "journal_name": "Swiss medical weekly",
+    "journal_issn": "1424-3997",
+    "authors": [
+      {
+        "name": "Steven Habbous",
+        "affiliations": [
+          "Data Sciences Institute's (DSI) Policy Lab, Dalla Lana School of Public Health, University of Toronto, Toronto, Ontario, Canada.",
+          "Ontario Health (Strategic Analytics), Toronto, Ontario, Canada."
+        ],
+        "country": "CA"
+      },
+      {
+        "name": "Jeremy Herring",
+        "affiliations": [
+          "Data Sciences Institute's (DSI) Policy Lab, Dalla Lana School of Public Health, University of Toronto, Toronto, Ontario, Canada.",
+          "Public Health Ontario, Toronto, Ontario, Canada."
+        ],
+        "country": "CA"
+      },
+      {
+        "name": "Tina Badiani",
+        "affiliations": [
+          "Data Sciences Institute's (DSI) Policy Lab, Dalla Lana School of Public Health, University of Toronto, Toronto, Ontario, Canada.",
+          "Toronto Public Health, Toronto, Ontario, Canada."
+        ],
+        "country": "CA"
+      },
+      {
+        "name": "Adalsteinn Brown",
+        "affiliations": [
+          "Data Sciences Institute's (DSI) Policy Lab, Dalla Lana School of Public Health, University of Toronto, Toronto, Ontario, Canada.",
+          "Dalla Lana School of Public Health, University of Toronto, Toronto, Ontario, Canada."
+        ],
+        "country": "CA"
+      },
+      {
+        "name": "Michael Hillmer",
+        "affiliations": [
+          "Data Sciences Institute's (DSI) Policy Lab, Dalla Lana School of Public Health, University of Toronto, Toronto, Ontario, Canada.",
+          "Dalla Lana School of Public Health, University of Toronto, Toronto, Ontario, Canada.",
+          "Digital Analytics and Strategy Division, Ministry of Health and Ministry of Long-Term Care, Toronto, Ontario, Canada."
+        ],
+        "country": "CA"
+      },
+      {
+        "name": "Laura C Rosella",
+        "affiliations": [
+          "Data Sciences Institute's (DSI) Policy Lab, Dalla Lana School of Public Health, University of Toronto, Toronto, Ontario, Canada.",
+          "Dalla Lana School of Public Health, University of Toronto, Toronto, Ontario, Canada.",
+          "Temerty Faculty of Medicine, University of Toronto, Toronto, Ontario, Canada.",
+          "Institute for Better Health, Trillium Health Partners, Mississauga, Ontario, Canada."
+        ],
+        "country": "CA"
+      }
+    ],
+    "mesh_terms": [
+      "Humans",
+      "Artificial Intelligence",
+      "Ontario",
+      "Qualitative Research",
+      "Public Sector",
+      "Machine Learning"
+    ],
+    "keywords": [],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41962065/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41961785",
+    "doi": "10.1371/journal.pone.0345693",
+    "pmcid": "PMC13068243",
+    "title": "Applying machine learning and natural language processing to patient safety event reports: Identifying patterns of cardiovascular diagnostic errors.",
+    "abstract": "OBJECTIVE: To explore the utility of natural language processing (NLP) and machine learning (ML) techniques to identify unsafe conditions leading to cardiovascular diagnostic errors using patient safety event (PSE) reports data. METHODS: PSE reports from January 2016 to August 2021 from a multi-hospital healthcare system in the mid-Atlantic region of the United States were included in this study. To have the true cardiovascular diagnostic errors labels for PSE reports, each individual PSE report was manually reviewed to find clinician-reported narratives describing current definitions of cardiovascular diagnostic errors. The PSE reports which contained cardiovascular diagnostic errors-related narratives were labeled as one and zero otherwise. Four binary ML models were employed to identify cardiovascular diagnostic errors narratives and common features from annotated PSE reports data: (1) simple logistic regression, (2) elastic net, (3) XGBoost, and (4) deep neural networks. RESULTS: XGBoost outperformed the rest of the models in identifying cardiovascular diagnostic errors -related reports and achieved high performance metrics on the testing data (AUROC = 0.914, specificity = 0.982, PPV = 0.866, accuracy = 0.929, F-1 score = 0.738, and AUPRC = 0.783). Pacemaker emerged as a significant signal for cardiovascular diagnostic errors in our PSE reports. Our analysis demonstrated that ordering MRI for patients with pacemaker was a frequent theme among cardiovascular diagnostic errors-related PSE reports containing the word pacemaker. Order, EKG, cardiac, and chest were the five most important features in identifying cardiovascular diagnostic errors events. These words were utilized in explaining heart conditions, associated care process, and related safety incidents. CONCLUSIONS: Findings from our study demonstrates the feasibility of ML and NLP techniques in identifying cardiovascular diagnostic errors-related reports among the existing PSE data sources. However, validation in external healthcare systems is needed before broader application.",
+    "year": 2026,
+    "journal_name": "PloS one",
+    "journal_issn": "1932-6203",
+    "authors": [
+      {
+        "name": "Azade Tabaie",
+        "affiliations": [
+          "Center for Biostatistics, Informatics, and Data Science, MedStar Health Research Institute, Washington, District of Columbia, United States of America.",
+          "Department of Emergency Medicine, Georgetown University Medical Center, Washington, District of Columbia, United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Alberta K Tran",
+        "affiliations": [
+          "Department of Emergency Medicine, Georgetown University Medical Center, Washington, District of Columbia, United States of America.",
+          "MedStar Health Research Institute, MedStar Health, Washington, District of Columbia, United States of America.",
+          "MedStar Health Institute of Quality and Safety, MedStar Health, Columbia, Maryland, United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Codrin Parau",
+        "affiliations": [
+          "National Center for Human Factors in Healthcare, MedStar Health Research Institute, Washington, District of Columbia, United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Sonita S Bennett",
+        "affiliations": [
+          "Center for Biostatistics, Informatics, and Data Science, MedStar Health Research Institute, Washington, District of Columbia, United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Sadaf Kazi",
+        "affiliations": [
+          "Department of Emergency Medicine, Georgetown University Medical Center, Washington, District of Columbia, United States of America.",
+          "National Center for Human Factors in Healthcare, MedStar Health Research Institute, Washington, District of Columbia, United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Kelly Smith",
+        "affiliations": [
+          "Institute of Health Policy, Management & Evaluation, University of Toronto, Toronto, Ontario, Canada.",
+          "Patient-Oriented Research, Michael Garron Hospital, Toronto, Ontario, Canada."
+        ],
+        "country": "CA"
+      },
+      {
+        "name": "John Yosaitis",
+        "affiliations": [
+          "School of Medicine, Georgetown University, Washington, District of Columbia, United States of America.",
+          "MedStar Simulation Training & Education Lab, MedStar Institute for Innovation, Washington, District of Columbia, United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Kristen E Miller",
+        "affiliations": [
+          "Department of Emergency Medicine, Georgetown University Medical Center, Washington, District of Columbia, United States of America.",
+          "National Center for Human Factors in Healthcare, MedStar Health Research Institute, Washington, District of Columbia, United States of America."
+        ],
+        "country": "US"
+      }
+    ],
+    "mesh_terms": [
+      "Humans",
+      "Natural Language Processing",
+      "Machine Learning",
+      "Patient Safety",
+      "Cardiovascular Diseases",
+      "Diagnostic Errors",
+      "United States"
+    ],
+    "keywords": [],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41961785/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41961783",
+    "doi": "10.1371/journal.pone.0343669",
+    "pmcid": "PMC13068287",
+    "title": "Privacy-preserving multimodal federated learning pipeline for cyber-resilient healthcare systems.",
+    "abstract": "The integration of Internet of Things (IoT) devices and electronic medical records (EMRs) has transformed healthcare delivery but has also created new vulnerabilities to cyberattacks that threaten both data confidentiality and patient safety. Conventional centralized machine learning approaches for intrusion detection are impractical in this domain due to strict privacy regulations, heterogeneous data sources, and the risk of single points of failure. To address these challenges, we propose a secure distributed machine learning pipeline for cyber-resilient healthcare systems. The framework combines federated optimization with split learning for sensitive EMR data, robust aggregation to mitigate poisoned updates, and differential privacy with secure aggregation to protect against inference attacks. Multimodal fusion is enabled through temporal consistency regularization for IoT traffic and cross-layer contrastive alignment to link EMR representations, ensuring improved anomaly detection across diverse healthcare environments. Experiments conducted on representative IoT and EMR datasets demonstrate that the proposed pipeline achieves accuracy of 0.942 on IoT data, 0.931 on EMR data, and 0.953 in the combined setting, with corresponding F1-scores of 0.921, 0.908, and 0.932. Ranking metrics further confirm superiority with AUROC up to 0.961 and AUPRC up to 0.947, outperforming deep baselines by margins of +0.025 to +0.033. Robustness analysis shows graceful degradation under client poisoning ([Formula: see text] at 30% malicious clients) and resilience under severe communication constraints (accuracy [Formula: see text] at 90% update sparsification). Detection latency is reduced to an average of 5.9 time steps, compared to 7.8 for the strongest deep baseline. These results highlight that secure distributed pipelines can deliver both strong detection capabilities and regulatory compliance, providing a practical path toward safeguarding next-generation healthcare infrastructures against evolving cyber threats.",
+    "year": 2026,
+    "journal_name": "PloS one",
+    "journal_issn": "1932-6203",
+    "authors": [
+      {
+        "name": "Md Iftekhar Monzur Tanvir",
+        "affiliations": [
+          "Department of Information Technology, Washington University of Science and Technology, Alexandria, Virginia, United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Habibor Rahman Rabby",
+        "affiliations": [
+          "Department of Computer Science, Campbellsville University, Louisville, Kentucky, United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Md Habibul Arif",
+        "affiliations": [
+          "Department of Information Technology, University of the Potomac, Potomac, Washington, D.C., United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Nusrat Yasmin Nadia",
+        "affiliations": [
+          "Department of Information Technology, Washington University of Science and Technology, Alexandria, Virginia, United States of America."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Kamruddin Nur",
+        "affiliations": [
+          "Department of Computer Science, American International University-Bangladesh, Dhaka, Bangladesh."
+        ]
+      }
+    ],
+    "mesh_terms": [
+      "Machine Learning",
+      "Computer Security",
+      "Humans",
+      "Electronic Health Records",
+      "Delivery of Health Care",
+      "Internet of Things",
+      "Confidentiality",
+      "Privacy",
+      "Federated Learning"
+    ],
+    "keywords": [],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41961783/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41961261",
+    "doi": "10.1007/s00068-026-03172-x",
+    "pmcid": "PMC13068730",
+    "title": "A machine-learning-based tool for stroke risk prediction in blunt cerebrovascular injury: development and preliminary evaluation.",
+    "abstract": "PURPOSE: Stroke risk correlates with the Biffl grading system in blunt cerebrovascular injury (BCVI). Although anti-thrombotic therapy is the mainstay of stroke prevention, no point-of-care clinical decision-support tool exists to guide timing for therapy. We sought to develop an interactive online calculator that incorporates patient-specific demographic and injury characteristics to estimate stroke risk and risk reduction with anti-thrombotic (AT) administration. METHODS: Data from BCVI patients (n = 1,197) at a Level I Trauma Center were retrospectively collected. Six machine learning methods were employed to predict stroke risk with and without AT therapy. Class imbalance was addressed using downsampling and/or class weighting. Model performance was assessed using 10-fold cross-validation. The model was implemented as an R-based Shiny online application. RESULTS: Stroke rate among the population was 4%, and the strongest predictors for stroke were the greatest Biffl grade of carotid (aOR [95%CI] = 2.02 [1.62-2.53]) and vertebral injuries (1.44 [1.18-1.77]). The least absolute shrinkage and selection operator (LASSO) model outperformed all others, achieving 66% [33%-100%] sensitivity and 74% [62%-82%] specificity for stroke prediction, with an area under the receiver operating characteristic curve of 0.79 [0.57-0.95]. This model was integrated into an interactive online tool ( https://grady-bcvi-calc.shinyapps.io/calculator/ ), where patient demographic and injury characteristics can be used to compute baseline stroke risk and estimate stroke risk with AT. CONCLUSION: We developed and evaluated a preliminary predictive model for personalized stroke risk assessment in patients with BCVI using key risk factors. The integration of patient-specific risk-benefit assessments into clinical decision-making could optimize and reduce variability in AT therapy. External validation is warranted to prepare this tool for broad clinical applicability.",
+    "year": 2026,
+    "journal_name": "European journal of trauma and emergency surgery : official publication of the European Trauma Society",
+    "journal_issn": "1863-9941",
+    "authors": [
+      {
+        "name": "Victoria Wagner",
+        "affiliations": [
+          "Department of Surgery, UTHealth Houston - McGovern School of Medicine, 6431 Fannin Street, MSB 4.264, Houston, TX, 77030, USA. victoria.e.wagner@uth.tmc.edu."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Joshua D Preston",
+        "affiliations": [
+          "Emory University School of Medicine, 100 Woodruff Circle, Atlanta, GA, 30322, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Alejandro De Leon Castro",
+        "affiliations": [
+          "Grady Memorial Hospital, 80 Jesse Hill Jr Dr SE, Atlanta, GA, 30303, USA.",
+          "HCA Healthcare Trident Hospital, 9330 Medical Plaza Dr, Charleston, SC, 29406, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "William F Mueller",
+        "affiliations": [
+          "Zucker School of Medicine, Hofstra University, Hempstead, NY, 11549, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Jonathan Nguyen",
+        "affiliations": [
+          "Morehouse School of Medicine, 720 Westview Dr. SW, Atlanta, GA, 30310, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Manuel Garcia-Toca",
+        "affiliations": [
+          "Emory University School of Medicine, 100 Woodruff Circle, Atlanta, GA, 30322, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Elizabeth R Benjamin",
+        "affiliations": [
+          "Emory University School of Medicine, 100 Woodruff Circle, Atlanta, GA, 30322, USA.",
+          "Grady Memorial Hospital, 80 Jesse Hill Jr Dr SE, Atlanta, GA, 30303, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "S Rob Todd",
+        "affiliations": [
+          "Grady Memorial Hospital, 80 Jesse Hill Jr Dr SE, Atlanta, GA, 30303, USA."
+        ],
+        "country": "US"
+      },
+      {
+        "name": "Jason D Sciarretta",
+        "affiliations": [
+          "Emory University School of Medicine, 100 Woodruff Circle, Atlanta, GA, 30322, USA."
+        ],
+        "country": "US"
+      }
+    ],
+    "mesh_terms": [
+      "Humans",
+      "Machine Learning",
+      "Male",
+      "Female",
+      "Stroke",
+      "Retrospective Studies",
+      "Middle Aged",
+      "Risk Assessment",
+      "Adult",
+      "Cerebrovascular Trauma",
+      "Wounds, Nonpenetrating",
+      "Risk Factors",
+      "Aged",
+      "Trauma Centers"
+    ],
+    "keywords": [
+      "Machine learning",
+      "Point-of-care",
+      "Predictive modeling",
+      "Risk stratification",
+      "Trauma decision support",
+      "Vascular trauma"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41961261/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41960682",
+    "doi": "10.1002/mbo3.70284",
+    "pmcid": "PMC13067202",
+    "title": "The Mechanism of Gut Microbiota in Breast Cancer Based on the Bulk Transcriptome, Mendelian Randomization Analysis and Single Cell RNA Sequencing.",
+    "abstract": "Breast cancer (BC) is the leading cause of cancer death in women. Bidirectional regulation between BC and gut microbiota (GM) is established, but GM's mechanistic role in BC pathogenesis remains unclear. Public BC/control samples and GM genome-wide association study data underwent Mendelian randomization to identify GM-BC associations and GMRGs. DEGs between BC and controls were analyzed. Candidate genes were derived from intersecting DEGs and GMRGs. Machine learning identified biomarkers, validated by expression analysis. GSEA, immune infiltration, drug screening with molecular docking, and scRNA-seq were performed. Intersecting 3455 DEGs with GMRGs yielded eight candidates; MCM6 and NR3C1 were validated as biomarkers, enriched in DNA replication pathways. Immune infiltration showed 13 differential immune cells, with macrophages notably influencing biomarkers. Etoposide exhibited strong binding to biomarkers via docking. scRNA-seq identified epithelial cells as key, with stage-dependent biomarker expression. This study redefines BC as a microbiome-regulated network, identifying the MCM6/NR3C1 biomarker pair for early diagnosis and microbiome-targeted interventions.",
+    "year": 2026,
+    "journal_name": "MicrobiologyOpen",
+    "journal_issn": "2045-8827",
+    "authors": [
+      {
+        "name": "Tianyu Luo",
+        "affiliations": [
+          "Shenzhen Hospital (Futian) of Guangzhou University of Chinese Medicine, Shenzhen, Guangdong, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Mengyao Xue",
+        "affiliations": [
+          "Shenzhen Hospital (Futian) of Guangzhou University of Chinese Medicine, Shenzhen, Guangdong, China.",
+          "Guangzhou University of Chinese Medicine, Guangzhou, Guangdong, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Yi Du",
+        "affiliations": [
+          "Shenzhen Hospital (Futian) of Guangzhou University of Chinese Medicine, Shenzhen, Guangdong, China.",
+          "Guangzhou University of Chinese Medicine, Guangzhou, Guangdong, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Huiying Chen",
+        "affiliations": [
+          "Shenzhen Hospital (Futian) of Guangzhou University of Chinese Medicine, Shenzhen, Guangdong, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Ying Sun",
+        "affiliations": [
+          "Shenzhen Hospital (Futian) of Guangzhou University of Chinese Medicine, Shenzhen, Guangdong, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Haidong Sun",
+        "affiliations": [
+          "Shenzhen Hospital (Futian) of Guangzhou University of Chinese Medicine, Shenzhen, Guangdong, China."
+        ],
+        "country": "CN"
+      }
+    ],
+    "mesh_terms": [
+      "Humans",
+      "Breast Neoplasms",
+      "Gastrointestinal Microbiome",
+      "Female",
+      "Mendelian Randomization Analysis",
+      "Transcriptome",
+      "Single-Cell Analysis",
+      "Genome-Wide Association Study",
+      "Biomarkers, Tumor",
+      "Sequence Analysis, RNA"
+    ],
+    "keywords": [
+      "Mendelian randomization",
+      "biomarkers",
+      "breast cancer",
+      "gut microbiota",
+      "single cell RNA sequencing"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41960682/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41959558",
+    "doi": "10.3389/fcimb.2026.1788229",
+    "pmcid": "PMC13057271",
+    "title": "Development and validation of an interpretable machine learning-based model for predicting carbapenem-resistant Acinetobacter baumannii infection in postoperative ICU patients: a retrospective cohort study.",
+    "abstract": "BACKGROUND: Carbapenem-resistant Acinetobacter baumannii (CRAB) is a major cause of healthcare-associated infections and is associated with poor outcomes in intensive care units, particularly among postoperative patients. However, predictive tools for early identification of high-risk postoperative intensive care units (ICU) patients remain scarce. METHODS: We conducted a retrospective cohort study including 2,195 postoperative ICU patients. Clinically available demographic, treatment-related, and laboratory variables were used to develop eight machine learning models. Feature selection was performed using Boruta, and model interpretability was enhanced using Shapley Additive Explanations (SHAP) analysis. Model performance was evaluated in an independent test set using the area under the receiver operating characteristic curve (AUC), with sensitivity analyses performed using reduced feature sets. RESULTS: Among 2,195 postoperative ICU patients, 694 (31.6%) developed CRAB infection. Patients with CRAB infection had significantly longer ICU stays, greater exposure to invasive procedures, higher antimicrobial use, and worse laboratory profiles than non-infected patients. Using 19 features selected by the Boruta algorithm, all eight machine learning models achieved good discrimination in the test set (AUC > 0.83). Gradient Boosting demonstrated the best overall performance, with an AUC of 0.867 (95% CI: 0.836-0.892), good calibration, and the highest net clinical benefit. SHAP analysis identified duration of mechanical ventilation, central venous catheterization, ICU length of stay (LOS), and carbapenem exposure as the most influential predictors. Sensitivity analyses showed that models using only the top 10 or top 5 SHAP-ranked features achieved performance comparable to the full model, supporting the feasibility of feature reduction for clinical application. CONCLUSIONS: This study provides an interpretable and clinically applicable framework for early risk assessment of CRAB infection in postoperative ICU patients, supporting targeted prevention strategies and more rational antimicrobial stewardship.",
+    "year": 2026,
+    "journal_name": "Frontiers in cellular and infection microbiology",
+    "journal_issn": "2235-2988",
+    "authors": [
+      {
+        "name": "Yan Gao",
+        "affiliations": [
+          "Department of Disease Prevention and Control, General Hospital of Northern Theater Command, Shenyang, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Guangxin Gu",
+        "affiliations": [
+          "Key Laboratory of Environmental Stress and Chronic Disease Control & Prevention, China Medical University, Ministry of Education, Shenyang, China.",
+          "Department of Epidemiology, School of Public Health, China Medical University, Shenyang, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Ruiwen Wang",
+        "affiliations": [
+          "Key Laboratory of Environmental Stress and Chronic Disease Control & Prevention, China Medical University, Ministry of Education, Shenyang, China.",
+          "Department of Epidemiology, School of Public Health, China Medical University, Shenyang, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Chen Jia",
+        "affiliations": [
+          "Department of Disease Prevention and Control, General Hospital of Northern Theater Command, Shenyang, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Feng Zhao",
+        "affiliations": [
+          "Department of Disease Prevention and Control, General Hospital of Northern Theater Command, Shenyang, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Dan Cao",
+        "affiliations": [
+          "Department of Disease Prevention and Control, General Hospital of Northern Theater Command, Shenyang, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Xin Jin",
+        "affiliations": [
+          "Department of Disease Prevention and Control, General Hospital of Northern Theater Command, Shenyang, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Xiaoyuan Ma",
+        "affiliations": [
+          "Department of Disease Prevention and Control, General Hospital of Northern Theater Command, Shenyang, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Yu Wang",
+        "affiliations": [
+          "Department of Orthopedics, General Hospital of Northern Theater Command, Shenyang, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Xueyu Li",
+        "affiliations": [
+          "Department of Disease Prevention and Control, General Hospital of Northern Theater Command, Shenyang, China."
+        ],
+        "country": "CN"
+      }
+    ],
+    "mesh_terms": [
+      "Humans",
+      "Retrospective Studies",
+      "Acinetobacter baumannii",
+      "Machine Learning",
+      "Carbapenems",
+      "Acinetobacter Infections",
+      "Male",
+      "Intensive Care Units",
+      "Female",
+      "Middle Aged",
+      "Aged",
+      "Anti-Bacterial Agents",
+      "ROC Curve",
+      "Cross Infection"
+    ],
+    "keywords": [
+      "ICU length of stay",
+      "carbapenem exposure",
+      "carbapenem-resistant Acinetobacter baumannii",
+      "central venous catheterization",
+      "los",
+      "machine learning models",
+      "mechanical ventilation",
+      "postoperative ICU patients"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41959558/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41958925",
+    "doi": "10.1002/dad2.70332",
+    "pmcid": "PMC13060654",
+    "title": "Advancing dementia identification using machine learning and real-world sequential health data.",
+    "abstract": "INTRODUCTION: Timely identification of dementia remains a major clinical challenge globally, with many cases being unrecognized. This study evaluated whether using machine learning models with routinely collected health data can support dementia case finding. METHOD: De-identified datasets were used to create a nested case-control of 8195 individuals with dementia and 8195 matched controls. Four models incorporating both cross-sectional and longitudinal features were developed and tested. RESULTS: The best-performing model achieved an area under the curve of 0.86 (95% confidence interval [CI]: 0.84-0.87), with sensitivity of 73.3% (95% CI: 72.3-74.2) and specificity of 87.5% (95% CI: 86.7-88.2). Key predictors included time-stamped International Classification of Diseases 10th Revision diagnostic codes, health-care use, referral to aged residential care, and hospital delirium assessments. DISCUSSION: A unique feature was the inclusion of \"timestamp data\" that allowed us to assess the longitudinal changes which may have improved performance of the model. These findings demonstrate the potential for using machine learning with routine health data to enhance early dementia detection. HIGHLIGHTS: Machine learning models using routine health data in a real-world setting in New Zealand had good accuracy for identification of dementia (area under the curve 0.86, sensitivity 73.3%, and specificity 87.5%).Longitudinal sequential \"timestamp\" data is a unique feature that improved the performance of machine learning models for dementia case finding.Key predictors included International Classification of Diseases 10th Revision codes, health-care use, referrals to aged residential care, and positive delirium scores.",
+    "year": 2026,
+    "journal_name": "Alzheimer's & dementia (Amsterdam, Netherlands)",
+    "journal_issn": "2352-8729",
+    "authors": [
+      {
+        "name": "Cristian Gonzalez-Prieto",
+        "affiliations": [
+          "School of Computer Science University of Auckland Auckland New Zealand."
+        ],
+        "country": "NZ"
+      },
+      {
+        "name": "Mukish Yelanchezian",
+        "affiliations": [
+          "Department of Psychological Medicine University of Auckland Auckland New Zealand.",
+          "Te Whatu Ora Counties Manukau South Auckland New Zealand."
+        ],
+        "country": "NZ"
+      },
+      {
+        "name": "Gillian Dobbie",
+        "affiliations": [
+          "School of Computer Science University of Auckland Auckland New Zealand."
+        ],
+        "country": "NZ"
+      },
+      {
+        "name": "Daniel Wilson",
+        "affiliations": [
+          "School of Computer Science University of Auckland Auckland New Zealand."
+        ],
+        "country": "NZ"
+      },
+      {
+        "name": "Claudia Rivera-Rodriguez",
+        "affiliations": [
+          "Department of Statistics University of Auckland Auckland New Zealand."
+        ],
+        "country": "NZ"
+      },
+      {
+        "name": "Bede Oulaghan",
+        "affiliations": [
+          "Health Analytics Counties Manukau District, Health New Zealand Te Whatu Ora Auckland New Zealand."
+        ],
+        "country": "GB"
+      },
+      {
+        "name": "Susan Yates",
+        "affiliations": [
+          "Department of Psychological Medicine University of Auckland Auckland New Zealand."
+        ],
+        "country": "NZ"
+      },
+      {
+        "name": "Sarah Cullum",
+        "affiliations": [
+          "Department of Psychological Medicine University of Auckland Auckland New Zealand.",
+          "Te Whatu Ora Counties Manukau South Auckland New Zealand.",
+          "Global Brain Health Institute, Trinity College Dublin UK."
+        ],
+        "country": "NZ"
+      }
+    ],
+    "mesh_terms": [],
+    "keywords": [
+      "case finding",
+      "dementia",
+      "electronic health records",
+      "machine learning",
+      "real‐world data"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41958925/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41958887",
+    "doi": "10.3389/fendo.2026.1757367",
+    "pmcid": "PMC13056624",
+    "title": "Prevalence, risk factors, and early prediction of cognitive impairment in patients with diabetes mellitus: a systematic review and meta-analysis.",
+    "abstract": "INTRODUCTION: Diabetes mellitus (DM) substantially increases the risk of cognitive impairment (CI). Currently, systematic evidence regarding its prevalence, risk factors, and early predictive models remains scarce, hindering the development of targeted preventive strategies. Thus, this meta-analysis aimed to comprehensively estimate the global CI prevalence in individuals with DM, identify associated risk factors, and assess the performance and potential application of early predictive models. METHODS: Embase, Web of Science, the Cochrane Library, and PubMed were searched up to May 2025 to include observational studies reporting on the prevalence, risk factors, and predictive models of CI in individuals with DM. The Agency for Healthcare Research and Quality scale and the Newcastle-Ottawa Scale were employed to appraise the quality of included studies. Meta-analyses of prevalence, risk factors, and c-indices of predictive models were carried out using R 4.5.0. This study was registered in PROSPERO (CRD420250632808). RESULTS: In total, 41 studies involving 18,768 patients with DM were included. After excluding three case-control studies, 38 studies were eligible for prevalence synthesis. Meta-analysis demonstrated an overall CI prevalence of 40.80% (95% CI: 33.91%-47.87%) among DM patients. Identified risk factors included demographic factors: age (odds ratio [OR]=2.18 95% confidence interval [CI]: 1.37-3.48), low income (OR = 2.25, 95%CI:1.28-3.96), and unmarried status (OR = 1.66, 95% CI:1.05-2.64); disease-related factors: Hemoglobin A1c (OR = 1.27, 95% CI:1.06-1.53), and hypoglycemia (OR = 1.87, 95% CI:1.30-2.71); and complications: diabetic nephropathy (OR = 1.64, 95% CI:1.19-2.25), diabetic retinopathy (OR = 1.71, 95% CI:1.27-2.42), depression (OR = 2.32, 95%CI: 2.32-5.33), and stroke (OR = 2.62, 95%CI:1.27-2.31). 8 studies constructed predictive models for CI, reporting a c-index of 0.83 (95%CI: 0.76-0.90) in the training sets and 0.81 (95%CI:0.74-0.89) in the validation sets. CONCLUSIONS: CI is highly prevalent among individuals with DM and is closely associated with multiple factors. These risk factors provide potential targets for early intervention. Although existing predictive models demonstrate encouraging performance, their clinical applicability remains limited owing to the small number of included studies and requires further validation. Future research should incorporate large, multicenter, and multiethnic cohorts and develop machine learning-based predictive models with broader applicability.",
+    "year": 2026,
+    "journal_name": "Frontiers in endocrinology",
+    "journal_issn": "1664-2392",
+    "authors": [
+      {
+        "name": "Qin Qin",
+        "affiliations": [
+          "Department of Medical, Quzhou College of Technology, Quzhou, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Le Chen",
+        "affiliations": [
+          "School of Nursing, Xiangnan University, Chenzhou, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Jingjing Wang",
+        "affiliations": [
+          "Institutes of Health Central Plains, Henan Medical University, Xinxiang Henan, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Luqing Zheng",
+        "affiliations": [
+          "School of Nursing, Hunan Traditional Chinese Medical College, Zhuzhou, China."
+        ],
+        "country": "CN"
+      },
+      {
+        "name": "Juan Zhao",
+        "affiliations": [
+          "Department of Psychiatry, First Hospital/First Clinical Medical College of Shanxi Medical University, Taiyuan, Shanxi, China."
+        ],
+        "country": "CN"
+      }
+    ],
+    "mesh_terms": [
+      "Humans",
+      "Risk Factors",
+      "Cognitive Dysfunction",
+      "Prevalence",
+      "Diabetes Mellitus"
+    ],
+    "keywords": [
+      "cognitive impairment",
+      "diabetes mellitus",
+      "meta-analysis",
+      "predictive model",
+      "prevalence",
+      "risk factors",
+      "systematic review"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41958887/",
+    "document_type": "Journal Article"
+  },
+  {
+    "pmid": "41958847",
+    "doi": "10.1177/20552076261428362",
+    "pmcid": "PMC13058212",
+    "title": "HEAL-AI: Enabling proactive and personalized smart healthcare through hierarchical edge autonomous learning.",
+    "abstract": "OBJECTIVE: This study aims to develop a proactive, personalized, and privacy-preserving smart healthcare framework that enables real-time clinical decision support across distributed healthcare environments while ensuring interpretability, low latency, and regulatory compliance. METHODS: This study proposes HEAL-AI (Healthcare Empowerment via Adaptive Learning with Artificial Intelligence), a federated neuro-symbolic framework that integrates federated learning, hierarchical contextual attention, symbolic medical reasoning, and edge intelligence optimization. The system supports collaborative model training across hospitals, clinics, and wearable devices without sharing raw patient data. Privacy is enforced using secure aggregation and differential privacy mechanisms, while edge intelligence techniques such as model compression and adaptive offloading enable real-time inference on resource-constrained devices. HEAL-AI was evaluated on multiple benchmark datasets, including MIMIC-III, PhysioNet/Computing in Cardiology Challenge 2019, eICU, MIMIC-IV, and a custom HEAL-Wearable dataset. Performance was assessed using diagnostic accuracy, early-detection lead time, inference latency, energy consumption, explainability scores from clinical experts, and privacy leakage under standard attack models. RESULTS: Across all datasets, HEAL-AI consistently outperformed state-of-the-art baselines. The framework achieved up to 17.3% improvement in diagnostic accuracy, enabled early sepsis detection by 5.9 h, and reduced inference latency and energy consumption by 32.6% on edge devices. Explainability evaluations showed a 43.5% improvement over the strongest neuro-symbolic baseline, with high symbolic rule coverage (94.3%) and strong clinical agreement. Under differential privacy with ε = 1.0, HEAL-AI reduced privacy leakage by 94.4% compared to centralized learning while maintaining clinically acceptable utility. CONCLUSIONS: HEAL-AI demonstrates that federated neuro-symbolic learning combined with edge intelligence can deliver accurate, explainable, and privacy-preserving healthcare artificial intelligence (AI). The framework is well suited for real-world deployment in critical care, remote monitoring, and personalized clinical decision support. INDEX TERMS: Federated learning, neuro-symbolic AI, smart healthcare, edge intelligence, personalized medicine, explainable AI, differential privacy, IoT healthcare.",
+    "year": 2026,
+    "journal_name": "Digital health",
+    "journal_issn": "2055-2076",
+    "authors": [
+      {
+        "name": "Manal A Othman",
+        "affiliations": [
+          "Medical Education Department, College of Medicine, Princess Nourah bint Abdulrahman University, Riyadh, Saudi Arabia."
+        ],
+        "country": "SA"
+      }
+    ],
+    "mesh_terms": [],
+    "keywords": [
+      "Artificial intelligence < general",
+      "digital < general",
+      "digital health < general",
+      "electronic < general",
+      "health informatics < general",
+      "machine learning < general"
+    ],
+    "author_keywords": [],
+    "keywords_plus": [],
+    "references_dois": [],
+    "cited_by_count": null,
+    "reference_count": null,
+    "fields_of_study": [],
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41958847/",
+    "document_type": "Journal Article"
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "module": "test_module",
+    "error": {
+      "type": "Exception",
+      "message": "Test error: need to understand the project",
+      "traceback": "NoneType: None\n"
+    },
+    "analysis": {
+      "error_type": "unknown",
+      "error_message": "Test error: need to understand the project",
+      "root_cause": "I have read the README.md file and analyzed the project structure. The analysis is complete.",
+      "suggested_fix": "No fix generated",
+      "confidence": 0.8
+    },
+    "fix_generated": false,
+    "fix_path": null,
+    "test_passed": false,
+    "applied": false,
+    "outcome": "success",
+    "timestamp": "2026-04-08T22:16:10.282353",
+    "source": "guardian_soul"
+  }
+]

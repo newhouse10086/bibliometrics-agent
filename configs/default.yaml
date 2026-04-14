@@ -1,0 +1,136 @@
+default:
+  llm:
+    model: "qwen/qwen3.6-plus"
+    temperature: 0.3
+    max_tokens: 4096
+    base_url: "https://openrouter.ai/api/v1"  # OpenRouter endpoint for all LLM calls
+    api_key_env: "OPENROUTER_API_KEY"  # Environment variable for API key
+
+  workspace:
+    base_dir: "workspaces"  # Base directory for all project workspaces
+    auto_create: true  # Automatically create workspace if not exists
+    default_name: "default"  # Default workspace name
+
+  web_api:
+    host: "localhost"
+    port: 8001
+
+  pipeline:
+    mode: "automated"  # "automated" | "hitl" | "pluggable"
+    checkpoint_dir: ".pipeline/runs"
+    auto_save: true
+
+    # Fully automated mode config
+    automated:
+      guardian_auto_fix: true
+      skip_on_guardian_failure: true  # Skip module if Guardian fails to fix
+      guardian_max_steps: 50  # Max steps for GuardianSoul auto-fix, -1 for unlimited
+
+    # Human-in-the-loop mode config
+    hitl:
+      default_checkpoints:
+        - "query_generator"
+        - "paper_fetcher"
+        - "topic_modeler"
+        - "report_generator"
+
+    # Pluggable modules mode config
+    pluggable:
+      plugin_dir: "plugins"
+      presets_dir: "configs/presets"
+
+  modules:
+    query_generator:
+      llm_model: "qwen/qwen3.6-plus"
+      max_keywords: 20
+      include_meSH_terms: true
+
+    paper_fetcher:
+      api_delay: 1.0
+      batch_size: 100
+      require_abstract: true
+      semantic_scholar_api_key: null
+      # PubMed E-utilities
+      pubmed_api_key: null
+      pubmed_email: null
+      pubmed_retmax: 200
+      # OpenAlex
+      openalex_email: null
+      # Crossref
+      crossref_email: null
+      # Source priority order
+      sources:
+        - pubmed
+        - openalex
+        - crossref
+
+    country_analyzer:
+      top_n: 20
+      min_papers_per_country: 1
+
+    bibliometrics_analyzer:
+      top_n_authors: 20
+      top_n_institutions: 20
+      top_n_journals: 20
+
+    preprocessor:
+      language: "en"
+      spacy_model: "en_core_web_sm"
+      remove_shorter_than: 3
+      remove_numbers: true
+      df_max_threshold: 0.1
+      df_min_threshold: 0.005
+      stopwords: []
+
+    topic_modeler:
+      min_topics: 1
+      max_topics: 30
+      step: 1
+      n_iter: 1000
+      eta: 0.1
+      metrics:
+        - "arun_2010"
+        - "cao_juan_2009"
+        - "coherence_mimno_2011"
+
+    burst_detector:
+      threshold_multiplier: 1.5
+      min_duration: 2
+      smoothing_window: 3
+
+    tsr_ranker:
+      weights:
+        uniform: 0.6
+        vacuous: 0.4
+        phi_weights:
+          uniform: 0.25
+          vacuous: 0.25
+          background: 0.5
+
+    paper_generator:
+      language: "zh"  # "zh" (中文) | "en" (English)
+      title: ""  # 留空则自动生成
+      compile_pdf: true
+      max_papers_in_refs: 50
+      llm:
+        temperature: 0.4
+        max_tokens: 4096
+
+    tuning_agent:
+      max_steps: 30  # Set to -1 for unlimited steps
+      temperature: 0.5
+      max_tokens: 4096
+      max_history_files: 10  # Maximum number of .old files to keep before deletion
+      preserve_recent_messages: 20  # Keep recent N messages when compacting context
+
+    chat_agent:
+      max_steps: 10  # -1 for unlimited, or positive number (e.g., 10, 20)
+      temperature: 0.3
+      max_tokens: 4096
+      max_history_files: 10  # Maximum number of .old files to keep before deletion
+      preserve_recent_messages: 50  # Keep recent N messages when compacting context (default 50)
+
+  hardware:
+    auto_detect: true
+    max_memory_gb: null
+    max_cores: null

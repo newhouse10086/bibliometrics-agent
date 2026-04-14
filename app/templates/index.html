@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t.app_title }} | {{ t.app_subtitle }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a2332;
+            --navy-light: #2d3a4d;
+            --cream: #faf8f3;
+            --cream-dark: #f5f1e8;
+            --amber: #d4a853;
+            --amber-light: #e8c27a;
+            --forest: #2d5a4a;
+            --forest-light: #4a8b72;
+            --burgundy: #7a3b3b;
+            --text-primary: #1a2332;
+            --text-secondary: #5a6a7a;
+            --text-tertiary: #8a9aaa;
+            --shadow-sm: 0 2px 8px rgba(26, 35, 50, 0.06);
+            --shadow-md: 0 4px 16px rgba(26, 35, 50, 0.08);
+            --shadow-lg: 0 8px 32px rgba(26, 35, 50, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Decorative background texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(212, 168, 83, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(45, 90, 74, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header with decorative line */
+        header {
+            margin-bottom: 70px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .lang-switcher a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .lang-switcher a:hover {
+            color: var(--amber);
+            background: rgba(212, 168, 83, 0.1);
+        }
+
+        .lang-switcher a.active {
+            color: var(--amber);
+            font-weight: 600;
+        }
+
+        .lang-switcher span {
+            color: var(--text-tertiary);
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cream);
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            font-weight: 700;
+            box-shadow: var(--shadow-md);
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .tagline {
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 0.01em;
+        }
+
+        .divider {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--amber) 0%, transparent 100%);
+            margin-top: 40px;
+            border-radius: 2px;
+        }
+
+        /* Main sections */
+        .section {
+            background: white;
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            border: 1px solid rgba(26, 35, 50, 0.06);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .section:nth-of-type(1) { animation-delay: 0.2s; }
+        .section:nth-of-type(2) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--cream-dark);
+        }
+
+        .section-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 14px;
+            color: var(--amber);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+        }
+
+        h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: -0.01em;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        /* Workflow visualization */
+        .workflow {
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
+            padding: 32px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            border-left: 4px solid var(--amber);
+        }
+
+        .workflow-title {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 20px;
+            font-size: 15px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .workflow ol {
+            list-style: none;
+            counter-reset: workflow-counter;
+            display: grid;
+            gap: 16px;
+        }
+
+        .workflow li {
+            counter-increment: workflow-counter;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 15px;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: 44px;
+        }
+
+        .workflow li::before {
+            content: counter(workflow-counter);
+            position: absolute;
+            left: 0;
+            width: 28px;
+            height: 28px;
+            background: white;
+            border: 2px solid var(--amber);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--amber);
+        }
+
+        /* Forms */
+        form {
+            display: grid;
+            gap: 28px;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--navy);
+            font-size: 15px;
+            letter-spacing: 0.01em;
+        }
+
+        .hint {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--cream-dark);
+            border-radius: 10px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 16px;
+            color: var(--text-primary);
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--amber);
+            box-shadow: 0 0 0 4px rgba(212, 168, 83, 0.1);
+        }
+
+        input[type="text"]::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 36px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%);
+            color: var(--navy);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--navy);
+            border: 2px solid var(--navy);
+        }
+
+        .btn-secondary:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Upload area */
+        .upload-area {
+            border: 3px dashed var(--navy-light);
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--cream) 0%, white 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: var(--amber);
+            transform: translateY(-2px);
+        }
+
+        .upload-area:hover::before {
+            opacity: 1;
+        }
+
+        .upload-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            background: var(--cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover .upload-icon {
+            background: var(--amber);
+            transform: scale(1.1);
+        }
+
+        .upload-text {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .upload-hint {
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-selected {
+            margin-top: 20px;
+            padding: 16px;
+            background: var(--forest);
+            color: white;
+            border-radius: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 14px;
+            display: none;
+        }
+
+        .file-selected.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Format specification */
+        .format-spec {
+            background: var(--cream);
+            padding: 24px;
+            border-radius: 10px;
+            margin-top: 24px;
+            border-left: 3px solid var(--forest);
+        }
+
+        .format-spec-title {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .format-spec ul {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .format-spec li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .format-spec code {
+            font-family: 'IBM Plex Mono', monospace;
+            background: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--burgundy);
+            border: 1px solid rgba(122, 59, 59, 0.2);
+        }
+
+        /* Separator */
+        .separator {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin: 48px 0;
+            color: var(--text-tertiary);
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--cream-dark);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 24px;
+            }
+
+            h1 {
+                font-size: 40px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            .section {
+                padding: 32px;
+            }
+
+            .workflow li {
+                padding-left: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="brand">
+                <div class="logo">B</div>
+                <div class="lang-switcher">
+                    <a href="/?lang=en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
+                    <span>|</span>
+                    <a href="/?lang=zh" class="{% if lang == 'zh' %}active{% endif %}">中文</a>
+                </div>
+            </div>
+            <h1>{{ t.app_title }}</h1>
+            <p class="tagline">{{ t.app_subtitle }}</p>
+            <div class="divider"></div>
+        </header>
+
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2>{{ t.card_automated_title }}</h2>
+            </div>
+            <p class="section-description">
+                {{ t.card_automated_desc }}
+            </p>
+
+            <div class="workflow">
+                <div class="workflow-title">Analysis Pipeline</div>
+                <ol>
+                    <li>LLM generates optimized Semantic Scholar search queries</li>
+                    <li>Fetches papers and abstracts from academic databases</li>
+                    <li>Preprocesses text (lemmatization, stopword removal, filtering)</li>
+                    <li>Performs LDA topic modeling with automatic optimization</li>
+                    <li>Generates interactive visualizations and LLM interpretation</li>
+                </ol>
+            </div>
+
+            <form action="/analyze" method="post">
+                <div class="form-group">
+                    <label for="research_domain">{{ t.domain_label }}</label>
+                    <input type="text" id="research_domain" name="research_domain" required
+                           placeholder="{{ t.domain_placeholder }}">
+                    <div class="hint">{{ t.domain_label }}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="max_papers">{{ t.max_papers }}</label>
+                    <input type="number" id="max_papers" name="max_papers" value="500" min="100" max="10000">
+                    <div class="hint">{{ t.max_papers }}</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <span>{{ t.start_analysis }}</span>
+                    <span>→</span>
+                </button>
+            </form>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2>{{ t.card_upload_title }}</h2>
+            </div>
+            <p class="section-description">
+                {{ t.card_upload_desc }}
+            </p>
+
+            <form action="/upload" method="post" enctype="multipart/form-data" id="upload-form">
+                <div class="upload-area" onclick="document.getElementById('file-input').click()">
+                    <div class="upload-content">
+                        <div class="upload-icon">📄</div>
+                        <div class="upload-text">{{ t.upload_file }}</div>
+                        <div class="upload-hint">{{ t.supported_formats }}</div>
+                    </div>
+                    <input type="file" id="file-input" name="file" accept=".csv,.xlsx,.xls,.json,.md,.txt" required onchange="updateFileName(this)">
+                    <div class="file-selected" id="file-selected"></div>
+                </div>
+
+                <div class="format-spec">
+                    <div class="format-spec-title">Expected Format</div>
+                    <ul>
+                        <li><code>NUM</code> Document ID (unique identifier)</li>
+                        <li><code>TIAB</code> Title + Abstract combined text</li>
+                        <li><code>year</code> Publication year (optional)</li>
+                    </ul>
+                </div>
+
+                <button type="submit" class="btn btn-secondary" id="submit-btn" disabled style="margin-top: 24px;">
+                    {{ t.start_analysis }}
+                </button>
+            </form>
+        </section>
+
+        <footer>
+            {{ t.footer_text }}
+        </footer>
+    </div>
+
+    <script>
+        function updateFileName(input) {
+            const fileName = input.files[0]?.name;
+            if (fileName) {
+                const fileSelected = document.getElementById('file-selected');
+                const uploadArea = document.querySelector('.upload-area');
+
+                fileSelected.textContent = `✓ Selected: ${fileName}`;
+                fileSelected.classList.add('show');
+                uploadArea.style.borderColor = 'var(--forest)';
+
+                document.getElementById('submit-btn').disabled = false;
+            }
+        }
+
+        // Drag and drop enhancement
+        const uploadArea = document.querySelector('.upload-area');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--amber)';
+            uploadArea.style.background = 'linear-gradient(135deg, var(--cream) 0%, white 100%)';
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '';
+            uploadArea.style.background = '';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            if (file && file.name.endsWith('.csv')) {
+                document.getElementById('file-input').files = e.dataTransfer.files;
+                updateFileName(document.getElementById('file-input'));
+            }
+        });
+    </script>
+</body>
+</html>

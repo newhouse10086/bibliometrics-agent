@@ -1,0 +1,52 @@
+version: 1
+# 网络分析模块 Guardian 配置
+agent:
+  name: network_analyzer_guardian
+  extend: ./base_guardian.yaml
+  module: network_analyzer
+  description: "网络分析 Guardian - 处理图构建错误、布局计算失败、内存不足"
+
+  error_patterns:
+    - name: graph_construction
+      exceptions:
+        - "ValueError"
+        - "KeyError"
+        - "TypeError"
+      keywords:
+        - "graph"
+        - "node"
+        - "edge"
+        - "networkx"
+        - "adjacency"
+      confidence: 0.8
+      template: graph_fix
+
+    - name: layout_error
+      exceptions:
+        - "RuntimeError"
+        - "ValueError"
+      keywords:
+        - "layout"
+        - "position"
+        - "spring"
+        - "kamada"
+      confidence: 0.75
+      template: layout_fallback
+
+    - name: memory_error
+      exceptions:
+        - "MemoryError"
+      keywords:
+        - "memory"
+        - "allocate"
+      confidence: 0.9
+      template: memory_chunking
+
+  fix_templates:
+    graph_fix:
+      file: modules/guardians/templates/graph_fix.py
+      description: "修复图构建错误"
+
+    layout_fallback:
+      file: modules/guardians/templates/layout_fallback.py
+      description: "布局计算回退方案"

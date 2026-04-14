@@ -1,0 +1,40 @@
+version: 1
+# 默认 Guardian Agent 配置
+# 所有模块 Guardian 继承此基础配置
+agent:
+  name: base_guardian
+  description: "Guardian Agent 基础配置 - 所有模块 Guardian 共享的工具和能力"
+
+  # 工具系统
+  tools:
+    - "core.tools.ReadFile"
+    - "core.tools.WriteFile"
+    - "core.tools.Glob"
+    - "core.tools.Grep"
+    - "core.tools.Shell"
+
+  # 技能系统
+  skills:
+    - path: .agents/skills/error-recovery/SKILL.md
+      description: "核心错误恢复技能"
+    - path: .agents/skills/code-generation/SKILL.md
+      description: "代码生成最佳实践"
+
+  # 错误处理策略
+  error_handling:
+    max_retries: 3
+    retry_delay: 2.0  # 秒
+    backoff_factor: 2.0
+    escalation_threshold: 0.5  # 置信度低于此值时升级到 HITL
+
+  # 工作区配置
+  workspace:
+    fixes_dir: "fixes"
+    logs_dir: "agent_logs"
+    templates_dir: "modules/guardians/templates"
+
+  # 决策配置
+  decisions:
+    auto_apply_threshold: 0.9  # 置信度高于此值时自动应用
+    require_confirmation: true  # 是否需要用户确认
+    log_all_decisions: true    # 记录所有决策

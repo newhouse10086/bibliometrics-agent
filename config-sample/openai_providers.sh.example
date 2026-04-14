@@ -1,0 +1,40 @@
+# OpenAI兼容平台配置示例
+# 复制对应平台的配置到您的 shell 或 .bashrc/.zshrc
+
+## OpenRouter (推荐 - 多模型聚合)
+export OPENAI_BASE_URL="https://openrouter.ai/api/v1"
+export OPENAI_API_KEY="sk-or-v1-your-key-here"
+# 常用模型: anthropic/claude-3.5-sonnet, openai/gpt-4o, meta-llama/llama-3.1-70b-instruct
+
+## DeepSeek (国内高性价比)
+# export OPENAI_BASE_URL="https://api.deepseek.com/v1"
+# export OPENAI_API_KEY="sk-your-deepseek-key"
+# 模型: deepseek-chat
+
+## 智谱 AI (GLM)
+# export OPENAI_BASE_URL="https://open.bigmodel.cn/api/paas/v4"
+# export OPENAI_API_KEY="your-zhipu-key"
+# 模型: glm-4, glm-4-flash
+
+## Moonshot (Kimi - 长文本)
+# export OPENAI_BASE_URL="https://api.moonshot.cn/v1"
+# export OPENAI_API_KEY="sk-your-moonshot-key"
+# 模型: moonshot-v1-8k, moonshot-v1-32k, moonshot-v1-128k
+
+## 标准OpenAI (官方API)
+# export OPENAI_API_KEY="sk-your-openai-key"
+# 不设置 OPENAI_BASE_URL
+# 模型: gpt-4o-mini, gpt-4o, gpt-3.5-turbo
+
+## Python 代码示例
+"""
+from llm.openai_completion import OpenAICompletion
+
+# 自动读取环境变量中的配置
+client = OpenAICompletion(model="your-model-name")
+
+response = client.completion(
+    messages=[{"role": "user", "content": "Hello!"}]
+)
+print(response["choices"][0]["message"]["content"])
+"""

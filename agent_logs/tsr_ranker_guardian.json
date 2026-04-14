@@ -1,0 +1,90 @@
+[
+  {
+    "module": "tsr_ranker",
+    "error": {
+      "type": "KeyError",
+      "message": "'topic_word_matrix not found in input_data or topic_modeler previous_outputs'",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\core\\orchestrator.py\", line 215, in run\n    try:\n    \n  File \"D:\\文件综述智能体\\bibliometrics-agent\\modules\\tsr_ranker.py\", line 187, in process\n    raise KeyError(\"topic_word_matrix not found in input_data or topic_modeler previous_outputs\")\nKeyError: 'topic_word_matrix not found in input_data or topic_modeler previous_outputs'\n"
+    },
+    "analysis": {
+      "error_type": "KeyError",
+      "error_message": "'topic_word_matrix not found in input_data or topic_modeler previous_outputs'",
+      "root_cause": "**Root Cause**: The `tsr_ranker` module raised `KeyError` because it couldn't find `topic_word_matrix` in either `input_data` or `context.previous_outputs[\"topic_modeler\"]`. This happened because:\n1. `paper_fetcher` returned 0 papers → `preprocessor` produced empty corpus (n_docs=0, vocab_size=0)\n2. `topic_modeler` was either skipped or failed due to the empty corpus, so it wasn't in `previous_outputs`\n3. `tsr_ranker` had no fallback for this scenario — it only checked `input_data` and `topic_modeler` output, then raised `KeyError`\n\n**Fix**: Modified `tsr_ranker.process()` to:\n1. First check if `topic_modeler` output exists AND has valid (non-None) paths — if paths are None, return graceful empty result\n2. If `topic_modeler` is missing from `previous_outputs`, check `preprocessor` stats for `n_docs=0` — if empty corpus, return graceful empty result\n3. Added `_empty_corpus_result()` helper method that returns a valid output dict with zeroed stats and a descriptive error message\n4. This allows downstream modules (network_analyzer, visualizer, report_generator) to continue without crashing",
+      "suggested_fix": "Fix for tsr_ranker to handle empty corpus gracefully when topic_modeler output is missing or contains None paths. Checks preprocessor stats for n_docs=0 and returns graceful result instead of raising KeyError.",
+      "confidence": 0.95
+    },
+    "fix_generated": true,
+    "fix_path": "D:\\文件综述智能体\\bibliometrics-agent\\fixes\\guardian_fix_2026-04-09T07-21-02-877172.py",
+    "test_passed": true,
+    "applied": false,
+    "outcome": "success",
+    "timestamp": "2026-04-09T07:13:40.729843",
+    "source": "guardian_soul"
+  },
+  {
+    "module": "tsr_ranker",
+    "error": {
+      "type": "KeyError",
+      "message": "'topic_word_matrix not found in input_data or topic_modeler previous_outputs'",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\core\\orchestrator.py\", line 215, in run\n    try:\n    \n  File \"D:\\文件综述智能体\\bibliometrics-agent\\modules\\tsr_ranker.py\", line 187, in process\n    raise KeyError(\"topic_word_matrix not found in input_data or topic_modeler previous_outputs\")\nKeyError: 'topic_word_matrix not found in input_data or topic_modeler previous_outputs'\n"
+    },
+    "analysis": {
+      "error_type": "unknown",
+      "error_message": "'topic_word_matrix not found in input_data or topic_modeler previous_outputs'",
+      "root_cause": "## 根因分析\n\n**错误**: `KeyError: 'topic_word_matrix not found in input_data or topic_modeler previous_outputs'`\n\n**根本原因**: \n1. 在运行 `410ddcdd` 中，`topic_modeler` 模块的输出目录存在但为空（没有生成任何文件）\n2. `topic_modeler` 未能成功执行或输出未被正确注册到 `context.previous_outputs`\n3. 但流水线继续执行了后续的 `burst_detector` 和 `tsr_ranker` 模块\n4. 当 `tsr_ranker` 运行时，它尝试从 `context.previous_outputs[\"topic_modeler\"]` 获取 `topic_word_path` 和 `doc_topic_path`，但该键不存在\n5. 原始代码没有回退机制，直接抛出 KeyError\n\n## 修复方案\n\n在 `fix_tsr_ranker.py` 中实现了三级数据加载策略：\n\n1. **策略1**: 从 `input_data` 直接加载（原有逻辑）\n2. **策略2**: 从 `context.previous_outputs[\"topic_modeler\"]` 加载（原有逻辑）\n3. **策略3（新增）**: 回退机制 — 从 checkpoint 目录搜索 topic model 文件\n   - 在 `{checkpoint_dir}/topic_modeler/` 中查找 `topic_word_distribution.csv` 和 `doc_topic_distribution.csv`\n   - 从 `{checkpoint_dir}/preprocessor/` 加载 `vocab.txt` 和 `dtm.csv`\n   - 如果所有文件都存在，继续执行 TSR 排名\n\n如果所有策略都失败，提供详细的错误信息，列出可用的 previous_outputs 键和 checkpoint 目录内容，便于诊断。\n\n## 验证\n- 语法检查通过: `python -c \"compile(open('fix_tsr_ranker.py').read(), '<string>', 'exec')\"` 无错误\n- 修复代码已保存到: `D:\\文件综述智能体\\bibliometrics-agent\\fix_tsr_ranker.py`",
+      "suggested_fix": "No fix generated",
+      "confidence": 0.9
+    },
+    "fix_generated": false,
+    "fix_path": null,
+    "test_passed": false,
+    "applied": false,
+    "outcome": "success",
+    "timestamp": "2026-04-09T07:42:01.540313",
+    "source": "guardian_soul"
+  },
+  {
+    "module": "tsr_ranker",
+    "error": {
+      "type": "KeyError",
+      "message": "'topic_word_matrix not found in input_data or topic_modeler previous_outputs'",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\core\\orchestrator.py\", line 215, in run\n    try:\n    \n  File \"D:\\文件综述智能体\\bibliometrics-agent\\modules\\tsr_ranker.py\", line 187, in process\n    raise KeyError(\"topic_word_matrix not found in input_data or topic_modeler previous_outputs\")\nKeyError: 'topic_word_matrix not found in input_data or topic_modeler previous_outputs'\n"
+    },
+    "analysis": {
+      "error_type": "KeyError",
+      "error_message": "'topic_word_matrix not found in input_data or topic_modeler previous_outputs'",
+      "root_cause": "## 根因分析\n\n**错误链**: `paper_fetcher` 返回 0 篇论文 → `preprocessor` 产生空语料库 (n_docs=0, vocab_size=0) → `topic_modeler` 因无数据而失败并被跳过（checkpoint 目录为空）→ `burst_detector` 同样失败 → `tsr_ranker` 在 `context.previous_outputs` 中找不到 `topic_modeler`，抛出 `KeyError`。\n\n**直接原因**: `tsr_ranker.py` 第 187 行，当 `topic_word_matrix` 不在 `input_data` 中且 `topic_modeler` 不在 `context.previous_outputs` 中时，直接抛出 `KeyError`，没有考虑上游模块因空数据而跳过的情况。\n\n## 修复方案\n\n在 `tsr_ranker.py` 的 `process()` 方法中增加优雅降级逻辑：\n\n1. **检测上游数据状态**: 当 `topic_modeler` 输出缺失时，检查 `preprocessor` 的 stats\n2. **空数据情况**: 如果 `n_docs=0` 或 `vocab_size=0`，返回空的 TSR 结果（空 CSV + 空 metrics），允许 pipeline 继续执行到下游模块\n3. **非空数据情况**: 如果 preprocessor 有数据但 topic_modeler 缺失，抛出更详细的错误信息帮助诊断\n\n修复文件已保存至 `fixes/guardian_fix_2026-04-09T08-45-45-337725.py`，语法检查通过。",
+      "suggested_fix": "Fix tsr_ranker to gracefully handle missing topic_modeler output when upstream data is empty (0 papers fetched). Returns empty TSR results instead of crashing with KeyError.",
+      "confidence": 0.95
+    },
+    "fix_generated": true,
+    "fix_path": "D:\\文件综述智能体\\bibliometrics-agent\\fixes\\guardian_fix_topic_modeler.py",
+    "test_passed": true,
+    "applied": false,
+    "outcome": "success",
+    "timestamp": "2026-04-09T08:39:52.170295",
+    "source": "guardian_soul"
+  },
+  {
+    "module": "tsr_ranker",
+    "error": {
+      "type": "KeyError",
+      "message": "'topic_word_matrix not found in input_data or topic_modeler previous_outputs'",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\core\\orchestrator.py\", line 215, in run\n    # Check hardware requirements\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\modules\\tsr_ranker.py\", line 187, in process\n    raise KeyError(\"topic_word_matrix not found in input_data or topic_modeler previous_outputs\")\nKeyError: 'topic_word_matrix not found in input_data or topic_modeler previous_outputs'\n"
+    },
+    "analysis": {
+      "error_type": "KeyError",
+      "error_message": "'topic_word_matrix not found in input_data or topic_modeler previous_outputs'",
+      "root_cause": "**Root Cause Analysis:**\n\nThe `KeyError` occurred because `tsr_ranker` expected `topic_modeler` output in `context.previous_outputs`, but it was missing. The chain of failures:\n\n1. **`paper_fetcher`** returned `num_papers: 0` — no papers were fetched for the query \"Endometrial cancer\"\n2. **`preprocessor`** stats show `n_docs: 0`, `vocab_size: 0` — empty corpus\n3. **`topic_modeler`** checkpoint directory exists but is **empty** (0 files) — it either failed silently or was skipped due to empty data\n4. **`tsr_ranker`** crashed with `KeyError` because neither `input_data` nor `context.previous_outputs` contained the required topic model data\n\n**Fix Applied (`fix_tsr_ranker.py`):**\n\n1. **Empty corpus detection** (`_check_empty_corpus`): Checks upstream `preprocessor` and `paper_fetcher` stats for zero documents/papers. If empty, gracefully returns empty TSR scores instead of crashing.\n\n2. **Checkpoint directory fallback** (`_find_topic_model_files`): When `topic_modeler` is not in `previous_outputs`, searches the checkpoint directory for `topic_word_distribution.csv` and `doc_topic_distribution.csv` files, and loads vocab/total_words from preprocessor checkpoints.\n\n3. **Three-strategy loading**: input_data → previous_outputs → checkpoint fallback, with clear error messages when all strategies fail.",
+      "suggested_fix": "Added checkpoint directory fallback for topic model files when topic_modeler is not in previous_outputs. Also handles empty corpus case gracefully.",
+      "confidence": 0.95
+    },
+    "fix_generated": true,
+    "fix_path": "D:\\文件综述智能体\\bibliometrics-agent\\fixes\\guardian_fix_topic_modeler.py",
+    "test_passed": true,
+    "applied": false,
+    "outcome": "success",
+    "timestamp": "2026-04-13T11:34:49.052739",
+    "source": "guardian_soul"
+  }
+]

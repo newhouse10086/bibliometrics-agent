@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t.run_title }} | {{ t.app_title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a2332;
+            --navy-light: #2d3a4d;
+            --cream: #faf8f3;
+            --cream-dark: #f5f1e8;
+            --amber: #d4a853;
+            --amber-light: #e8c27a;
+            --forest: #2d5a4a;
+            --forest-light: #4a8b72;
+            --burgundy: #7a3b3b;
+            --text-primary: #1a2332;
+            --text-secondary: #5a6a7a;
+            --text-tertiary: #8a9aaa;
+            --shadow-sm: 0 2px 8px rgba(26, 35, 50, 0.06);
+            --shadow-md: 0 4px 16px rgba(26, 35, 50, 0.08);
+            --shadow-lg: 0 8px 32px rgba(26, 35, 50, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(212, 168, 83, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(45, 90, 74, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 50px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 32px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.01em;
+        }
+
+        .back-link:hover {
+            color: var(--amber);
+            gap: 12px;
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 32px;
+        }
+
+        /* Run ID badge */
+        .run-id-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(26, 35, 50, 0.06);
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .run-id-label {
+            color: var(--amber);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 11px;
+        }
+
+        /* Main card */
+        .config-card {
+            background: white;
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(26, 35, 50, 0.06);
+            margin-top: 40px;
+            animation: fadeInUp 0.6s ease-out 0.3s backwards;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--cream-dark);
+        }
+
+        .section-header h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: -0.01em;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Form */
+        form {
+            display: grid;
+            gap: 32px;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 12px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--navy);
+            font-size: 15px;
+            letter-spacing: 0.01em;
+        }
+
+        .hint {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--cream-dark);
+            border-radius: 10px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 16px;
+            color: var(--text-primary);
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--amber);
+            box-shadow: 0 0 0 4px rgba(212, 168, 83, 0.1);
+        }
+
+        /* Info box */
+        .info-box {
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
+            padding: 28px;
+            border-radius: 12px;
+            border-left: 4px solid var(--forest);
+            margin-top: 8px;
+        }
+
+        .info-title {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 16px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .info-box ul {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .info-box li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .info-box li::before {
+            content: '→';
+            color: var(--forest);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%);
+            color: var(--navy);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--navy);
+            border: 2px solid var(--navy);
+        }
+
+        .btn-secondary:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 24px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .config-card {
+                padding: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="/?lang={{ lang }}" class="back-link">
+                <span>←</span>
+                <span>{{ t.home }}</span>
+            </a>
+            <h1>{{ t.run_title }}</h1>
+            <p class="subtitle">{{ t.run_settings }}</p>
+            <div class="run-id-badge">
+                <span class="run-id-label">Run ID</span>
+                <span>{{ run_id }}</span>
+            </div>
+        </header>
+
+        <div class="config-card">
+            <div class="section-header">
+                <h2>Topic Modeling (LDA)</h2>
+                <p>Configure the latent Dirichlet allocation algorithm for discovering abstract topics in your document collection.</p>
+            </div>
+
+            <form action="/start/{{ run_id }}" method="post">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="min_topics">{{ t.topic_range }} (Min)</label>
+                        <input type="number" id="min_topics" name="min_topics" value="1" min="1" max="100">
+                        <div class="hint">Lower bound for topic number search</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="max_topics">{{ t.topic_range }} (Max)</label>
+                        <input type="number" id="max_topics" name="max_topics" value="20" min="1" max="100">
+                        <div class="hint">Upper bound (larger = longer runtime)</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-title">Automated Processing Steps</div>
+                    <ul>
+                        <li>Text preprocessing with lemmatization and stopword removal</li>
+                        <li>Optimal topic number search using three evaluation metrics</li>
+                        <li>Interactive pyLDAvis visualization generation</li>
+                        <li>LLM-powered topic interpretation and labeling</li>
+                    </ul>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <span>{{ t.run_start }}</span>
+                        <span>→</span>
+                    </button>
+                    <a href="/?lang={{ lang }}" class="btn btn-secondary">{{ t.home }}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+[
+  {
+    "module": "topic_modeler",
+    "error": {
+      "type": "ValueError",
+      "message": "cannot infer dimensions from zero sized index arrays",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\core\\orchestrator.py\", line 215, in run\n    output = module.process(current_input, mod_config, context)\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\modules\\topic_modeler.py\", line 172, in process\n    eval_results = tm_lda.evaluate_topic_models(\n        dtm_matrix,\n    ...<3 lines>...\n        return_models=True,\n    )\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\tm_lda.py\", line 244, in evaluate_topic_models\n    return mp_eval.run()\n           ~~~~~~~~~~~^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 109, in run\n    self._setup_workers(self.worker_class)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 181, in _setup_workers\n    w = self._new_worker(worker_class, i, task_q, self.results_queue, self.data)\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 371, in _new_worker\n    return worker_class(i, self.eval_metric, self.eval_metric_options, self.return_models,\n                        task_queue, results_queue, data, name='%s#%d' % (str(worker_class), i))\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 403, in __init__\n    super(MultiprocEvaluationWorkerABC, self).__init__(worker_id,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^\n                                                       tasks_queue, results_queue, data,\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                                                       group, target, name, args, kwargs)\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 266, in __init__\n    self.data_per_doc[doc_label] = coo_matrix((sparse_data, (sparse_row_ind, sparse_col_ind)))\n                                   ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\scipy\\sparse\\_coo.py\", line 54, in __init__\n    raise ValueError('cannot infer dimensions from zero '\n                     'sized index arrays')\nValueError: cannot infer dimensions from zero sized index arrays\n"
+    },
+    "analysis": {
+      "error_type": "ValueError",
+      "error_message": "cannot infer dimensions from zero sized index arrays",
+      "root_cause": "**Root Cause**: The paper_fetcher returned 0 papers (`num_papers: 0`), causing the preprocessor to produce an empty corpus (`n_docs: 0, vocab_size: 0`). When `tm_lda.evaluate_topic_models` received this zero-sized DTM matrix, scipy's `coo_matrix` constructor raised `ValueError: cannot infer dimensions from zero sized index arrays`.\n\n**Fix**: Added an early validation check in `TopicModeler.process()` after loading the DTM. If `n_docs == 0` or `vocab_size == 0`, the module now:\n1. Logs a clear warning explaining the empty corpus issue\n2. Returns a graceful result dict with `stats.error = \"empty_corpus\"` and a descriptive message\n3. Sets all output paths to `None` so downstream modules can handle the absence gracefully\n\nThe fix file has been saved and syntax-verified successfully.",
+      "suggested_fix": "Add early validation check for empty corpus (n_docs=0 or vocab_size=0) before calling tm_lda.evaluate_topic_models. When empty, return a graceful result with error info instead of crashing with scipy ValueError.",
+      "confidence": 0.95
+    },
+    "fix_generated": true,
+    "fix_path": "D:\\文件综述智能体\\bibliometrics-agent\\fixes\\guardian_fix_2026-04-09T07-11-56-033159.py",
+    "test_passed": true,
+    "applied": false,
+    "outcome": "success",
+    "timestamp": "2026-04-09T07:07:56.534252",
+    "source": "guardian_soul"
+  },
+  {
+    "module": "topic_modeler",
+    "error": {
+      "type": "ValueError",
+      "message": "cannot infer dimensions from zero sized index arrays",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\core\\orchestrator.py\", line 215, in run\n    try:\n    \n  File \"D:\\文件综述智能体\\bibliometrics-agent\\modules\\topic_modeler.py\", line 172, in process\n    eval_results = tm_lda.evaluate_topic_models(\n        dtm_matrix,\n    ...<3 lines>...\n        return_models=True,\n    )\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\tm_lda.py\", line 244, in evaluate_topic_models\n    return mp_eval.run()\n           ~~~~~~~~~~~^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 109, in run\n    self._setup_workers(self.worker_class)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 181, in _setup_workers\n    w = self._new_worker(worker_class, i, task_q, self.results_queue, self.data)\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 371, in _new_worker\n    return worker_class(i, self.eval_metric, self.eval_metric_options, self.return_models,\n                        task_queue, results_queue, data, name='%s#%d' % (str(worker_class), i))\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 403, in __init__\n    super(MultiprocEvaluationWorkerABC, self).__init__(worker_id,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^\n                                                       tasks_queue, results_queue, data,\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                                                       group, target, name, args, kwargs)\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 266, in __init__\n    self.data_per_doc[doc_label] = coo_matrix((sparse_data, (sparse_row_ind, sparse_col_ind)))\n                                   ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\scipy\\sparse\\_coo.py\", line 54, in __init__\n    raise ValueError('cannot infer dimensions from zero '\n                     'sized index arrays')\nValueError: cannot infer dimensions from zero sized index arrays\n"
+    },
+    "analysis": {
+      "error_type": "ValueError",
+      "error_message": "cannot infer dimensions from zero sized index arrays",
+      "root_cause": "## Root Cause Analysis\n\n**Error**: `ValueError: cannot infer dimensions from zero sized index arrays`\n\n**Root Cause**: The `paper_fetcher` module returned **0 papers** (`num_papers: 0`), which cascaded through the pipeline:\n\n1. **paper_fetcher** → 0 papers fetched (empty papers.csv)\n2. **preprocessor** → processed 0 documents → produced empty DTM (0×0), empty vocab.txt, empty doc_labels.txt\n3. **topic_modeler** → loaded the empty DTM matrix and passed it to `tmtoolkit.evaluate_topic_models()`\n4. **tmtoolkit** → internally creates scipy COO sparse matrices from the DTM data. With zero-sized index arrays, scipy raises `ValueError: cannot infer dimensions from zero sized index arrays`\n\n## Fix Applied\n\nSaved to `fixes/guardian_fix_topic_modeler.py`:\n\n1. **Empty DTM validation** — Before calling tmtoolkit, checks if `n_docs == 0` or `n_vocab == 0` and raises a clear error message pointing to the upstream issue (paper_fetcher returned 0 papers or preprocessor filtered everything out)\n2. **All-zeros DTM check** — Also validates that the DTM contains non-zero entries\n3. **Bounds checking** — Ensures `max_k < n_docs` and `max_k <= n_vocab` to prevent similar errors with small datasets\n4. **Robust file reading** — Handles empty vocab.txt and doc_labels.txt files gracefully\n\nThe fix converts the cryptic scipy error into an actionable message that guides users to fix the upstream data issue.",
+      "suggested_fix": "Add validation to check if DTM is empty (0 docs or 0 vocab) before calling tmtoolkit.evaluate_topic_models. Also add bounds checking for max_k relative to n_docs and n_vocab.",
+      "confidence": 0.95
+    },
+    "fix_generated": true,
+    "fix_path": "D:\\文件综述智能体\\bibliometrics-agent\\fixes\\guardian_fix_topic_modeler.py",
+    "test_passed": true,
+    "applied": false,
+    "outcome": "success",
+    "timestamp": "2026-04-09T07:38:06.763712",
+    "source": "guardian_soul"
+  },
+  {
+    "module": "topic_modeler",
+    "error": {
+      "type": "ValueError",
+      "message": "cannot infer dimensions from zero sized index arrays",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\core\\orchestrator.py\", line 215, in run\n    try:\n    \n  File \"D:\\文件综述智能体\\bibliometrics-agent\\modules\\topic_modeler.py\", line 172, in process\n    eval_results = tm_lda.evaluate_topic_models(\n        dtm_matrix,\n    ...<3 lines>...\n        return_models=True,\n    )\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\tm_lda.py\", line 244, in evaluate_topic_models\n    return mp_eval.run()\n           ~~~~~~~~~~~^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 109, in run\n    self._setup_workers(self.worker_class)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 181, in _setup_workers\n    w = self._new_worker(worker_class, i, task_q, self.results_queue, self.data)\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 371, in _new_worker\n    return worker_class(i, self.eval_metric, self.eval_metric_options, self.return_models,\n                        task_queue, results_queue, data, name='%s#%d' % (str(worker_class), i))\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 403, in __init__\n    super(MultiprocEvaluationWorkerABC, self).__init__(worker_id,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^\n                                                       tasks_queue, results_queue, data,\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                                                       group, target, name, args, kwargs)\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 266, in __init__\n    self.data_per_doc[doc_label] = coo_matrix((sparse_data, (sparse_row_ind, sparse_col_ind)))\n                                   ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\scipy\\sparse\\_coo.py\", line 54, in __init__\n    raise ValueError('cannot infer dimensions from zero '\n                     'sized index arrays')\nValueError: cannot infer dimensions from zero sized index arrays\n"
+    },
+    "analysis": {
+      "error_type": "ValueError",
+      "error_message": "cannot infer dimensions from zero sized index arrays",
+      "root_cause": "Root cause: paper_fetcher returned 0 papers, producing an empty DTM (0 rows). tmtoolkit's evaluate_topic_models failed when scipy's coo_matrix tried to infer dimensions from zero-sized index arrays. Fix: added early-exit guard checking n_docs==0 or vocab_size==0 before calling tmtoolkit. When empty corpus is detected, returns gracefully with empty output artifacts and a clear diagnostic message, preventing downstream module crashes.",
+      "suggested_fix": "Guard fix for topic_modeler: adds empty corpus detection before calling tmtoolkit.evaluate_topic_models. When DTM has 0 rows (no papers fetched), returns early with empty output artifacts instead of crashing with ValueError.",
+      "confidence": 0.95
+    },
+    "fix_generated": true,
+    "fix_path": "D:\\文件综述智能体\\bibliometrics-agent\\fixes\\guardian_fix_topic_modeler.py",
+    "test_passed": true,
+    "applied": false,
+    "outcome": "success",
+    "timestamp": "2026-04-09T08:36:56.466127",
+    "source": "guardian_soul"
+  },
+  {
+    "module": "topic_modeler",
+    "error": {
+      "type": "ValueError",
+      "message": "cannot infer dimensions from zero sized index arrays",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\core\\orchestrator.py\", line 215, in run\n    # Check hardware requirements\n  File \"D:\\文件综述智能体\\bibliometrics-agent\\modules\\topic_modeler.py\", line 172, in process\n    n_empty = int((~nonempty_mask).sum())\n                   ^^^^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n            raise ValueError(\"All documents are empty after filtering. Check preprocessor output.\")\n    \n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\tm_lda.py\", line 244, in evaluate_topic_models\n    return mp_eval.run()\n           ~~~~~~~~~~~^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 109, in run\n    self._setup_workers(self.worker_class)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 181, in _setup_workers\n    w = self._new_worker(worker_class, i, task_q, self.results_queue, self.data)\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 371, in _new_worker\n    return worker_class(i, self.eval_metric, self.eval_metric_options, self.return_models,\n                        task_queue, results_queue, data, name='%s#%d' % (str(worker_class), i))\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 403, in __init__\n    super(MultiprocEvaluationWorkerABC, self).__init__(worker_id,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^\n                                                       tasks_queue, results_queue, data,\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                                                       group, target, name, args, kwargs)\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\tmtoolkit\\topicmod\\parallel.py\", line 266, in __init__\n    self.data_per_doc[doc_label] = coo_matrix((sparse_data, (sparse_row_ind, sparse_col_ind)))\n                                   ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\ldr\\AppData\\Roaming\\Python\\Python314\\site-packages\\scipy\\sparse\\_coo.py\", line 54, in __init__\n    raise ValueError('cannot infer dimensions from zero '\n                     'sized index arrays')\nValueError: cannot infer dimensions from zero sized index arrays\n"
+    },
+    "analysis": {
+      "error_type": "ValueError",
+      "error_message": "cannot infer dimensions from zero sized index arrays",
+      "root_cause": "## 错误根因分析\n\n**直接原因**：`tmtoolkit` 在内部创建 scipy `coo_matrix` 时，传入的稀疏数据数组为空，导致 `ValueError: cannot infer dimensions from zero sized index arrays`。\n\n**根本原因**：上游 `paper_fetcher` 未获取到任何论文（`num_papers: 0`），导致级联失败：\n- `preprocessor`: `n_docs=0`, `vocab_size=0`\n- `frequency_analyzer`: `total_papers=0`\n- `topic_modeler`: 对空语料库执行 LDA 建模\n\n虽然原始代码有 `n_docs == 0 or n_terms == 0` 的检查，但 DTM CSV 可能只有列头无数据行，或者在 `tmtoolkit` 内部处理后才变为空数组，导致检查未能拦截。\n\n## 修复方案\n\n生成了独立的验证模块 `guardian_fix_2026-04-13T11-34-18-313595.py`，包含：\n\n1. **`validate_corpus_data()` 函数**：在任何 tmtoolkit 操作之前进行全面的语料库验证\n   - 检查 DTM 行数（文档数）是否为 0\n   - 检查 DTM 列数（术语数）是否为 0\n   - 检查词汇表和文档标签是否为空\n   - 过滤空文档和空术语列\n   - 提供清晰的错误信息，指向上游问题（paper_fetcher 未获取论文）\n\n2. **`TopicModelerFix` 类**：集成验证的修复版模块\n\n## 建议\n\n此错误的根本解决需要修复 `paper_fetcher` 模块（搜索 \"Endometrial cancer\" 返回 0 篇论文），可能涉及：\n- API 连接性和速率限制检查\n- 搜索查询有效性验证\n- 网络连通性检查",
+      "suggested_fix": "Add early validation for empty corpus data before tmtoolkit operations to prevent 'cannot infer dimensions from zero sized index arrays' error",
+      "confidence": 0.9
+    },
+    "fix_generated": true,
+    "fix_path": "D:\\文件综述智能体\\bibliometrics-agent\\fixes\\guardian_fix_topic_modeler.py",
+    "test_passed": true,
+    "applied": false,
+    "outcome": "success",
+    "timestamp": "2026-04-13T11:28:47.360735",
+    "source": "guardian_soul"
+  }
+]

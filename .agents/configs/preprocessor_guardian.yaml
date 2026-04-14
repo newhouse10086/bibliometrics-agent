@@ -1,0 +1,91 @@
+version: 1
+# 预处理模块 Guardian Agent 配置
+agent:
+  name: preprocessor_guardian
+  extend: ./base_guardian.yaml
+  module: preprocessor
+  description: "预处理模块 Guardian - 处理编码、内存、spaCy 模型等错误"
+
+  # 模块专用工具
+  tools:
+    - "core.tools.Shell"  # 用于运行 spacy download 等命令
+
+  # 错误模式定义
+  error_patterns:
+    - name: encoding
+      exceptions:
+        - "UnicodeDecodeError"
+        - "UnicodeEncodeError"
+      keywords:
+        - "codec"
+        - "encoding"
+        - "invalid byte"
+        - "invalid start byte"
+      confidence: 0.9
+      template: encoding_fix
+
+    - name: memory
+      exceptions:
+        - "MemoryError"
+      keywords:
+        - "out of memory"
+        - "cannot allocate"
+      confidence: 0.85
+      template: memory_chunking
+
+    - name: spacy_model
+      exceptions:
+        - "OSError"
+        - "ModuleNotFoundError"
+      keywords:
+        - "spacy"
+        - "model"
+        - "not found"
+        - "can't find"
+      confidence: 0.95
+      template: spacy_download
+
+    - name: dtm_vocabulary
+      exceptions:
+        - "ValueError"
+      keywords:
+        - "dtm"
+        - "vocabulary"
+        - "shape"
+        - "dimension"
+      confidence: 0.75
+      template: null  # 无预定义模板
+
+  # 修复模板
+  fix_templates:
+    encoding_fix:
+      file: modules/guardians/templates/encoding_fix.py
+      description: "自动检测文件编码并处理编码错误"
+
+    memory_chunking:
+      file: modules/guardians/templates/memory_chunking.py
+      description: "分块处理文档以减少内存使用"
+
+    spacy_download:
+      file: modules/guardians/templates/spacy_download.py
+      description: "自动下载缺失的 spaCy 语言模型"
+
+  # 上下文数据
+  context_schema:
+    input_file:
+      type: str
+      required: true
+      description: "输入文件路径"
+    n_docs:
+      type: int
+      required: false
+      description: "文档数量"
+    vocab_size:
+      type: int
+      required: false
+      description: "词汇表大小"
+    spacy_model:
+      type: str
+      required: false
+      default: "en_core_web_sm"
+      description: "spaCy 模型名称"

@@ -1,0 +1,62 @@
+version: 1
+# 论文获取模块 Guardian 配置
+agent:
+  name: paper_fetcher_guardian
+  extend: ./base_guardian.yaml
+  module: paper_fetcher
+  description: "论文获取 Guardian - 处理 API 限流、网络超时、数据格式错误"
+
+  tools:
+    - "core.tools.Shell"
+    - "core.tools.ReadFile"
+
+  error_patterns:
+    - name: api_rate_limit
+      exceptions:
+        - "HTTPError"
+        - "ConnectionError"
+      keywords:
+        - "rate limit"
+        - "429"
+        - "too many requests"
+        - "quota exceeded"
+      confidence: 0.9
+      template: api_retry
+
+    - name: network_timeout
+      exceptions:
+        - "TimeoutError"
+        - "ConnectionError"
+        - "ConnectTimeout"
+      keywords:
+        - "timeout"
+        - "connection"
+        - "refused"
+        - "unreachable"
+      confidence: 0.85
+      template: network_retry
+
+    - name: invalid_response
+      exceptions:
+        - "JSONDecodeError"
+        - "ValueError"
+      keywords:
+        - "json"
+        - "parse"
+        - "invalid response"
+        - "unexpected"
+      confidence: 0.75
+      template: response_parser_fix
+
+  fix_templates:
+    api_retry:
+      file: modules/guardians/templates/api_retry.py
+      description: "指数退避重试 API 调用"
+
+    network_retry:
+      file: modules/guardians/templates/network_retry.py
+      description: "网络请求重试和超时处理"
+
+    response_parser_fix:
+      file: modules/guardians/templates/response_parser_fix.py
+      description: "API 响应解析容错处理"

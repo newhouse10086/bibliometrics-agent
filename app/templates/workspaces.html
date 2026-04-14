@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t.workspace_title }} | {{ t.app_title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Reuse styles from index.html */
+        :root {
+            --navy: #1a2332;
+            --navy-light: #2d3a4d;
+            --cream: #faf8f3;
+            --cream-dark: #f5f1e8;
+            --amber: #d4a853;
+            --amber-light: #e8c27a;
+            --text-primary: #1a2332;
+            --text-secondary: #5a6a7a;
+            --shadow-sm: 0 2px 8px rgba(26, 35, 50, 0.06);
+            --shadow-md: 0 4px 16px rgba(26, 35, 50, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 14px;
+        }
+
+        .lang-switcher a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .lang-switcher a:hover {
+            color: var(--amber);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 24px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--amber);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--navy-light);
+            color: white;
+        }
+
+        .btn-danger {
+            background: #d9534f;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .workspace-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+        }
+
+        .workspace-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        .workspace-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .workspace-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .workspace-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .workspace-actions .btn {
+            flex: 1;
+            text-align: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state p {
+            margin-top: 16px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switcher">
+            <a href="/workspaces?lang=en">EN</a>
+            <span>|</span>
+            <a href="/workspaces?lang=zh">中文</a>
+        </div>
+
+        <header>
+            <h1>{{ t.workspace_title }}</h1>
+        </header>
+
+        <div class="card">
+            <h2>{{ t.workspace_create }}</h2>
+            <form action="/workspaces/create" method="post">
+                <input type="hidden" name="lang" value="{{ lang }}">
+                <div class="form-group">
+                    <label for="name">{{ t.workspace_name }}</label>
+                    <input type="text" id="name" name="name" required placeholder="My Research Project">
+                </div>
+                <div class="form-group">
+                    <label for="description">{{ t.workspace_description }}</label>
+                    <textarea id="description" name="description" rows="3" placeholder="Optional description..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">{{ t.workspace_create }}</button>
+            </form>
+        </div>
+
+        {% if workspaces %}
+        <div class="workspace-grid">
+            {% for ws in workspaces %}
+            <div class="workspace-card">
+                <h3>{{ ws.name }}</h3>
+                <p style="color: var(--text-secondary); font-size: 14px;">{{ ws.description }}</p>
+
+                <div class="workspace-stats">
+                    <div>
+                        <strong>{{ t.workspace_files }}:</strong>
+                        <span>{{ ws.stats.total_files if ws.stats else 0 }}</span>
+                    </div>
+                    <div>
+                        <strong>{{ t.workspace_size }}:</strong>
+                        <span>{{ ws.stats.total_size_mb if ws.stats else 0 }} MB</span>
+                    </div>
+                    <div>
+                        <strong>{{ t.workspace_created }}:</strong>
+                        <span>{{ ws.created_at[:10] if ws.created_at else "N/A" }}</span>
+                    </div>
+                    <div>
+                        <strong>{{ t.workspace_status }}:</strong>
+                        <span>{{ ws.status }}</span>
+                    </div>
+                </div>
+
+                <div class="workspace-actions">
+                    <a href="/workspace/{{ ws.safe_name }}?lang={{ lang }}" class="btn btn-primary">{{ t.workspace_open }}</a>
+                    <form action="/workspaces/delete" method="post" style="flex: 1;" onsubmit="return confirm('Delete this workspace?');">
+                        <input type="hidden" name="name" value="{{ ws.safe_name }}">
+                        <input type="hidden" name="lang" value="{{ lang }}">
+                        <button type="submit" class="btn btn-danger" style="width: 100%;">{{ t.workspace_delete }}</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div style="font-size: 48px;">📁</div>
+            <p>{{ t.workspace_no_workspaces }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

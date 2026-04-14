@@ -1,0 +1,52 @@
+version: 1
+# 主题建模模块 Guardian 配置
+agent:
+  name: topic_modeler_guardian
+  extend: ./base_guardian.yaml
+  module: topic_modeler
+  description: "主题建模 Guardian - 处理 LDA 收敛、维度不匹配、内存错误"
+
+  error_patterns:
+    - name: lda_convergence
+      exceptions:
+        - "RuntimeError"
+        - "ValueError"
+      keywords:
+        - "convergence"
+        - "lda"
+        - "topic"
+        - "iteration"
+        - "did not converge"
+      confidence: 0.8
+      template: lda_params_adjust
+
+    - name: dimension_mismatch
+      exceptions:
+        - "ValueError"
+        - "IndexError"
+      keywords:
+        - "shape"
+        - "dimension"
+        - "mismatch"
+        - "matrix"
+        - "size"
+      confidence: 0.85
+      template: dimension_fix
+
+    - name: memory_error
+      exceptions:
+        - "MemoryError"
+      keywords:
+        - "memory"
+        - "allocate"
+      confidence: 0.9
+      template: memory_chunking
+
+  fix_templates:
+    lda_params_adjust:
+      file: modules/guardians/templates/lda_params_adjust.py
+      description: "调整 LDA 超参数以改善收敛"
+
+    dimension_fix:
+      file: modules/guardians/templates/dimension_fix.py
+      description: "修复维度不匹配问题"

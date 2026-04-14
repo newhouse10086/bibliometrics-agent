@@ -1,0 +1,50 @@
+[project]
+name = "bibliometrics-agent"
+version = "0.1.0"
+description = "LLM-powered bibliometric analysis system with web UI and HITL support"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+    "jinja2>=3.1",
+    "python-multipart>=0.0.18",
+    "omegaconf>=2.3",
+    "pydantic>=2.10",
+    "openai>=1.0",
+    "python-dotenv>=1.0",
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "scipy>=1.14",
+    "scikit-learn>=1.6",
+    "matplotlib>=3.9",
+    "seaborn>=0.13",
+    "spacy>=3.8",
+    "tmtoolkit[recommended,lda,sklearn,gensim]>=0.12",
+    "pyLDAvis>=3.4",
+    "plotly>=5.24",
+    "networkx>=3.4",
+    "aiosqlite>=0.20",
+    "httpx>=0.28",
+    "psutil>=6.1",
+    "pycountry>=24.6",
+    "lxml>=5.0",  # Optional: faster XML parsing for pubmed_fetcher
+    "fpdf2>=2.8",  # PDF generation for paper_generator
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.hatch.build.targets.wheel]
+packages = ["app", "core", "llm", "modules", "plugins"]

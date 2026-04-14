@@ -1,0 +1,88 @@
+version: 1
+# 流水线编排器智能体配置
+agent:
+  name: pipeline_orchestrator
+  module: orchestrator
+  description: "流水线编排智能体 - 管理模块执行、错误恢复、HITL 交互"
+
+  # 编排器工具 - 更高级别的权限
+  tools:
+    - "core.tools.ReadFile"
+    - "core.tools.WriteFile"
+    - "core.tools.Glob"
+    - "core.tools.Grep"
+    - "core.tools.Shell"
+
+  # 子智能体（模块 Guardians）
+  subagents:
+    preprocessor_guardian:
+      path: ./preprocessor_guardian.yaml
+      module: preprocessor
+      description: "预处理模块 Guardian - 编码、内存、spaCy 模型错误"
+
+    paper_fetcher_guardian:
+      path: ./paper_fetcher_guardian.yaml
+      module: paper_fetcher
+      description: "论文获取 Guardian - API 限流、网络错误"
+
+    topic_modeler_guardian:
+      path: ./topic_modeler_guardian.yaml
+      module: topic_modeler
+      description: "主题建模 Guardian - LDA 收敛、维度错误"
+
+    network_analyzer_guardian:
+      path: ./network_analyzer_guardian.yaml
+      module: network_analyzer
+      description: "网络分析 Guardian - 图构建、内存错误"
+
+  # 流水线配置
+  pipeline:
+    order:
+      - query_generator
+      - paper_fetcher
+      - preprocessor
+      - frequency_analyzer
+      - topic_modeler
+      - burst_detector
+      - tsr_ranker
+      - network_analyzer
+      - visualizer
+      - report_generator
+
+    execution:
+      mode: "interactive"  # batch | interactive
+      stop_on_error: false  # Guardian 处理后是否继续
+      max_module_retries: 2  # 每个模块最大重试次数
+
+  # HITL 配置
+  hitl:
+    enabled: true
+    checkpoints:
+      - after: query_generator
+        action: "confirm_query"
+        message: "请确认生成的搜索查询"
+      - after: preprocessor
+        action: "review_stats"
+        message: "请检查预处理统计"
+      - after: topic_modeler
+        action: "review_topics"
+        message: "请审查主题建模结果"
+      - after: report_generator
+        action: "final_review"
+        message: "请审查最终报告"
+
+  # 升级策略
+  escalation:
+    rules:
+      - condition: "confidence < 0.5"
+        action: "escalate_to_hitl"
+        message: "Guardian 无法确定错误原因"
+      - condition: "api_key in error"
+        action: "escalate_to_hitl"
+        message: "API 认证问题需要用户干预"
+      - condition: "file not found"
+        action: "escalate_to_hitl"
+        message: "文件缺失需要用户确认"
+      - condition: "retry_count > 3"
+        action: "escalate_to_hitl"
+        message: "多次重试失败"

@@ -1,0 +1,3172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文献计量智能体——AI协助平台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 夜间主题（默认）- 科学仪器配色 */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --bg-hover: #475569;
+            --glass-panel: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border: rgba(255, 255, 255, 0.1);
+
+            /* 强调色 */
+            --ai-message: #06b6d4;
+            --ai-glow: rgba(6, 182, 212, 0.3);
+            --tool-call: #f59e0b;
+            --tool-glow: rgba(245, 158, 11, 0.3);
+            --user-message: #10b981;
+            --user-glow: rgba(16, 185, 129, 0.3);
+            --error: #f43f5e;
+            --error-glow: rgba(244, 63, 94, 0.3);
+            --success: #22c55e;
+            --accent-secondary: #8b5cf6;
+            --warning: #eab308;
+
+            /* 间距 */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+
+            /* 字体 — 宋体(中文) + Times New Roman(英文) + Source Serif 4(网页回退) */
+            --font-display: 'JetBrains Mono', monospace;
+            --font-body: 'SimSun', '宋体', 'Source Serif 4', 'Times New Roman', 'Times', serif;
+
+            /* 阴影 */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px var(--ai-glow);
+
+            /* 圆角 */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        /* 日间主题 - Claude 风格 */
+        html.theme-light {
+            --bg-primary: #faf9f7;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f5f4f1;
+            --bg-hover: #e8e7e4;
+            --glass-panel: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --text-primary: #1f1f1f;
+            --text-secondary: #545454;
+            --text-muted: #8e8e8e;
+            --border: rgba(0, 0, 0, 0.12);
+
+            /* Claude 品牌色 - 温暖橙色系 */
+            --ai-message: #d97706;
+            --ai-glow: rgba(217, 119, 6, 0.15);
+            --tool-call: #0ea5e9;
+            --tool-glow: rgba(14, 165, 233, 0.15);
+            --user-message: #059669;
+            --user-glow: rgba(5, 150, 105, 0.15);
+            --error: #dc2626;
+            --error-glow: rgba(220, 38, 38, 0.15);
+            --success: #16a34a;
+            --accent-secondary: #7c3aed;
+            --warning: #ca8a04;
+
+            /* 更柔和的阴影 */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-glow: 0 0 24px var(--ai-glow);
+        }
+
+        /* 日间主题覆盖 - 修正硬编码颜色 */
+        html.theme-light .sidebar-header {
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.06) 0%, transparent 100%);
+        }
+        html.theme-light .create-project-btn:hover {
+            box-shadow: 0 8px 15px rgba(217, 119, 6, 0.2);
+        }
+        html.theme-light .project-card.active {
+            background: rgba(217, 119, 6, 0.06);
+        }
+        html.theme-light .project-card:hover {
+            border-color: var(--ai-message);
+        }
+        html.theme-light .status-running { background: var(--ai-message); }
+        html.theme-light .module-card.running::before { border-color: var(--ai-message); }
+        html.theme-light .module-card.guardian-active { border-color: var(--ai-message); }
+        html.theme-light .status-running-badge {
+            background: rgba(217, 119, 6, 0.12);
+            color: var(--ai-message);
+        }
+        html.theme-light .chat-header {
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.08) 0%, transparent 100%);
+        }
+        html.theme-light .message-ai {
+            background: rgba(217, 119, 6, 0.06);
+            border-color: rgba(217, 119, 6, 0.15);
+        }
+        html.theme-light .badge-tuning {
+            background: rgba(217, 119, 6, 0.1);
+            color: #b45309;
+        }
+        html.theme-light .module-error {
+            background: rgba(220, 38, 38, 0.05);
+        }
+        html.theme-light .log-error {
+            background: rgba(220, 38, 38, 0.04);
+            border-left-color: var(--error);
+        }
+        html.theme-light .chat-menu-dropdown {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        html.theme-light .config-btn {
+            border-color: rgba(0, 0, 0, 0.12);
+            background: var(--bg-tertiary);
+        }
+        html.theme-light .create-project-btn {
+            background: linear-gradient(135deg, var(--ai-message), var(--user-message));
+            color: #fff;
+        }
+        html.theme-light .chat-tab.active {
+            background: var(--ai-message);
+            color: #fff;
+            border-color: var(--ai-message);
+        }
+        html.theme-light .message-user {
+            background: rgba(5, 150, 105, 0.06);
+            border-color: rgba(5, 150, 105, 0.15);
+        }
+        html.theme-light .message-tool {
+            background: rgba(14, 165, 233, 0.06);
+            border-color: rgba(14, 165, 233, 0.15);
+        }
+        html.theme-light .message-error {
+            background: rgba(220, 38, 38, 0.05);
+            border-color: rgba(220, 38, 38, 0.12);
+        }
+        html.theme-light .badge-paper {
+            background: rgba(22, 163, 74, 0.1);
+            color: #16a34a;
+        }
+        html.theme-light .status-completed-badge {
+            background: rgba(22, 163, 74, 0.12);
+            color: var(--success);
+        }
+        html.theme-light .status-failed-badge {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--error);
+        }
+        html.theme-light .empty-state {
+            color: var(--text-muted);
+        }
+        html.theme-light .app-container {
+            background: rgba(0, 0, 0, 0.06);
+        }
+        html.theme-light .injection-card .injection-schema {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        html.theme-light .modal-overlay.active {
+            background: rgba(0, 0, 0, 0.4);
+        }
+        html.theme-light .ai-indicator {
+            background: var(--ai-message);
+        }
+        html.theme-light .module-timeline::before {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* 主题切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 1000;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+        .theme-toggle .icon-sun,
+        .theme-toggle .icon-moon { display: none; }
+        :root:not(.theme-light) .theme-toggle .icon-sun { display: block; }
+        html:not(.theme-light) .theme-toggle .icon-sun { display: block; }
+        html.theme-light .theme-toggle .icon-moon { display: block; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            height: 100dvh;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* 自定义滚动条 */
+        .workspace-content::-webkit-scrollbar,
+        .chat-messages::-webkit-scrollbar,
+        .error-log-container::-webkit-scrollbar,
+        .projects-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .workspace-content::-webkit-scrollbar-track,
+        .chat-messages::-webkit-scrollbar-track,
+        .error-log-container::-webkit-scrollbar-track,
+        .projects-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .workspace-content::-webkit-scrollbar-thumb,
+        .chat-messages::-webkit-scrollbar-thumb,
+        .error-log-container::-webkit-scrollbar-thumb,
+        .projects-list::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.3);
+            border-radius: 3px;
+        }
+        .workspace-content::-webkit-scrollbar-thumb:hover,
+        .chat-messages::-webkit-scrollbar-thumb:hover,
+        .error-log-container::-webkit-scrollbar-thumb:hover,
+        .projects-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.5);
+        }
+
+        /* 布局 */
+        .app-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 380px;
+            grid-template-rows: 1fr;
+            gap: 1px;
+            height: 100vh;
+            height: 100dvh;
+            background: var(--glass-border);
+        }
+
+        /* 玻璃面板 */
+        .glass-panel {
+            background: var(--glass-panel);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 侧边栏 - 项目列表 */
+        .sidebar {
+            background: var(--bg-secondary);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .sidebar-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--glass-border);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, transparent 100%);
+        }
+
+        .sidebar-title {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: 0.05em;
+        }
+
+        .create-project-btn {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: linear-gradient(135deg, var(--ai-message), var(--user-message));
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--bg-primary);
+            font-family: 'Source Serif 4', 'SimSun', '宋体', 'Times New Roman', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.03em;
+        }
+
+        .create-project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .projects-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-md);
+            min-height: 0;
+        }
+
+        .project-card {
+            padding: var(--spacing-md);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--ai-message);
+            transform: translateX(4px);
+        }
+
+        .project-card.active {
+            border-color: var(--ai-message);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .project-name {
+            font-family: 'Source Serif 4', 'SimSun', '宋体', 'Times New Roman', serif;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            letter-spacing: 0.02em;
+        }
+
+        .project-domain {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .project-status {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 0.75rem;
+            font-family: var(--font-display);
+            letter-spacing: 0.08em;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-created { background: var(--text-muted); }
+        .status-running { background: var(--ai-message); animation: pulse 1.5s infinite; }
+        .status-paused { background: var(--warning); }
+        .status-stopped { background: var(--warning); }
+        .status-completed { background: var(--success); }
+        .status-failed { background: var(--error); }
+
+        /* 徽章样式 */
+        .project-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.68rem;
+            padding: 2px 7px;
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        .badge-tuning {
+            background: rgba(37, 99, 235, 0.12);
+            color: #3b82f6;
+        }
+        .badge-paper {
+            background: rgba(34, 197, 94, 0.12);
+            color: #22c55e;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* 主工作区 */
+        .main-workspace {
+            background: var(--bg-secondary);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .workspace-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .project-title {
+            font-family: 'Source Serif 4', 'SimSun', '宋体', 'Times New Roman', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: 0.02em;
+        }
+
+        .project-meta {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .config-btn {
+            margin-left: 12px;
+            padding: 4px 10px;
+            font-size: 11px;
+            border: 1px solid var(--glass-border);
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .config-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--text-muted);
+        }
+
+        .workspace-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+            min-height: 0;
+        }
+
+        /* 模块时间线 */
+        .module-timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .module-timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--glass-border);
+        }
+
+        .module-card {
+            position: relative;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 3px solid var(--text-muted);
+        }
+
+        .module-card.running::before {
+            border-color: var(--ai-message);
+            animation: pulse 1.5s infinite;
+        }
+
+        .module-card.completed::before {
+            border-color: var(--success);
+            background: var(--success);
+        }
+
+        .module-card.failed::before {
+            border-color: var(--error);
+            background: var(--error);
+        }
+
+        .module-card.guardian-active {
+            border-color: var(--ai-message);
+            box-shadow: var(--shadow-glow);
+            animation: guardianPulse 2s infinite;
+        }
+
+        @keyframes guardianPulse {
+            0%, 100% { box-shadow: 0 0 20px var(--ai-glow); }
+            50% { box-shadow: 0 0 40px var(--ai-glow); }
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .module-name {
+            font-family: 'Source Serif 4', 'SimSun', '宋体', 'Times New Roman', serif;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+        }
+
+        .module-status-badge {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-family: var(--font-display);
+            letter-spacing: 0.08em;
+        }
+
+        .status-pending-badge {
+            background: rgba(100, 116, 139, 0.2);
+            color: var(--text-muted);
+        }
+
+        .status-running-badge {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--ai-message);
+        }
+
+        .status-completed-badge {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+        }
+
+        .status-failed-badge {
+            background: rgba(244, 63, 94, 0.2);
+            color: var(--error);
+        }
+
+        .status-skipped-badge {
+            background: rgba(234, 179, 8, 0.2);
+            color: var(--warning);
+        }
+
+        .status-stopped-badge {
+            background: rgba(234, 179, 8, 0.2);
+            color: var(--warning);
+        }
+
+        .module-error {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: rgba(244, 63, 94, 0.1);
+            border-left: 3px solid var(--error);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            color: var(--error);
+        }
+
+        /* AI对话面板 */
+        .ai-chat {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--glass-border);
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .chat-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--glass-border);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, transparent 100%);
+        }
+
+        .chat-title {
+            font-family: 'Source Serif 4', 'SimSun', '宋体', 'Times New Roman', serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .ai-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--ai-message);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .chat-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .chat-tab {
+            flex: 1;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+        }
+
+        .chat-tab:hover {
+            background: var(--bg-secondary);
+        }
+
+        .chat-tab.active {
+            background: var(--ai-message);
+            color: var(--bg-primary);
+            border-color: var(--ai-message);
+        }
+
+        .chat-tab-error {
+            position: relative;
+        }
+
+        .chat-tab-error.has-errors::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--error);
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Chat menu dropdown */
+        .chat-menu-container {
+            position: relative;
+        }
+        .chat-menu-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 2px 8px;
+            border-radius: 6px;
+            line-height: 1;
+            transition: all 0.15s ease;
+        }
+        .chat-menu-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        .chat-menu-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 4px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 100;
+            min-width: 140px;
+            overflow: hidden;
+        }
+        .chat-menu-dropdown.show {
+            display: block;
+        }
+        .chat-menu-item {
+            display: block;
+            width: 100%;
+            padding: 8px 14px;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 13px;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.1s;
+        }
+        .chat-menu-item:hover {
+            background: var(--bg-hover);
+        }
+
+        /* Message delete button */
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .message-delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: all 0.15s;
+        }
+        .message:hover .message-delete-btn {
+            opacity: 1;
+        }
+        .message-delete-btn:hover {
+            color: var(--error);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Image upload */
+        .chat-attach-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.15s;
+            color: var(--text-muted);
+        }
+        .chat-attach-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        .chat-image-preview {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: var(--bg-hover);
+            border-top: 1px solid var(--glass-border);
+        }
+        .chat-image-preview img {
+            max-height: 60px;
+            max-width: 120px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        .preview-remove-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .preview-remove-btn:hover {
+            color: var(--error);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .message-content img.chat-image {
+            max-width: 300px;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 6px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            min-height: 0;
+        }
+
+        .error-log-container {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+            background: var(--bg-primary);
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            min-height: 0;
+        }
+
+        .error-log-container.active {
+            display: block;
+        }
+
+        .error-log-line {
+            padding: var(--spacing-xs) 0;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--error);
+        }
+
+        .error-log-line:last-child {
+            border-bottom: none;
+        }
+
+        .log-line {
+            padding: var(--spacing-xs) 0;
+            border-bottom: 1px solid var(--glass-border);
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .log-line:last-child {
+            border-bottom: none;
+        }
+
+        .log-error {
+            color: var(--error);
+            background: rgba(244, 63, 94, 0.05);
+            padding-left: var(--spacing-sm);
+            padding-right: var(--spacing-sm);
+            border-left: 3px solid var(--error);
+        }
+
+        .log-warning {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+            padding-left: var(--spacing-sm);
+            padding-right: var(--spacing-sm);
+            border-left: 3px solid #f59e0b;
+        }
+
+        .log-info {
+            color: var(--text-primary);
+        }
+
+        .log-debug {
+            color: var(--text-secondary);
+            opacity: 0.8;
+        }
+
+        .message {
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-ai {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            align-self: flex-start;
+            max-width: 90%;
+        }
+
+        .message-tool {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+        }
+
+        .message-user {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            align-self: flex-end;
+            max-width: 90%;
+        }
+
+        .message-error {
+            background: rgba(244, 63, 94, 0.1);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+        }
+
+        .message-header {
+            font-size: 0.75rem;
+            font-family: var(--font-display);
+            letter-spacing: 0.08em;
+            margin-bottom: var(--spacing-xs);
+            opacity: 0.7;
+        }
+
+        .message-content {
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.938rem;
+        }
+
+        .chat-input-container {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--glass-border);
+            background: var(--bg-tertiary);
+        }
+
+        /* Chat mode selector */
+        .chat-mode-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .chat-mode-btn {
+            flex: 1;
+            padding: 6px 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-body);
+        }
+
+        .chat-mode-btn:hover {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .chat-mode-btn.active {
+            background: var(--ai-message);
+            color: var(--bg-primary);
+            border-color: var(--ai-message);
+            font-weight: 600;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: var(--spacing-sm);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+            transition: border-color 0.2s ease;
+        }
+
+        .chat-input-wrapper:focus-within {
+            border-color: var(--ai-message);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .chat-input {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: var(--spacing-md);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.938rem;
+            line-height: 1.6;
+            outline: none;
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .chat-send-btn {
+            background: var(--ai-message);
+            border: none;
+            padding: var(--spacing-md);
+            color: var(--bg-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-display);
+            font-weight: 600;
+        }
+
+        .chat-send-btn:hover {
+            background: #0891b2;
+        }
+
+        /* 空状态 */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--text-muted);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.3;
+        }
+
+        /* 滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Modal Dialog */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            width: 620px;
+            max-height: 85vh;
+            overflow-y: auto;
+            color: var(--text-primary);
+        }
+        .modal-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+        .modal-field { margin-bottom: 12px; }
+        .modal-field label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
+        .modal-field input, .modal-field select { width: 100%; padding: 8px 12px; background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 14px; box-sizing: border-box; }
+        .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
+        .modal-btn { padding: 8px 20px; border-radius: var(--radius-sm); border: none; cursor: pointer; font-size: 14px; }
+        .modal-btn-primary { background: var(--ai-message); color: #fff; }
+        .modal-btn-cancel { background: var(--bg-hover); color: var(--text-secondary); }
+
+        /* Mode Cards */
+        .mode-cards { display: flex; gap: 10px; margin-bottom: 16px; }
+        .mode-card {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: border-color 0.2s;
+            text-align: center;
+        }
+        .mode-card:hover { border-color: var(--text-muted); }
+        .mode-card.selected { border-color: var(--ai-message); background: rgba(0,200,200,0.05); }
+        .mode-card-icon { font-size: 28px; margin-bottom: 6px; }
+        .mode-card-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .mode-card-desc { font-size: 11px; color: var(--text-muted); }
+
+        /* Conditional sections */
+        .mode-options { margin-top: 12px; padding: 12px; background: var(--bg-tertiary); border-radius: var(--radius-sm); }
+        .mode-options.hidden { display: none; }
+
+        /* Module checklist (HITL) */
+        .checklist-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+        .checklist-item input[type="checkbox"] { accent-color: var(--ai-message); }
+
+        /* Draggable module list (Pluggable) */
+        .module-sort-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 4px;
+            cursor: grab;
+            user-select: none;
+        }
+        .module-sort-item:active { cursor: grabbing; }
+        .module-sort-item.dragging { opacity: 0.5; }
+        .module-sort-item .drag-handle { color: var(--text-muted); font-size: 16px; }
+        .module-sort-item .module-name { flex: 1; }
+
+        /* HITL Checkpoint Review Panel */
+        .checkpoint-review-panel {
+            margin: 8px 0;
+            padding: 12px;
+            background: rgba(0,200,200,0.05);
+            border: 1px solid var(--ai-message);
+            border-radius: var(--radius-md);
+        }
+        .checkpoint-review-panel .review-title { font-weight: 600; margin-bottom: 8px; }
+        .checkpoint-review-panel .review-actions { display: flex; gap: 8px; }
+        .review-btn { padding: 6px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; font-size: 13px; }
+        .review-btn-approve { background: #10b981; color: white; }
+        .review-btn-adjust { background: #f59e0b; color: white; }
+        .review-btn-reject { background: #ef4444; color: white; }
+
+        /* Module Injection Card */
+        .injection-card {
+            margin: 8px 0;
+            padding: 14px;
+            background: rgba(139, 92, 246, 0.06);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: var(--radius-md);
+        }
+        .injection-card .injection-title {
+            font-weight: 600; margin-bottom: 6px; color: #a78bfa;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .injection-card .injection-desc {
+            font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;
+        }
+        .injection-card .injection-meta {
+            font-size: 12px; color: var(--text-muted); margin-bottom: 6px;
+        }
+        .injection-card .injection-schema {
+            font-size: 11px; font-family: monospace; background: rgba(0,0,0,0.2);
+            padding: 6px 8px; border-radius: 4px; margin-bottom: 8px;
+            max-height: 80px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
+        }
+        .injection-card .injection-warning {
+            font-size: 12px; color: #f59e0b; background: rgba(245,158,11,0.1);
+            padding: 4px 8px; border-radius: 4px; margin-bottom: 8px;
+        }
+        .injection-card .injection-actions { display: flex; gap: 8px; }
+
+        /* Module config panel */
+        .module-config-btn {
+            background: none; border: 1px solid var(--glass-border); color: var(--text-muted);
+            padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 12px;
+            transition: all 0.15s;
+        }
+        .module-config-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+        .module-config-panel {
+            display: none; margin-top: 8px; padding: 10px;
+            background: var(--bg-primary); border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+        }
+        .module-config-panel.open { display: block; }
+        .config-field { margin-bottom: 8px; }
+        .config-field label {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 12px; color: var(--text-secondary); margin-bottom: 2px;
+        }
+        .config-field label .config-default { color: var(--text-muted); font-size: 11px; }
+        .config-field input, .config-field select {
+            width: 100%; padding: 5px 8px; background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border); border-radius: 4px;
+            color: var(--text-primary); font-size: 13px; box-sizing: border-box;
+        }
+        .config-field input[type="checkbox"] { width: auto; }
+
+        /* Open project */
+        .open-project-btn {
+            background: none; border: 1px solid var(--glass-border); color: var(--text-secondary);
+            padding: 6px 12px; border-radius: var(--radius-sm); cursor: pointer; font-size: 13px;
+            width: 100%; margin-top: 8px; transition: all 0.15s;
+        }
+        .open-project-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+        .existing-project-item {
+            padding: 8px 12px; background: var(--bg-tertiary); border-radius: var(--radius-sm);
+            margin-bottom: 4px; cursor: pointer; display: flex; justify-content: space-between;
+            align-items: center; transition: background 0.15s;
+        }
+        .existing-project-item:hover { background: var(--bg-hover); }
+        .existing-project-item .ep-info { font-size: 13px; }
+        .existing-project-item .ep-status { font-size: 11px; color: var(--text-muted); }
+        .existing-project-item .ep-status .completed { color: #10b981; }
+        .existing-project-item .ep-status .failed { color: #ef4444; }
+
+        .mode-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        /* --- Panel toggle buttons --- */
+        .sidebar-toggle-btn, .chat-toggle-btn {
+            display: none;
+            position: fixed;
+            z-index: 600;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 18px;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .sidebar-toggle-btn { top: 12px; left: 12px; }
+        .chat-toggle-btn { top: 12px; right: 12px; }
+        .sidebar-toggle-btn:hover, .chat-toggle-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--ai-message);
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 499;
+        }
+
+        /* --- Responsive: reduce padding on short screens --- */
+        @media (max-height: 750px) {
+            .sidebar-header { padding: var(--spacing-sm) var(--spacing-md); }
+            .workspace-header { padding: var(--spacing-sm) var(--spacing-md); }
+            .chat-header { padding: var(--spacing-sm) var(--spacing-md); }
+            .chat-input-container { padding: var(--spacing-sm); }
+            .module-card { padding: var(--spacing-sm); margin-bottom: var(--spacing-sm); }
+            .sidebar-title { font-size: 0.95rem; margin-bottom: var(--spacing-sm); }
+            .project-title { font-size: 1.15rem; }
+            .chat-title { font-size: 0.95rem; }
+        }
+
+        @media (max-height: 600px) {
+            .sidebar-header { padding: 6px var(--spacing-sm); }
+            .workspace-header { padding: 6px var(--spacing-sm); }
+            .chat-header { padding: 6px var(--spacing-sm); }
+            .chat-input-container { padding: 6px; }
+            .chat-input { padding: 6px 8px; font-size: 0.85rem; }
+            .chat-send-btn { padding: 6px 10px; }
+            .module-card { padding: 6px 8px; margin-bottom: 6px; }
+            .module-name { font-size: 0.9rem; }
+            .sidebar-title { font-size: 0.85rem; margin-bottom: 4px; }
+            .create-project-btn { padding: 6px; font-size: 0.85rem; }
+            .project-title { font-size: 1rem; }
+            .chat-title { font-size: 0.85rem; }
+            .chat-tab { padding: 4px 8px; font-size: 0.8rem; }
+        }
+
+        /* --- Responsive: narrow screens --- */
+        @media (max-width: 1200px) {
+            .app-container { grid-template-columns: 250px 1fr 340px; }
+        }
+
+        @media (max-width: 1024px) {
+            .app-container { grid-template-columns: 0px 1fr 320px; }
+            .sidebar {
+                position: fixed;
+                left: 0; top: 0; bottom: 0;
+                width: 280px;
+                z-index: 500;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-toggle-btn { display: flex; }
+            .sidebar-overlay.active { display: block; }
+        }
+
+        @media (max-width: 860px) {
+            .app-container { grid-template-columns: 0px 1fr 0px; }
+            .ai-chat {
+                position: fixed;
+                right: 0; top: 0; bottom: 0;
+                width: 380px;
+                z-index: 500;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            }
+            .ai-chat.open { transform: translateX(0); }
+            .chat-toggle-btn { display: flex; }
+            .sidebar-toggle-btn { display: flex; }
+            .main-workspace { min-width: 0; }
+        }
+
+        @media (max-width: 600px) {
+            .sidebar { width: 260px; }
+            .ai-chat { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Panel toggle buttons (visible on small screens) -->
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="项目面板">☰</button>
+    <button class="chat-toggle-btn" onclick="toggleChatPanel()" title="AI面板">💬</button>
+
+    <!-- Theme toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+    </button>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
+
+    <div class="app-container">
+        <!-- 侧边栏 - 项目列表 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">📁 项目管理</div>
+                <button class="create-project-btn" onclick="showCreateProjectModal()">+ 新建项目</button>
+            </div>
+            <div class="projects-list" id="projectsList"></div>
+            <button class="open-project-btn" onclick="showOpenProjectModal()">📂 打开已有项目</button>
+        </div>
+
+        <!-- 主工作区 -->
+        <div class="main-workspace">
+            <div class="workspace-header">
+                <div class="project-title" id="workspaceTitle">选择或创建项目</div>
+                <div class="project-meta" id="workspaceMeta"></div>
+            </div>
+            <div class="workspace-content" id="workspaceContent">
+                <div class="empty-state">
+                    <div class="empty-icon">📊</div>
+                    <div>请从左侧选择项目或创建新项目</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Project Modal -->
+        <div class="modal-overlay" id="createProjectModal">
+            <div class="modal-content">
+                <div class="modal-title">Create New Project</div>
+
+                <div class="modal-field">
+                    <label>Project Name</label>
+                    <input type="text" id="modalProjectName" placeholder="e.g. My Research">
+                </div>
+                <div class="modal-field">
+                    <label>Research Domain</label>
+                    <input type="text" id="modalResearchDomain" placeholder="e.g. AI in Healthcare">
+                </div>
+                <div class="modal-field">
+                    <label>Max Papers</label>
+                    <input type="number" id="modalMaxPapers" value="100" min="10" max="5000">
+                </div>
+
+                <div class="modal-field">
+                    <label>Workflow Mode</label>
+                    <div class="mode-cards">
+                        <div class="mode-card selected" data-mode="automated" onclick="selectMode('automated')">
+                            <div class="mode-card-icon">&#9881;</div>
+                            <div class="mode-card-title">Automated</div>
+                            <div class="mode-card-desc">Full auto, Guardian fixes errors</div>
+                        </div>
+                        <div class="mode-card" data-mode="hitl" onclick="selectMode('hitl')">
+                            <div class="mode-card-icon">&#128100;</div>
+                            <div class="mode-card-title">Human-in-Loop</div>
+                            <div class="mode-card-desc">Review at checkpoints</div>
+                        </div>
+                        <div class="mode-card" data-mode="pluggable" onclick="selectMode('pluggable')">
+                            <div class="mode-card-icon">&#128268;</div>
+                            <div class="mode-card-title">Pluggable</div>
+                            <div class="mode-card-desc">Custom modules &amp; order</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HITL options -->
+                <div class="mode-options hidden" id="hitlOptions">
+                    <label style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;display:block">Select checkpoint modules:</label>
+                    <div id="hitlCheckpoints"></div>
+                </div>
+
+                <!-- Pluggable options -->
+                <div class="mode-options hidden" id="pluggableOptions">
+                    <label style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;display:block">Drag to reorder modules:</label>
+                    <div id="pluggableModuleList"></div>
+                    <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+                        <input type="text" id="pluginDirInput" placeholder="Plugin directory (optional)" style="flex:1;padding:6px 10px;background:var(--bg-primary);border:1px solid var(--glass-border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:13px">
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-cancel" onclick="closeCreateModal()">Cancel</button>
+                    <button class="modal-btn modal-btn-primary" onclick="submitCreateProject()">Create</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LLM Config Modal -->
+        <div class="modal-overlay" id="llmConfigModal">
+            <div class="modal-content" style="width: 550px">
+                <div class="modal-title">⚙️ LLM 配置</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px">
+                    配置 OpenAI 兼容的大模型提供商（如 OpenRouter、DeepSeek、本地部署等）
+                </div>
+
+                <div class="modal-field">
+                    <label>Provider</label>
+                    <select id="llmProvider" onchange="updateLLMProviderFields()">
+                        <option value="openai">OpenAI Compatible</option>
+                        <option value="mock">Mock (Testing)</option>
+                    </select>
+                </div>
+
+                <div id="llmOpenAIFields">
+                    <div class="modal-field">
+                        <label>API Key *</label>
+                        <input type="password" id="llmApiKey" placeholder="sk-... 或 your-api-key">
+                    </div>
+
+                    <div class="modal-field">
+                        <label>Base URL</label>
+                        <input type="text" id="llmBaseUrl" placeholder="https://api.openai.com/v1 (留空使用默认)">
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px">
+                            示例：https://openrouter.ai/api/v1 (OpenRouter)<br>
+                            http://localhost:11434/v1 (Ollama)
+                        </div>
+                    </div>
+
+                    <div class="modal-field">
+                        <label>Model Name</label>
+                        <input type="text" id="llmModel" placeholder="gpt-4o">
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px">
+                            示例：gpt-4o, gpt-4o-mini, qwen/qwen3.6-plus (OpenRouter)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 24px">
+                    <button class="modal-btn modal-btn-cancel" onclick="closeLLMConfigModal()">取消</button>
+                    <button class="modal-btn" onclick="testLLMConfig()" style="background: #f59e0b; color: white">测试连接</button>
+                    <button class="modal-btn modal-btn-primary" onclick="saveLLMConfig()">保存</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI对话面板 -->
+        <div class="ai-chat">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <div class="ai-indicator"></div>
+                    🤖 AI 工作流监控
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <button class="chat-tab active" onclick="switchChatTab('workflow')" id="workflowTab">
+                        💬 工作流
+                    </button>
+                    <button class="chat-tab" onclick="switchChatTab('logs')" id="logsTab">
+                        📋 完整日志
+                    </button>
+                    <button class="chat-tab chat-tab-error" onclick="switchChatTab('errors')" id="errorsTab">
+                        ⚠️ 错误日志
+                    </button>
+                    <div class="chat-menu-container">
+                        <button class="chat-menu-btn" onclick="toggleChatMenu()" title="更多选项">⋮</button>
+                        <div class="chat-menu-dropdown" id="chatMenuDropdown">
+                            <button class="chat-menu-item" onclick="clearChatHistory()">🗑 清空对话</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="empty-state">
+                    <div class="empty-icon">💬</div>
+                    <div>AI分析过程将在这里实时显示</div>
+                </div>
+            </div>
+            <div class="error-log-container" id="fullLogContainer">
+                <div class="empty-state">
+                    <div class="empty-icon">📋</div>
+                    <div>完整日志将在这里显示</div>
+                </div>
+            </div>
+            <div class="error-log-container" id="errorLogContainer">
+                <div class="empty-state">
+                    <div class="empty-icon">⚠️</div>
+                    <div>错误日志将在这里显示</div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <div class="chat-mode-selector">
+                    <button class="chat-mode-btn active" data-mode="auto" onclick="setChatMode('auto')">自动</button>
+                    <button class="chat-mode-btn" data-mode="chat" onclick="setChatMode('chat')">对话</button>
+                    <button class="chat-mode-btn" data-mode="agent" onclick="setChatMode('agent')">Agent</button>
+                </div>
+                <div class="chat-input-wrapper">
+                    <label class="chat-attach-btn" title="上传图片">
+                        📎
+                        <input type="file" id="imageUpload" accept="image/*" style="display:none" onchange="handleImageUpload(this)">
+                    </label>
+                    <input type="text" class="chat-input" id="userInput"
+                           placeholder="向AI发送消息..."
+                           onkeypress="if(event.key==='Enter') sendUserMessage()">
+                    <button class="chat-send-btn" onclick="sendUserMessage()">发送</button>
+                </div>
+                <div class="chat-image-preview" id="imagePreview" style="display:none">
+                    <img id="previewImg" src="" alt="preview">
+                    <button class="preview-remove-btn" onclick="removeImagePreview()">✕</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+        let ws = null;
+        let selectedProjectId = null;
+        let currentProjectStatus = null;
+        let currentChatMode = 'auto';
+
+        // Theme management
+        function initTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                document.documentElement.classList.add('theme-light');
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.classList.toggle('theme-light');
+            const isLight = html.classList.contains('theme-light');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        initTheme();
+
+        // 加载项目列表
+        async function loadProjects() {
+            const response = await fetch(`${API_BASE}/projects`);
+            const data = await response.json();
+
+            const container = document.getElementById('projectsList');
+            container.innerHTML = '';
+
+            if (data.projects.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><div>暂无项目</div></div>';
+                return;
+            }
+
+            data.projects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = `project-card ${selectedProjectId === project.id ? 'active' : ''}`;
+                card.onclick = () => selectProject(project.id);
+
+                const statusText = {
+                    'created': '已创建',
+                    'running': '运行中',
+                    'paused': '已暂停',
+                    'stopped': '已停止',
+                    'completed': '已完成',
+                    'failed': '失败'
+                };
+
+                let badgesHtml = '';
+                if (project.tuning_count > 0) {
+                    badgesHtml += `<span class="badge badge-tuning">🔧 已调优 ${project.tuning_count} 次</span>`;
+                }
+                if (project.paper_status === 'pdf_ready') {
+                    badgesHtml += '<span class="badge badge-paper">📄 PDF已生成</span>';
+                } else if (project.paper_status === 'draft') {
+                    badgesHtml += '<span class="badge badge-paper">📄 已生成初稿</span>';
+                }
+
+                card.innerHTML = `
+                    <div class="project-name">${project.name}</div>
+                    <div class="project-domain">${project.research_domain}</div>
+                    <div class="project-status">
+                        <div class="status-dot status-${project.status}"></div>
+                        ${statusText[project.status] || project.status}
+                    </div>
+                    ${badgesHtml ? `<div class="project-badges">${badgesHtml}</div>` : ''}
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // 选择项目
+        async function selectProject(projectId) {
+            selectedProjectId = projectId;
+
+            // 连接WebSocket
+            connectWebSocket(projectId);
+
+            // 加载项目详情
+            const response = await fetch(`${API_BASE}/projects/${projectId}`);
+            const data = await response.json();
+
+            if (!data.success) return;
+
+            const project = data.project;
+            const progress = data.progress;
+            currentProjectStatus = project.status;
+
+            // 更新标题
+            document.getElementById('workspaceTitle').textContent = project.name;
+            let metaHtml = `${project.research_domain} | 创建于 ${new Date(project.created_at).toLocaleString('zh-CN')}`;
+            if (project.tuning_count > 0) {
+                metaHtml += ` | <span class="badge badge-tuning">🔧 已调优 ${project.tuning_count} 次</span>`;
+            }
+            if (project.paper_status === 'pdf_ready') {
+                metaHtml += ' | <span class="badge badge-paper">📄 PDF已生成</span>';
+            } else if (project.paper_status === 'draft') {
+                metaHtml += ' | <span class="badge badge-paper">📄 已生成初稿</span>';
+            }
+            metaHtml += ` <button class="config-btn" onclick="showLLMConfig('${projectId}')">⚙️ LLM配置</button>`;
+            document.getElementById('workspaceMeta').innerHTML = metaHtml;
+
+            // 加载上下文使用情况
+            loadContextStatus(projectId);
+
+            // 渲染模块时间线
+            renderModuleTimeline(progress, project.status);
+
+            // 清空聊天容器并加载历史消息
+            const chatContainer = document.getElementById('chatMessages');
+            chatContainer.innerHTML = '';
+
+            try {
+                const historyRes = await fetch(`${API_BASE}/projects/${projectId}/chat-history?limit=200`);
+                const historyData = await historyRes.json();
+
+                if (historyData.success && historyData.history.length > 0) {
+                    historyData.history.forEach(msg => {
+                        handleWebSocketMessage(msg, false); // false = don't auto-scroll
+                    });
+
+                    // 滚动到底部
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                } else {
+                    // 显示空状态
+                    chatContainer.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">💬</div>
+                            <div>AI分析过程将在这里实时显示</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to load chat history:', error);
+            }
+
+            // 加载日志（如果当前在日志标签页）
+            if (document.getElementById('logsTab').classList.contains('active')) {
+                loadFullLogs();
+            } else if (document.getElementById('errorsTab').classList.contains('active')) {
+                loadErrorLogs();
+            }
+
+            // 刷新项目列表以更新active状态
+            loadProjects();
+        }
+
+        // 渲染模块时间线
+        function renderModuleTimeline(progress, projectStatus) {
+            const container = document.getElementById('workspaceContent');
+
+            const moduleNames = {
+                'query_generator': '查询生成器',
+                'paper_fetcher': '论文获取',
+                'preprocessor': '数据预处理',
+                'frequency_analyzer': '频率分析',
+                'topic_modeler': '主题建模',
+                'burst_detector': '突发检测',
+                'tsr_ranker': 'TSR排序',
+                'network_analyzer': '网络分析',
+                'visualizer': '可视化',
+                'report_generator': '报告生成'
+            };
+
+            let html = '<div class="module-timeline">';
+
+            progress.modules.forEach((module, index) => {
+                const statusClass = module.status;
+                const isGuardianActive = module.status === 'failed' && projectStatus === 'running';
+                const canSkip = (module.status === 'pending' || module.status === 'running') && projectStatus === 'running';
+
+                html += `
+                    <div class="module-card ${statusClass} ${isGuardianActive ? 'guardian-active' : ''}"
+                         id="module-${module.name}">
+                        <div class="module-header">
+                            <div class="module-name">${moduleNames[module.name] || module.name}</div>
+                            <div class="module-status-badge status-${module.status}-badge">
+                                ${getStatusText(module.status)}
+                            </div>
+                        </div>
+                        ${module.error ? `<div class="module-error">❌ ${module.error}</div>` : ''}
+                        ${isGuardianActive ? `<button class="stop-guardian-btn" onclick="stopGuardian()" style="margin-top: 8px; font-size: 12px; padding: 4px 12px; background: #ff6b6b; color: white; border: none; border-radius: 4px; cursor: pointer;">🛑 停止AI</button>` : ''}
+                        ${canSkip ? `<button class="skip-module-btn" onclick="skipModule('${module.name}')" style="margin-top: 8px; font-size: 12px; padding: 4px 12px; background: #ff6b6b; color: white; border: none; border-radius: 4px; cursor: pointer;">跳过此模块</button>` : ''}
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            html += renderActionButtons(projectStatus);
+
+            container.innerHTML = html;
+        }
+
+        // Update module cards from progress data (WebSocket real-time update)
+        function updateModuleCardsFromProgress(progressData) {
+            if (!progressData || !progressData.modules) return;
+
+            const moduleNames = {
+                'query_generator': '查询生成器',
+                'paper_fetcher': '论文获取',
+                'preprocessor': '预处理',
+                'frequency_analyzer': '频率分析',
+                'topic_modeler': '主题建模',
+                'burst_detector': '突发检测',
+                'tsr_ranker': 'TSR排序',
+                'network_analyzer': '网络分析',
+                'visualizer': '可视化',
+                'report_generator': '报告生成'
+            };
+
+            progressData.modules.forEach(module => {
+                const card = document.getElementById('module-' + module.name);
+                if (!card) return; // Card doesn't exist yet
+
+                // Update card class
+                const statusClass = module.status === 'completed' ? 'completed' :
+                                   module.status === 'running' ? 'running' :
+                                   module.status === 'failed' ? 'failed' : '';
+                card.className = `module-card ${statusClass} ${module.isGuardianActive ? 'guardian-active' : ''}`;
+
+                // Update status badge
+                const badge = card.querySelector('.module-status-badge');
+                if (badge) {
+                    badge.className = `module-status-badge status-${module.status}-badge`;
+                    badge.textContent = getStatusText(module.status);
+                }
+
+                // Update error message
+                let errorDiv = card.querySelector('.module-error');
+                if (module.error) {
+                    if (!errorDiv) {
+                        errorDiv = document.createElement('div');
+                        errorDiv.className = 'module-error';
+                        card.appendChild(errorDiv);
+                    }
+                    errorDiv.textContent = '❌ ' + module.error;
+                } else if (errorDiv) {
+                    errorDiv.remove();
+                }
+            });
+
+            // Check if pipeline completed, failed, or paused — refresh project status
+            const allCompleted = progressData.modules.length > 0 &&
+                progressData.modules.every(m => m.status === 'completed' || m.status === 'skipped');
+            const anyFailed = progressData.modules.some(m => m.status === 'failed');
+            const noneRunning = !progressData.modules.some(m => m.status === 'running');
+            const anyPending = progressData.modules.some(m => m.status === 'pending');
+
+            // Don't re-render if we're pausing/paused — the condition "noneRunning + anyPending"
+            // matches the paused state (last module done, next module pending) and would overwrite
+            // the "▶ 继续" button with "⏸ 暂停" if the API hasn't synced yet.
+            const isPausedOrPausing = currentProjectStatus === 'paused' || currentProjectStatus === 'pausing';
+
+            if (allCompleted || (noneRunning && (anyFailed || anyPending) && !isPausedOrPausing)) {
+                // Refresh project list to update status badges
+                loadProjects();
+                // Also refresh the module timeline to update action buttons
+                if (selectedProjectId) {
+                    fetch(`${API_BASE}/projects/${selectedProjectId}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success && data.progress) {
+                                currentProjectStatus = data.project.status;
+                                renderModuleTimeline(data.progress, data.project.status);
+                                // Stop log auto-refresh if no longer running
+                                if (_logRefreshTimer && data.project.status !== 'running') {
+                                    clearInterval(_logRefreshTimer);
+                                    _logRefreshTimer = null;
+                                }
+                            }
+                        })
+                        .catch(err => console.error('Failed to refresh project status:', err));
+                }
+            }
+        }
+
+        // 获取状态文本
+        function getStatusText(status) {
+            const texts = {
+                'pending': '待执行',
+                'running': '运行中',
+                'completed': '已完成',
+                'failed': '失败',
+                'skipped': '已跳过'
+            };
+            return texts[status] || status;
+        }
+
+        // 渲染操作按钮
+        function renderActionButtons(status) {
+            const buttons = {
+                'created': `<button class="create-project-btn" onclick="startProject('${selectedProjectId}')">▶ 启动流水线</button>`,
+                'running': `
+                    <button class="create-project-btn" onclick="pauseProject('${selectedProjectId}')" style="margin-right: 8px">⏸ 暂停</button>
+                `,
+                'paused': `
+                    <button class="create-project-btn" onclick="resumeProject('${selectedProjectId}')" style="margin-right: 8px">▶ 继续</button>
+                    <button class="create-project-btn" onclick="startTuning('${selectedProjectId}')" style="margin-right: 8px; background: var(--accent-secondary)">🔧 调优</button>
+                `,
+                'stopped': `<button class="create-project-btn" onclick="resumeProject('${selectedProjectId}')">▶ 继续</button>`,
+                'completed': `
+                    <button class="create-project-btn" onclick="startTuning('${selectedProjectId}')" style="margin-right: 8px; background: var(--accent-secondary)">🔧 调优</button>
+                    <button class="create-project-btn" onclick="generatePaper('${selectedProjectId}')" style="margin-right: 8px; background: var(--success)">📄 生成论文</button>
+                    <button class="create-project-btn" onclick="resetProject('${selectedProjectId}')">🔄 重置</button>
+                `,
+                'failed': `
+                    <button class="create-project-btn" onclick="startTuning('${selectedProjectId}')" style="margin-right: 8px; background: var(--accent-secondary)">🔧 调优</button>
+                    <button class="create-project-btn" onclick="resetProject('${selectedProjectId}')">🔄 重置</button>
+                `
+            };
+            return `<div style="margin-top: 24px">${buttons[status] || ''}</div>`;
+        }
+
+        // 项目操作
+        async function startProject(projectId) {
+            currentProjectStatus = 'running';
+            await fetch(`${API_BASE}/projects/${projectId}/start`, { method: 'POST' });
+            loadProjects();
+            // Re-render without WS reconnection
+            if (selectedProjectId === projectId) {
+                const res = await fetch(`${API_BASE}/projects/${projectId}`);
+                const data = await res.json();
+                if (data.success) {
+                    renderModuleTimeline(data.progress, data.project.status);
+                }
+            }
+        }
+
+        async function pauseProject(projectId) {
+            const res = await fetch(`${API_BASE}/projects/${projectId}/pause`, { method: 'POST' });
+            const data = await res.json();
+            if (data.success) {
+                // Show immediate feedback — button changes to "暂停中..."
+                const actionDiv = document.querySelector('.create-project-btn[onclick*="pauseProject"]');
+                if (actionDiv) {
+                    actionDiv.textContent = '⏳ 暂停中...';
+                    actionDiv.disabled = true;
+                    actionDiv.style.opacity = '0.6';
+                }
+                currentProjectStatus = 'pausing';
+                // Poll for status change (steer is async, takes effect at module boundary)
+                let attempts = 0;
+                const pollInterval = setInterval(async () => {
+                    attempts++;
+                    try {
+                        const checkRes = await fetch(`${API_BASE}/projects/${projectId}`);
+                        const checkData = await checkRes.json();
+                        if (checkData.success && checkData.project.status === 'paused') {
+                            clearInterval(pollInterval);
+                            currentProjectStatus = 'paused';
+                            await loadProjects();
+                            // Re-render module timeline without full selectProject() to avoid WS reconnection
+                            if (selectedProjectId === projectId) {
+                                renderModuleTimeline(checkData.progress, checkData.project.status);
+                            }
+                        }
+                    } catch (e) {}
+                    // Give up polling after 60 seconds
+                    if (attempts >= 60) {
+                        clearInterval(pollInterval);
+                        await loadProjects();
+                        if (selectedProjectId === projectId) {
+                            const checkRes = await fetch(`${API_BASE}/projects/${projectId}`);
+                            const checkData = await checkRes.json();
+                            if (checkData.success) {
+                                currentProjectStatus = checkData.project.status;
+                                renderModuleTimeline(checkData.progress, checkData.project.status);
+                            }
+                        }
+                    }
+                }, 1000);
+            }
+        }
+
+        async function resumeProject(projectId) {
+            // Show immediate feedback
+            const actionDiv = document.querySelector('.create-project-btn[onclick*="resumeProject"]');
+            if (actionDiv) {
+                actionDiv.textContent = '⏳ 启动中...';
+                actionDiv.disabled = true;
+                actionDiv.style.opacity = '0.6';
+            }
+            currentProjectStatus = 'running';
+            await fetch(`${API_BASE}/projects/${projectId}/resume`, { method: 'POST' });
+            loadProjects();
+            // Re-render without full selectProject() to avoid WS reconnection
+            if (selectedProjectId === projectId) {
+                const res = await fetch(`${API_BASE}/projects/${projectId}`);
+                const data = await res.json();
+                if (data.success) {
+                    renderModuleTimeline(data.progress, data.project.status);
+                }
+            }
+            // Start log auto-refresh if on logs/errors tab
+            if (!_logRefreshTimer) {
+                const activeTab = document.getElementById('logsTab').classList.contains('active') ? 'logs' :
+                                 document.getElementById('errorsTab').classList.contains('active') ? 'errors' : null;
+                if (activeTab === 'logs') _logRefreshTimer = setInterval(loadFullLogs, 2000);
+                else if (activeTab === 'errors') _logRefreshTimer = setInterval(loadErrorLogs, 2000);
+            }
+        }
+
+        async function resetProject(projectId) {
+            if (confirm('确定要重置项目吗？所有数据将被清除。')) {
+                await fetch(`${API_BASE}/projects/${projectId}/reset`, { method: 'POST' });
+                currentProjectStatus = 'created';
+                loadProjects();
+                // Re-render without WS reconnection
+                if (selectedProjectId === projectId) {
+                    const res = await fetch(`${API_BASE}/projects/${projectId}`);
+                    const data = await res.json();
+                    if (data.success) {
+                        renderModuleTimeline(data.progress, data.project.status);
+                    }
+                }
+                // 清空聊天记录
+                document.getElementById('chatMessages').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">💬</div>
+                        <div>AI分析过程将在这里实时显示</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Generate LaTeX/PDF paper from pipeline results
+        async function generatePaper(projectId) {
+            const lang = confirm('点击"确定"生成中文论文，点击"取消"生成英文论文') ? 'zh' : 'en';
+            try {
+                const res = await fetch(`${API_BASE}/projects/${projectId}/generate-paper`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ language: lang, compile_pdf: true })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    switchChatTab('workflow');
+                    const chatContainer = document.getElementById('chatMessages');
+                    const msg = document.createElement('div');
+                    msg.className = 'message message-ai';
+                    msg.innerHTML = `<div class="message-header">📄 论文生成</div><div class="message-content">论文生成已启动，请等待 AI 完成各章节生成...</div>`;
+                    chatContainer.appendChild(msg);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                } else {
+                    alert('启动失败: ' + (data.error || '未知错误'));
+                }
+            } catch (e) {
+                alert('请求失败: ' + e.message);
+            }
+        }
+
+        // Start AI tuning session
+        async function startTuning(projectId) {
+            // 检查是否有历史会话
+            const shouldStartNew = confirm('是否开启新的调优会话？\n\n确定 = 新会话（清空历史）\n取消 = 续接上次会话');
+
+            try {
+                const res = await fetch(`${API_BASE}/projects/${projectId}/tune`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: '',
+                        new_session: shouldStartNew
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    switchChatTab('workflow');
+                    const chatContainer = document.getElementById('chatMessages');
+                    const msg = document.createElement('div');
+                    msg.className = 'message message-ai';
+                    const sessionType = shouldStartNew ? '新会话' : '续接会话';
+                    msg.innerHTML = `<div class="message-header">🔧 调优 Agent (${sessionType})</div><div class="message-content">调优 Agent 已启动，正在分析管道输出...</div>`;
+                    chatContainer.appendChild(msg);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    const chatTitle = document.querySelector('.chat-title');
+                    if (chatTitle) chatTitle.textContent = '🔧 调优 Agent';
+                } else {
+                    alert('启动失败: ' + (data.error || '未知错误'));
+                }
+            } catch (e) {
+                alert('请求失败: ' + e.message);
+            }
+        }
+
+        // Stop tuning session
+        async function stopTuning(projectId) {
+            try {
+                await fetch(`${API_BASE}/projects/${projectId}/stop-tuning`, { method: 'POST' });
+                const chatTitle = document.querySelector('.chat-title');
+                if (chatTitle) chatTitle.textContent = 'AI 工作流监控';
+            } catch (e) {
+                console.error('Stop tuning failed:', e);
+            }
+        }
+
+        // Skip a specific module via WebSocket
+        function skipModule(moduleName) {
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                alert('WebSocket未连接，无法跳过模块');
+                return;
+            }
+
+            if (confirm(`确定要跳过模块 "${moduleName}" 吗？`)) {
+                ws.send(JSON.stringify({
+                    type: 'skip_module',
+                    module_name: moduleName
+                }));
+            }
+        }
+
+        // Stop the active GuardianSoul AI
+        async function stopGuardian() {
+            if (!selectedProjectId) return;
+
+            if (confirm('确定要停止AI分析吗？')) {
+                try {
+                    const response = await fetch(`${API_BASE}/projects/${selectedProjectId}/stop-guardian`, {
+                        method: 'POST'
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        console.log('Stop command sent to GuardianSoul');
+                    } else {
+                        alert('停止失败: ' + result.error);
+                    }
+                } catch (error) {
+                    console.error('Failed to stop Guardian:', error);
+                    alert('停止AI失败');
+                }
+            }
+        }
+
+        // Load context usage status
+        async function loadContextStatus(projectId) {
+            try {
+                const res = await fetch(`${API_BASE}/projects/${projectId}/context-status`);
+                const data = await res.json();
+
+                if (!data.success) return;
+
+                const container = document.getElementById('workspaceMeta');
+                const existingStatus = document.getElementById('contextStatus');
+
+                // Remove existing context status if present
+                if (existingStatus) existingStatus.remove();
+
+                // Only show if there's actual context data
+                if (data.estimated_tokens > 0 || data.active_session) {
+                    const usagePercent = (data.usage_ratio * 100).toFixed(1);
+                    const statusColor = data.should_compact ? '#f59e0b' : '#10b981';
+                    const statusText = data.active_session
+                        ? `${data.active_session === 'tuning' ? '🔧 调优' : '🛡️ Guardian'} 上下文`
+                        : '上下文';
+
+                    const statusHtml = `
+                        <span id="contextStatus" style="margin-left: 12px; font-size: 12px; color: ${statusColor};">
+                            ${statusText}: ${data.estimated_tokens} / ${data.max_tokens} tokens (${usagePercent}%)
+                            ${data.should_compact ? ' ⚠️ 建议压缩' : ''}
+                            <button onclick="compactContext('${projectId}')"
+                                    style="margin-left: 6px; padding: 2px 8px; border-radius: 4px; border: 1px solid ${statusColor}; background: transparent; color: ${statusColor}; cursor: pointer; font-size: 11px;">
+                                压缩
+                            </button>
+                        </span>
+                    `;
+                    container.innerHTML += statusHtml;
+                }
+            } catch (e) {
+                console.error('Failed to load context status:', e);
+            }
+        }
+
+        // Manual context compaction
+        async function compactContext(projectId) {
+            if (!confirm('确定要压缩上下文吗？这将保留最近 15 条消息，其余部分会被 LLM 生成的摘要替代。')) {
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/projects/${projectId}/compact-context`, {
+                    method: 'POST'
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    if (data.compacted) {
+                        alert(`压缩成功！节省了 ${data.tokens_saved} tokens。\n当前使用：${data.new_token_count} tokens (${(data.new_usage_ratio * 100).toFixed(1)}%)`);
+                        // Reload context status
+                        loadContextStatus(projectId);
+                    } else {
+                        alert(data.message);
+                    }
+                } else {
+                    alert('压缩失败: ' + (data.error || '未知错误'));
+                }
+            } catch (e) {
+                alert('请求失败: ' + e.message);
+            }
+        }
+
+        // WebSocket
+        let currentWsProjectId = null;
+
+        function connectWebSocket(projectId) {
+            // Don't reconnect if already connected to the same project
+            if (ws && ws.readyState === WebSocket.OPEN && currentWsProjectId === projectId) {
+                return;
+            }
+            if (ws) ws.close();
+            currentWsProjectId = projectId;
+
+            ws = new WebSocket(`ws://${location.host}/ws/${projectId}`);
+
+            ws.onopen = () => {
+                console.log('WebSocket 已连接');
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleWebSocketMessage(data, true); // true = auto-scroll on new message
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket 错误:', error);
+            };
+        }
+
+        // 处理WebSocket消息
+        function handleWebSocketMessage(data, autoScroll = true) {
+            // Handle project-level status updates
+            if (data.type === 'project_status_update') {
+                // Update current project status tracking
+                if (selectedProjectId === data.project_id) {
+                    currentProjectStatus = data.status;
+                    // Update log auto-refresh timer based on new status
+                    if (_logRefreshTimer && data.status !== 'running') {
+                        clearInterval(_logRefreshTimer);
+                        _logRefreshTimer = null;
+                    } else if (!_logRefreshTimer && data.status === 'running') {
+                        const activeTab = document.getElementById('logsTab').classList.contains('active') ? 'logs' :
+                                         document.getElementById('errorsTab').classList.contains('active') ? 'errors' : null;
+                        if (activeTab === 'logs') _logRefreshTimer = setInterval(loadFullLogs, 2000);
+                        else if (activeTab === 'errors') _logRefreshTimer = setInterval(loadErrorLogs, 2000);
+                    }
+                }
+                // Refresh project list to show updated status badge
+                loadProjects();
+                // Re-render current project detail panel (action buttons, module statuses)
+                // WITHOUT calling selectProject() to avoid WebSocket reconnection
+                if (selectedProjectId === data.project_id) {
+                    // Fetch latest project data and re-render module timeline
+                    fetch(`${API_BASE}/projects/${selectedProjectId}`)
+                        .then(res => res.json())
+                        .then(projectData => {
+                            if (projectData.success) {
+                                renderModuleTimeline(projectData.progress, projectData.project.status);
+                            }
+                        })
+                        .catch(err => console.error('Failed to refresh project:', err));
+                }
+                return;
+            }
+
+            // Handle progress updates - update module cards dynamically
+            if (data.type === 'progress_update') {
+                updateModuleCardsFromProgress(data.data);
+                return;
+            }
+
+            const chatContainer = document.getElementById('chatMessages');
+
+            // 清除空状态
+            if (chatContainer.querySelector('.empty-state')) {
+                chatContainer.innerHTML = '';
+            }
+
+            // 确定消息类型
+            let messageClass = 'message-ai';
+            let headerText = '🤖 AI';
+
+            switch (data.type) {
+                case 'ai_thinking':
+                    messageClass = 'message-ai';
+                    headerText = '🤖 AI思考';
+                    break;
+                case 'ai_tool_call':
+                    messageClass = 'message-tool';
+                    headerText = `🔧 工具调用: ${data.metadata?.tool || '未知'}`;
+                    break;
+                case 'ai_tool_result':
+                    messageClass = 'message-tool';
+                    headerText = '📊 执行结果';
+                    break;
+                case 'ai_decision':
+                    messageClass = 'message-ai';
+                    headerText = '🎯 AI决策';
+                    break;
+                case 'user_message':
+                    messageClass = 'message-user';
+                    headerText = '👤 你';
+                    break;
+                case 'error':
+                case 'ai_error':
+                case 'module_error':
+                    messageClass = 'message-error';
+                    headerText = '❌ 错误';
+                    break;
+                case 'module_start':
+                    messageClass = 'message-ai';
+                    headerText = '▶️ 模块启动';
+                    break;
+                case 'module_success':
+                case 'ai_success':
+                    messageClass = 'message-ai';
+                    headerText = '✅ 完成';
+                    break;
+                case 'guardian_activated':
+                    messageClass = 'message-tool';
+                    headerText = '🛡️ Guardian激活';
+                    break;
+                case 'project_started':
+                    messageClass = 'message-ai';
+                    headerText = '🚀 项目启动';
+                    break;
+                case 'module_injection_request':
+                    // Render injection confirmation card instead of regular message
+                    renderInjectionCard(data.metadata);
+                    return;
+                case 'module_injection_result':
+                    messageClass = 'message-ai';
+                    headerText = '📋 注入结果';
+                    break;
+            }
+
+            // Handle HITL checkpoint review requests
+            if (data.metadata?.review_required) {
+                const checkpoint = data.metadata.checkpoint;
+                const reviewHtml = `
+                    <div class="checkpoint-review-panel" id="review-${checkpoint}">
+                        <div class="review-title">Review Required: ${checkpoint}</div>
+                        <div style="margin-bottom:8px;font-size:13px">${data.content}</div>
+                        <div class="review-actions">
+                            <button class="review-btn review-btn-approve" onclick="reviewCheckpoint('${checkpoint}','approve')">Approve</button>
+                            <button class="review-btn review-btn-adjust" onclick="reviewCheckpoint('${checkpoint}','adjust')">Adjust</button>
+                            <button class="review-btn review-btn-reject" onclick="reviewCheckpoint('${checkpoint}','reject')">Reject</button>
+                        </div>
+                    </div>
+                `;
+                const moduleCard = document.getElementById('module-' + checkpoint);
+                if (moduleCard) {
+                    moduleCard.insertAdjacentHTML('afterend', reviewHtml);
+                } else {
+                    chatContainer.insertAdjacentHTML('beforeend', reviewHtml);
+                }
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                return;
+            }
+
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${messageClass}`;
+            messageEl.setAttribute('data-timestamp', data.timestamp || '');
+            const content = data.content || data.message || '';
+            if (!content) return; // skip empty messages
+            messageEl.innerHTML = `
+                <div class="message-header">
+                    <span>${headerText}</span>
+                    <button class="message-delete-btn" onclick="deleteMessage(this)" title="删除此消息">✕</button>
+                </div>
+                <div class="message-content">${content}</div>
+            `;
+
+            chatContainer.appendChild(messageEl);
+
+            // 自动滚动（仅在实时消息时）
+            if (autoScroll) {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            // 更新模块卡片状态
+            if (data.metadata?.module) {
+                const moduleCard = document.getElementById(`module-${data.metadata.module}`);
+                if (moduleCard && data.type === 'ai_thinking') {
+                    moduleCard.classList.add('guardian-active');
+                }
+            }
+        }
+
+        function reviewCheckpoint(moduleName, decision) {
+            const reviewPanel = document.getElementById('review-' + moduleName);
+            if (!reviewPanel) return;
+
+            if (decision === 'adjust') {
+                // Show a simple prompt for parameter adjustment
+                const params = prompt('Enter adjusted parameters as JSON (e.g. {"n_topics": 5}):');
+                if (!params) return;
+                try {
+                    JSON.parse(params);
+                } catch { alert('Invalid JSON'); return; }
+                ws.send(JSON.stringify({
+                    type: 'checkpoint_review',
+                    module_name: moduleName,
+                    decision: 'adjust',
+                    params: JSON.parse(params)
+                }));
+            } else {
+                ws.send(JSON.stringify({
+                    type: 'checkpoint_review',
+                    module_name: moduleName,
+                    decision: decision
+                }));
+            }
+
+            reviewPanel.innerHTML = '<div style="color:var(--ai-message);padding:8px">Review submitted: ' + decision + '</div>';
+            setTimeout(() => reviewPanel.remove(), 3000);
+        }
+
+        // --- Module Injection UI ---
+
+        function renderInjectionCard(metadata) {
+            const chatContainer = document.getElementById('chatMessages');
+            if (chatContainer.querySelector('.empty-state')) {
+                chatContainer.innerHTML = '';
+            }
+
+            const moduleName = metadata.module_name || 'unknown';
+            const description = metadata.description || '';
+            const inputSchema = metadata.input_schema || {};
+            const outputSchema = metadata.output_schema || {};
+            const insertAfter = metadata.insert_after || '';
+            const insertBefore = metadata.insert_before || '';
+            const warnings = metadata.compatibility_warnings || [];
+
+            let positionText = '';
+            if (insertAfter) positionText = `在 ${insertAfter} 之后`;
+            else if (insertBefore) positionText = `在 ${insertBefore} 之前`;
+            else positionText = 'pipeline 末尾';
+
+            let warningsHtml = '';
+            if (warnings.length > 0) {
+                warningsHtml = warnings.map(w => `<div class="injection-warning">⚠️ ${w}</div>`).join('');
+            }
+
+            const cardId = `injection-${moduleName}`;
+
+            const cardHtml = `
+                <div class="injection-card" id="${cardId}">
+                    <div class="injection-title">📋 请求添加新模块: ${moduleName}</div>
+                    <div class="injection-desc">${description}</div>
+                    <div class="injection-meta">插入位置: ${positionText}</div>
+                    <div class="injection-meta">输入 Schema:</div>
+                    <div class="injection-schema">${JSON.stringify(inputSchema, null, 2)}</div>
+                    <div class="injection-meta">输出 Schema:</div>
+                    <div class="injection-schema">${JSON.stringify(outputSchema, null, 2)}</div>
+                    ${warningsHtml}
+                    <div class="injection-actions">
+                        <button class="review-btn review-btn-approve" onclick="approveInjection('${moduleName}')">批准注入</button>
+                        <button class="review-btn review-btn-reject" onclick="rejectInjection('${moduleName}')">拒绝</button>
+                    </div>
+                </div>
+            `;
+
+            chatContainer.insertAdjacentHTML('beforeend', cardHtml);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function approveInjection(moduleName) {
+            if (!ws || ws.readyState !== WebSocket.OPEN) return;
+            ws.send(JSON.stringify({
+                type: 'steer',
+                content: `INJECT_APPROVE:${moduleName}`
+            }));
+            const card = document.getElementById(`injection-${moduleName}`);
+            if (card) {
+                card.innerHTML = '<div style="color:#10b981;padding:8px">✅ 已批准注入: ' + moduleName + '</div>';
+                setTimeout(() => card.remove(), 3000);
+            }
+        }
+
+        function rejectInjection(moduleName) {
+            if (!ws || ws.readyState !== WebSocket.OPEN) return;
+            ws.send(JSON.stringify({
+                type: 'steer',
+                content: `INJECT_REJECT:${moduleName}`
+            }));
+            const card = document.getElementById(`injection-${moduleName}`);
+            if (card) {
+                card.innerHTML = '<div style="color:#ef4444;padding:8px">❌ 已拒绝注入: ' + moduleName + '</div>';
+                setTimeout(() => card.remove(), 3000);
+            }
+        }
+
+        // 发送用户消息
+        function sendUserMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+
+            if ((!message && !pendingImage) || !ws) return;
+
+            const payload = {
+                type: 'user_message',
+                content: message || '(image)',
+                mode: currentChatMode  // 传递当前模式
+            };
+
+            if (pendingImage) {
+                payload.image = pendingImage.dataUrl;
+                payload.image_name = pendingImage.file.name;
+            }
+
+            ws.send(JSON.stringify(payload));
+            input.value = '';
+            removeImagePreview();
+        }
+
+        // 设置聊天模式
+        function setChatMode(mode) {
+            currentChatMode = mode;
+
+            // 更新按钮状态
+            document.querySelectorAll('.chat-mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.mode === mode) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // 更新 placeholder 提示
+            const input = document.getElementById('userInput');
+            const placeholders = {
+                'auto': '向AI发送消息... (自动判断模式)',
+                'chat': '纯对话模式 - 闲聊、咨询、讨论想法...',
+                'agent': 'Agent模式 - 读取文件、执行命令、分析数据...'
+            };
+            input.placeholder = placeholders[mode] || '向AI发送消息...';
+        }
+
+        // 聊天菜单
+        function toggleChatMenu() {
+            const dropdown = document.getElementById('chatMenuDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // 点击其他地方关闭菜单
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.chat-menu-container')) {
+                const dropdown = document.getElementById('chatMenuDropdown');
+                if (dropdown) dropdown.classList.remove('show');
+            }
+        });
+
+        // 清空对话历史
+        function clearChatHistory() {
+            if (!currentProjectId) return;
+            if (!confirm('确定要清空所有对话记录吗？')) return;
+
+            fetch(`/api/projects/${currentProjectId}/chat-history`, {
+                method: 'DELETE'
+            }).then(res => res.json()).then(data => {
+                if (data.success) {
+                    document.getElementById('chatMessages').innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">💬</div>
+                            <div>AI分析过程将在这里实时显示</div>
+                        </div>
+                    `;
+                }
+            }).catch(err => console.error('Clear history failed:', err));
+
+            toggleChatMenu();
+        }
+
+        // 删除单条消息
+        function deleteMessage(btn) {
+            const messageEl = btn.closest('.message');
+            const timestamp = messageEl.getAttribute('data-timestamp');
+
+            if (!timestamp || !currentProjectId) {
+                messageEl.remove();
+                return;
+            }
+
+            fetch(`/api/projects/${currentProjectId}/chat-message/${encodeURIComponent(timestamp)}`, {
+                method: 'DELETE'
+            }).then(res => res.json()).then(data => {
+                if (data.success) {
+                    messageEl.remove();
+                    // Check if chat is now empty
+                    const chatContainer = document.getElementById('chatMessages');
+                    if (!chatContainer.querySelector('.message')) {
+                        chatContainer.innerHTML = `
+                            <div class="empty-state">
+                                <div class="empty-icon">💬</div>
+                                <div>AI分析过程将在这里实时显示</div>
+                            </div>
+                        `;
+                    }
+                }
+            }).catch(err => {
+                console.error('Delete message failed:', err);
+                messageEl.remove();
+            });
+        }
+
+        // Image upload handling
+        let pendingImage = null;  // { dataUrl, file }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                alert('Image size must be less than 10MB');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                pendingImage = { dataUrl: e.target.result, file: file };
+                document.getElementById('previewImg').src = e.target.result;
+                document.getElementById('imagePreview').style.display = 'flex';
+            };
+            reader.readAsDataURL(file);
+            input.value = '';  // Reset so same file can be re-selected
+        }
+
+        function removeImagePreview() {
+            pendingImage = null;
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('previewImg').src = '';
+        }
+
+        // LLM Configuration
+        let currentLLMConfigProject = null;
+
+        async function showLLMConfig(projectId) {
+            currentLLMConfigProject = projectId;
+
+            try {
+                const res = await fetch(`${API_BASE}/projects/${projectId}/llm-config`);
+                const data = await res.json();
+
+                if (data.success && data.llm_config) {
+                    document.getElementById('llmProvider').value = data.llm_config.provider || 'openai';
+                    document.getElementById('llmApiKey').value = data.llm_config.api_key || '';
+                    document.getElementById('llmBaseUrl').value = data.llm_config.base_url || '';
+                    document.getElementById('llmModel').value = data.llm_config.model || '';
+                } else {
+                    // Clear form
+                    document.getElementById('llmProvider').value = 'openai';
+                    document.getElementById('llmApiKey').value = '';
+                    document.getElementById('llmBaseUrl').value = '';
+                    document.getElementById('llmModel').value = '';
+                }
+
+                updateLLMProviderFields();
+                document.getElementById('llmConfigModal').classList.add('active');
+            } catch (e) {
+                console.error('Failed to load LLM config:', e);
+                alert('加载配置失败: ' + e.message);
+            }
+        }
+
+        function closeLLMConfigModal() {
+            document.getElementById('llmConfigModal').classList.remove('active');
+            currentLLMConfigProject = null;
+        }
+
+        function updateLLMProviderFields() {
+            const provider = document.getElementById('llmProvider').value;
+            const fields = document.getElementById('llmOpenAIFields');
+            fields.style.display = provider === 'openai' ? 'block' : 'none';
+        }
+
+        async function testLLMConfig() {
+            const config = {
+                provider: document.getElementById('llmProvider').value,
+                api_key: document.getElementById('llmApiKey').value,
+                base_url: document.getElementById('llmBaseUrl').value,
+                model: document.getElementById('llmModel').value || 'gpt-4o',
+            };
+
+            if (config.provider === 'openai' && !config.api_key) {
+                alert('请输入 API Key');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/projects/${currentLLMConfigProject}/test-llm-config`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    alert(`✅ 连接成功！\n\n响应预览: ${data.response_preview}\n\nToken 使用: ${JSON.stringify(data.usage)}`);
+                } else {
+                    alert(`❌ 连接失败\n\n错误: ${data.error}\n\n类型: ${data.error_type}`);
+                }
+            } catch (e) {
+                alert('测试失败: ' + e.message);
+            }
+        }
+
+        async function saveLLMConfig() {
+            const config = {
+                provider: document.getElementById('llmProvider').value,
+                api_key: document.getElementById('llmApiKey').value,
+                base_url: document.getElementById('llmBaseUrl').value,
+                model: document.getElementById('llmModel').value || 'gpt-4o',
+            };
+
+            if (config.provider === 'openai' && !config.api_key) {
+                alert('请输入 API Key');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/projects/${currentLLMConfigProject}/llm-config`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    alert('✅ LLM 配置已保存');
+                    closeLLMConfigModal();
+                } else {
+                    alert('保存失败: ' + (data.error || '未知错误'));
+                }
+            } catch (e) {
+                alert('保存失败: ' + e.message);
+            }
+        }
+
+        // 创建项目模态框
+        let selectedMode = 'automated';
+        const DEFAULT_MODULES = [
+            "query_generator", "paper_fetcher", "preprocessor",
+            "frequency_analyzer", "topic_modeler", "burst_detector",
+            "tsr_ranker", "network_analyzer", "visualizer", "report_generator"
+        ];
+        let pluggableOrder = [...DEFAULT_MODULES];
+
+        function showCreateProjectModal() {
+            document.getElementById('createProjectModal').classList.add('active');
+            // Reset form
+            document.getElementById('modalProjectName').value = '';
+            document.getElementById('modalResearchDomain').value = '';
+            document.getElementById('modalMaxPapers').value = '100';
+            selectMode('automated');
+            // Populate HITL checkpoints
+            populateHitlCheckpoints();
+            // Populate pluggable list
+            populatePluggableList();
+        }
+
+        function closeCreateModal() {
+            document.getElementById('createProjectModal').classList.remove('active');
+        }
+
+        function selectMode(mode) {
+            selectedMode = mode;
+            document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+            document.querySelector(`.mode-card[data-mode="${mode}"]`).classList.add('selected');
+            document.getElementById('hitlOptions').classList.toggle('hidden', mode !== 'hitl');
+            document.getElementById('pluggableOptions').classList.toggle('hidden', mode !== 'pluggable');
+        }
+
+        function populateHitlCheckpoints() {
+            const container = document.getElementById('hitlCheckpoints');
+            const defaults = ['query_generator', 'paper_fetcher', 'topic_modeler', 'report_generator'];
+            container.innerHTML = DEFAULT_MODULES.map(m => {
+                const checked = defaults.includes(m) ? 'checked' : '';
+                return `<div class="checklist-item"><input type="checkbox" id="hitl_${m}" ${checked}><label for="hitl_${m}">${m}</label></div>`;
+            }).join('');
+        }
+
+        function populatePluggableList() {
+            const container = document.getElementById('pluggableModuleList');
+            container.innerHTML = pluggableOrder.map((m, i) =>
+                `<div class="module-sort-item" draggable="true" data-index="${i}"
+                      ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dropItem(event)" ondragend="dragEnd(event)">
+                    <span class="drag-handle">&#9776;</span>
+                    <span class="module-name">${m}</span>
+                    <button class="module-config-btn" onclick="event.stopPropagation();toggleModuleConfig('${m}')" title="Configure parameters">&#9881;</button>
+                </div>
+                <div class="module-config-panel" id="config-${m}"></div>`
+            ).join('');
+            // Pre-load schemas
+            loadModuleSchemas();
+        }
+
+        let dragSrcIndex = null;
+        function dragStart(e) {
+            dragSrcIndex = +e.currentTarget.dataset.index;
+            e.currentTarget.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+        function dragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
+        function dropItem(e) {
+            e.preventDefault();
+            const target = e.currentTarget;
+            const dropIdx = +target.dataset.index;
+            if (dragSrcIndex !== null && dragSrcIndex !== dropIdx) {
+                const item = pluggableOrder.splice(dragSrcIndex, 1)[0];
+                pluggableOrder.splice(dropIdx, 0, item);
+                populatePluggableList();
+            }
+        }
+        function dragEnd(e) { e.currentTarget.classList.remove('dragging'); dragSrcIndex = null; }
+
+        async function submitCreateProject() {
+            const name = document.getElementById('modalProjectName').value.trim();
+            const domain = document.getElementById('modalResearchDomain').value.trim();
+            const maxPapers = parseInt(document.getElementById('modalMaxPapers').value) || 100;
+            if (!name || !domain) { alert('Please fill in name and domain'); return; }
+
+            const body = {
+                name, research_domain: domain, max_papers: maxPapers,
+                pipeline_mode: selectedMode
+            };
+
+            if (selectedMode === 'hitl') {
+                body.hitl_checkpoints = DEFAULT_MODULES.filter(m =>
+                    document.getElementById('hitl_' + m)?.checked
+                );
+            } else if (selectedMode === 'pluggable') {
+                body.pipeline_order = [...pluggableOrder];
+                const pluginDir = document.getElementById('pluginDirInput').value.trim();
+                if (pluginDir) body.plugin_dir = pluginDir;
+            }
+
+            // Collect module configs from config panels
+            const moduleConfigs = collectModuleConfigs();
+            if (Object.keys(moduleConfigs).length > 0) {
+                body.config = { max_papers: maxPapers, require_abstract: true, modules: moduleConfigs };
+            }
+
+            const res = await fetch('/api/projects', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+            });
+            const data = await res.json();
+            if (data.success) {
+                closeCreateModal();
+                loadProjects();
+                setTimeout(() => selectProject(data.project_id), 500);
+            } else {
+                alert(data.error || 'Failed to create project');
+            }
+        }
+
+        // --- Module config schema & dynamic form generation ---
+        let moduleSchemas = {};  // {module_name: config_schema}
+
+        async function loadModuleSchemas() {
+            if (Object.keys(moduleSchemas).length > 0) return;  // Already loaded
+            try {
+                const res = await fetch('/api/modules');
+                const data = await res.json();
+                if (data.success) {
+                    data.modules.forEach(m => {
+                        moduleSchemas[m.name] = m.config_schema || {};
+                    });
+                }
+            } catch (e) { console.error('Failed to load module schemas:', e); }
+        }
+
+        function renderConfigForm(moduleName) {
+            const schema = moduleSchemas[moduleName];
+            if (!schema || !schema.properties || Object.keys(schema.properties).length === 0) {
+                return '<div style="font-size:12px;color:var(--text-muted);padding:4px">No configurable parameters</div>';
+            }
+
+            const required = schema.required || [];
+            let html = '';
+            for (const [key, prop] of Object.entries(schema.properties)) {
+                const defaultVal = prop.default ?? '';
+                const isReq = required.includes(key) ? ' *' : '';
+                const type = prop.type || 'string';
+                const desc = prop.description || '';
+
+                html += `<div class="config-field">`;
+                html += `<label>${key}${isReq} <span class="config-default">default: ${JSON.stringify(defaultVal)}</span></label>`;
+
+                if (type === 'boolean') {
+                    html += `<input type="checkbox" data-key="${key}" ${defaultVal ? 'checked' : ''}>`;
+                } else if (prop.enum) {
+                    html += `<select data-key="${key}">`;
+                    prop.enum.forEach(v => {
+                        html += `<option value="${v}" ${v === defaultVal ? 'selected' : ''}>${v}</option>`;
+                    });
+                    html += `</select>`;
+                } else if (type === 'number' || type === 'integer') {
+                    html += `<input type="number" data-key="${key}" value="${defaultVal}" step="${type === 'integer' ? '1' : 'any'}">`;
+                } else if (type === 'array') {
+                    html += `<input type="text" data-key="${key}" value="${Array.isArray(defaultVal) ? defaultVal.join(', ') : ''}" placeholder="comma-separated">`;
+                } else if (type === 'object') {
+                    html += `<input type="text" data-key="${key}" value="${typeof defaultVal === 'object' ? JSON.stringify(defaultVal) : ''}" placeholder="JSON object">`;
+                } else {
+                    html += `<input type="text" data-key="${key}" value="${defaultVal}">`;
+                }
+
+                if (desc) html += `<div style="font-size:11px;color:var(--text-muted);margin-top:1px">${desc}</div>`;
+                html += `</div>`;
+            }
+            return html;
+        }
+
+        function toggleModuleConfig(moduleName) {
+            const panel = document.getElementById('config-' + moduleName);
+            if (panel) {
+                panel.classList.toggle('open');
+                if (panel.classList.contains('open') && !panel.dataset.loaded) {
+                    panel.innerHTML = renderConfigForm(moduleName);
+                    panel.dataset.loaded = 'true';
+                }
+            }
+        }
+
+        function collectModuleConfigs() {
+            const configs = {};
+            document.querySelectorAll('.module-config-panel.open').forEach(panel => {
+                const moduleName = panel.id.replace('config-', '');
+                const config = {};
+                panel.querySelectorAll('[data-key]').forEach(el => {
+                    const key = el.dataset.key;
+                    let val;
+                    if (el.type === 'checkbox') {
+                        val = el.checked;
+                    } else if (el.type === 'number') {
+                        val = parseFloat(el.value);
+                        if (isNaN(val)) val = el.value;
+                    } else if (el.tagName === 'SELECT') {
+                        val = el.value;
+                    } else {
+                        val = el.value;
+                        // Try to parse arrays/objects
+                        if (val.includes(',') && !val.startsWith('{')) {
+                            val = val.split(',').map(s => s.trim());
+                        } else if (val.startsWith('{') || val.startsWith('[')) {
+                            try { val = JSON.parse(val); } catch {}
+                        }
+                    }
+                    config[key] = val;
+                });
+                if (Object.keys(config).length > 0) configs[moduleName] = config;
+            });
+            return configs;
+        }
+
+        // --- Open existing project ---
+        async function showOpenProjectModal() {
+            const existing = document.getElementById('openProjectModal');
+            if (existing) { existing.classList.add('active'); await loadExistingProjects(); return; }
+
+            // Create modal dynamically
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay active';
+            modal.id = 'openProjectModal';
+            modal.innerHTML = `
+                <div class="modal-content" style="width:500px">
+                    <div class="modal-title">📂 Open Existing Project</div>
+                    <div id="existingProjectsList" style="max-height:400px;overflow-y:auto">
+                        <div style="color:var(--text-muted);font-size:13px;padding:12px">Loading...</div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="modal-btn modal-btn-cancel" onclick="closeOpenProjectModal()">Cancel</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            await loadExistingProjects();
+        }
+
+        function closeOpenProjectModal() {
+            const modal = document.getElementById('openProjectModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        async function loadExistingProjects() {
+            const container = document.getElementById('existingProjectsList');
+            try {
+                const res = await fetch('/api/existing-projects');
+                const data = await res.json();
+                if (!data.success || data.projects.length === 0) {
+                    container.innerHTML = '<div style="color:var(--text-muted);font-size:13px;padding:12px">No existing projects found in workspaces/</div>';
+                    return;
+                }
+                container.innerHTML = data.projects.map(p => {
+                    // Use display_name (project_name_run_id) or fallback to folder_name
+                    const displayName = p.display_name || p.folder_name;
+                    // Show research domain prominently
+                    const domainDisplay = p.research_domain ? `<div style="font-size:13px;color:var(--accent);margin-top:4px">${p.research_domain}</div>` : '';
+                    const created = p.created_at ? `<span style="margin-left:8px">${p.created_at}</span>` : '';
+                    const modeLabel = {automated: 'Auto', hitl: 'HITL', pluggable: 'Plug'}[p.mode] || p.mode;
+                    return `
+                    <div class="existing-project-item" onclick="importExistingProject('${p.run_id}')">
+                        <div class="ep-info">
+                            <div style="font-weight:600">${displayName}</div>
+                            ${domainDisplay}
+                            <div style="font-size:11px;color:var(--text-muted);margin-top:4px">
+                                <span class="mode-badge">${modeLabel}</span>${created}
+                            </div>
+                        </div>
+                        <div class="ep-status">
+                            <span class="${p.status === 'completed' ? 'completed' : p.status === 'failed' ? 'failed' : ''}">${p.status}</span>
+                            ${p.completed_count}/${p.module_count} done
+                        </div>
+                    </div>`;
+                }).join('');
+            } catch (e) {
+                container.innerHTML = '<div style="color:var(--error);font-size:13px">Failed to load projects</div>';
+            }
+        }
+
+        async function importExistingProject(runId) {
+            try {
+                const res = await fetch('/api/import-project', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ run_id: runId })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    closeOpenProjectModal();
+                    loadProjects();
+                    setTimeout(() => selectProject(data.project_id), 500);
+                } else {
+                    alert(data.error || 'Failed to import project');
+                }
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
+        // 切换聊天标签页
+        function switchChatTab(tab) {
+            const workflowTab = document.getElementById('workflowTab');
+            const logsTab = document.getElementById('logsTab');
+            const errorsTab = document.getElementById('errorsTab');
+            const chatMessages = document.getElementById('chatMessages');
+            const fullLogContainer = document.getElementById('fullLogContainer');
+            const errorLogContainer = document.getElementById('errorLogContainer');
+
+            // Reset all tabs and containers
+            workflowTab.classList.remove('active');
+            logsTab.classList.remove('active');
+            errorsTab.classList.remove('active');
+            chatMessages.style.display = 'none';
+            fullLogContainer.classList.remove('active');
+            errorLogContainer.classList.remove('active');
+
+            // Clear any existing log refresh timer
+            if (_logRefreshTimer) {
+                clearInterval(_logRefreshTimer);
+                _logRefreshTimer = null;
+            }
+
+            if (tab === 'workflow') {
+                workflowTab.classList.add('active');
+                chatMessages.style.display = 'flex';
+            } else if (tab === 'logs') {
+                logsTab.classList.add('active');
+                fullLogContainer.classList.add('active');
+                // Load logs immediately
+                loadFullLogs();
+                // Setup auto-refresh every 2 seconds if project is running
+                if (currentProjectStatus === 'running') {
+                    _logRefreshTimer = setInterval(loadFullLogs, 2000);
+                }
+            } else if (tab === 'errors') {
+                errorsTab.classList.add('active');
+                errorLogContainer.classList.add('active');
+                // Load error logs immediately
+                loadErrorLogs();
+                // Setup auto-refresh every 2 seconds if project is running
+                if (currentProjectStatus === 'running') {
+                    _logRefreshTimer = setInterval(loadErrorLogs, 2000);
+                }
+            }
+        }
+
+        // 加载错误日志
+        async function loadErrorLogs() {
+            if (!selectedProjectId) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/projects/${selectedProjectId}/error-logs`);
+                const data = await response.json();
+
+                const container = document.getElementById('errorLogContainer');
+                const errorsTab = document.getElementById('errorsTab');
+
+                if (data.success && data.errors && data.errors.length > 0) {
+                    container.innerHTML = data.errors.map(log =>
+                        `<div class="error-log-line">${escapeHtml(log)}</div>`
+                    ).join('');
+
+                    // 添加错误标记
+                    errorsTab.classList.add('has-errors');
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">✓</div>
+                            <div>没有错误日志</div>
+                        </div>
+                    `;
+                    errorsTab.classList.remove('has-errors');
+                }
+            } catch (error) {
+                console.error('Failed to load error logs:', error);
+            }
+        }
+
+        // 加载完整日志
+        let _logRefreshTimer = null;
+
+        async function loadFullLogs() {
+            if (!selectedProjectId) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/projects/${selectedProjectId}/logs?lines=200`);
+                const data = await response.json();
+
+                const container = document.getElementById('fullLogContainer');
+
+                if (data.success && data.logs && data.logs.length > 0) {
+                    // Check if user has scrolled up (don't auto-scroll if they're reading history)
+                    const isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 50;
+
+                    container.innerHTML = data.logs.map(log => {
+                        const logLevel = parseLogLevel(log);
+                        const logClass = getLogClass(logLevel);
+                        return `<div class="log-line log-${logClass}">${escapeHtml(log)}</div>`;
+                    }).join('');
+
+                    // Only auto-scroll if already at bottom
+                    if (isAtBottom) {
+                        container.scrollTop = container.scrollHeight;
+                    }
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">📋</div>
+                            <div>没有日志记录</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to load full logs:', error);
+                const container = document.getElementById('fullLogContainer');
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">❌</div>
+                        <div>加载日志失败</div>
+                    </div>
+                `;
+            }
+        }
+
+        // 解析日志级别
+        function parseLogLevel(logLine) {
+            if (logLine.includes(' - ERROR - ') || logLine.includes(' - CRITICAL - ')) {
+                return 'error';
+            } else if (logLine.includes(' - WARNING - ')) {
+                return 'warning';
+            } else if (logLine.includes(' - DEBUG - ')) {
+                return 'debug';
+            } else if (logLine.includes(' - INFO - ')) {
+                return 'info';
+            }
+            return 'info';
+        }
+
+        // 获取日志样式类
+        function getLogClass(level) {
+            const classes = {
+                'error': 'error',
+                'warning': 'warning',
+                'info': 'info',
+                'debug': 'debug'
+            };
+            return classes[level] || 'info';
+        }
+
+        // HTML 转义函数
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // --- Panel toggle functions ---
+        function toggleSidebar(forceState) {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const isOpen = sidebar.classList.contains('open');
+            const newState = typeof forceState === 'boolean' ? forceState : !isOpen;
+            sidebar.classList.toggle('open', newState);
+            overlay.classList.toggle('active', newState);
+        }
+
+        function toggleChatPanel(forceState) {
+            const chat = document.querySelector('.ai-chat');
+            const isOpen = chat.classList.contains('open');
+            const newState = typeof forceState === 'boolean' ? forceState : !isOpen;
+            chat.classList.toggle('open', newState);
+        }
+
+        // 初始化
+        loadProjects();
+    </script>
+</body>
+</html>
