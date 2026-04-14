@@ -1,0 +1,62 @@
+MIT License with Non-Commercial and Attribution Requirements
+
+Copyright (c) 2026 Liu Dingrui
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+1. The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+2. **Non-Commercial Use Only**: The Software may not be used for commercial
+purposes without explicit written permission from the copyright holder.
+Commercial purposes include, but are not limited to:
+   - Selling the Software or any derivative works
+   - Using the Software in a product or service that is sold
+   - Using the Software to generate revenue through advertising, subscriptions,
+     or other monetization methods
+
+3. **Attribution Requirement**: Any derivative works, modifications, or
+enhancements to the Software must:
+   - Clearly credit the original author: Liu Dingrui (刘丁瑞)
+   - Include a link to the original repository: https://github.com/newhouse10086/bibliometrics-agent
+   - Preserve all original copyright notices
+   - Clearly indicate the nature and extent of modifications
+
+4. The Software is provided "as is", without warranty of any kind, express or
+implied, including but not limited to the warranties of merchantability,
+fitness for a particular purpose and NONINFRINGEMENT. In no event shall the
+authors or copyright holders be liable for any claim, damages or other
+liability, whether in an action of contract, tort or otherwise, arising from,
+out of or in connection with the Software or the use or other dealings in the
+Software.
+
+---
+
+## 中文说明
+
+### 许可条款
+
+本项目采用 MIT 许可证，并附加以下限制条件：
+
+1. **禁止商用**：未经版权所有者书面许可，不得将本软件用于商业目的。
+   商业目的包括但不限于：
+   - 出售本软件或其衍生作品
+   - 在销售的产品或服务中使用本软件
+   - 通过广告、订阅或其他变现方式使用本软件盈利
+
+2. **引用要求**：对本软件的任何衍生作品、修改或增强，必须：
+   - 明确注明原作者：Liu Dingrui (刘丁瑞)
+   - 包含原项目链接：https://github.com/newhouse10086/bibliometrics-agent
+   - 保留所有原始版权声明
+   - 清楚说明修改的性质和范围
+
+### 联系方式
+
+如需商业使用许可，请联系原作者：
+- GitHub: https://github.com/newhouse10086
+- 项目地址: https://github.com/newhouse10086/bibliometrics-agent

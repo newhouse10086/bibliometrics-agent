@@ -432,7 +432,19 @@ POST /api/projects
 
 ## 📄 许可证
 
-MIT License
+**MIT License with Non-Commercial and Attribution Requirements**
+
+- ✅ **允许**：个人学习、研究、非商业用途
+- ❌ **禁止**：未经许可的商业使用
+- 📝 **要求**：修改需注明原作者 **Liu Dingrui (刘丁瑞)** 并引用原项目链接
+
+详见 [LICENSE](LICENSE) 文件。
+
+### 商业使用
+
+如需商业使用许可，请联系原作者：
+- GitHub: https://github.com/newhouse10086
+- 项目地址: https://github.com/newhouse10086/bibliometrics-agent
 
 ---
 
