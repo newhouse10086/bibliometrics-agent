@@ -463,5 +463,8 @@ POST /api/projects
 **版本**：v2.0
 **状态**：✅ 生产就绪
 
-感谢Oh-my--paper,claude-code,GLM5.1,阿里云平台项目，本项目基于Oh-my--paper插件实践
+感谢Oh-my--paper,claude-code,GLM5.1，本项目基于Oh-my--paper插件实践
+
 Oh-my--paper:https://github.com/LigphiDonk/Oh-my--paper.git
+
+感谢阿里云平台提供基础算力！
